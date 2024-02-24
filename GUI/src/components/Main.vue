@@ -1,5 +1,13 @@
+<script setup>
+import ModalExample from '@/components/ModalExample.vue';
+</script>
+
 <template>
-  <h1 class="text-3xl font-bold underline text-sky-500">
-    Hello world!
-  </h1>
+  <div class="text-center">
+    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  </div>
+
+  <ModalExample />
+
 </template>
+
