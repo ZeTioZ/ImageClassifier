@@ -1,5 +1,7 @@
+<script setup>
+import Workspace from '@/components/Workspace.vue';
+</script>
+
 <template>
-  <div>
-  2 
-  </div>
+  <Workspace workspaceName="Triées" :images="[]" />
 </template>

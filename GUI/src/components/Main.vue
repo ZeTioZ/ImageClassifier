@@ -2,7 +2,7 @@
 import Navbar from '@/components/Navbar.vue';
 import DeletedItemsWorkspace from '@/components/DeletedItemsWorkspace.vue';
 import SortedItemsWorkspace from '@/components/SortedItemsWorkspace.vue';
-import Workspace from '@/components/Workspace.vue';
+// import Workspace from '@/components/Workspace.vue';
 </script>
 
 <template>
@@ -11,12 +11,9 @@ import Workspace from '@/components/Workspace.vue';
 
     <!-- Side component to add later  -->
 
-    <!-- <div class="flex flex-row"> -->
-    <!--   <DeletedItemsWorkspace /> -->
-    <!--   <SortedItemsWorkspace /> -->
-    <!-- </div> -->
-    <div class="flex-1">
-      <Workspace workspaceName="À supprimer" :images="[]" />
+    <div class="flex-1 flex flex-row">
+      <DeletedItemsWorkspace class="flex-1" />
+      <SortedItemsWorkspace class="flex-1"/>
     </div>
   </main>
 </template>

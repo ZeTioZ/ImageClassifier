@@ -1,5 +1,7 @@
+<script setup>
+import Workspace from '@/components/Workspace.vue';
+</script>
+
 <template>
-  <div>
-  1 
-  </div>
+  <Workspace workspaceName="À supprimer" :images="[]" />
 </template>
