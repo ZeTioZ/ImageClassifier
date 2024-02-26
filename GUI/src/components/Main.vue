@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from '@/components/Navbar.vue';
-import ModalExample from '@/components/ModalExample.vue';
+import DeletedItemsWorkspace from '@/components/DeletedItemsWorkspace.vue';
+import SortedItemsWorkspace from '@/components/SortedItemsWorkspace.vue';
 </script>
 
 <template>
@@ -8,8 +9,9 @@ import ModalExample from '@/components/ModalExample.vue';
 
   <!-- Side component to add later  -->
  
-  <div>
-    
+  <div class="flex flex-row">
+    <DeletedItemsWorkspace />
+    <SortedItemsWorkspace />
   </div>
 </template>
 
