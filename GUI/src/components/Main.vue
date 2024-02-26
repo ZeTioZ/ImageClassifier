@@ -5,11 +5,7 @@ import ModalExample from '@/components/ModalExample.vue';
 
 <template>
   <Navbar />
-  <div class="text-center">
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
-  </div>
-
-  <ModalExample />
-
+  
+  <!-- <ModalExample /> -->
 </template>
 
