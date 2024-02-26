@@ -8,16 +8,16 @@
       <div class="block w-auto" id="navbar-solid-bg">
         <ul class="flex flex-row font-medium rounded-lg space-x-8 mt-0 border-0 bg-transparent">
           <li>
-            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Link1</a>
+            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Action1</a>
           </li>
           <li>
-            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Link2</a>
+            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Action2</a>
           </li>
           <li>
-            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Link3</a>
+            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Action3</a>
           </li>
           <li>
-            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Link4</a>
+            <a href="#" class="block py-2 p-0 text-gray-900 rounded hover:bg-transparent border-0 hover:text-blue-700">Action4</a>
           </li>
         </ul>
       </div>
