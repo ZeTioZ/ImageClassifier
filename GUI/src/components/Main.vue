@@ -1,13 +1,20 @@
 <script setup>
-import ModalExample from '@/components/ModalExample.vue';
+import Navbar from '@/components/Navbar.vue';
+import DeletedItemsWorkspace from '@/components/DeletedItemsWorkspace.vue';
+import SortedItemsWorkspace from '@/components/SortedItemsWorkspace.vue';
+// import Workspace from '@/components/Workspace.vue';
 </script>
 
 <template>
-  <div class="text-center">
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
-  </div>
+  <main class="flex flex-col h-full">
+    <Navbar />
 
-  <ModalExample />
+    <!-- Side component to add later  -->
 
+    <div class="flex-1 flex flex-row">
+      <DeletedItemsWorkspace class="flex-1" />
+      <SortedItemsWorkspace class="flex-1"/>
+    </div>
+  </main>
 </template>
 
