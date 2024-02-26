@@ -1,8 +1,10 @@
 <script setup>
+import Navbar from '@/components/NavbarComp.vue';
 import ModalExample from '@/components/ModalExample.vue';
 </script>
 
 <template>
+  <Navbar />
   <div class="text-center">
     <h1 class="text-3xl font-bold underline">Hello world!</h1>
   </div>
