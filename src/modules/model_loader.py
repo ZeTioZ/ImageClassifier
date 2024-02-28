@@ -33,7 +33,7 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 	model = ModelLoader(model_path)
 	tags = {}
 	for file in pathlib.Path(os.path.abspath(pathlib.Path(os.path.abspath(__file__)).parent.parent.parent.absolute().__str__() + '/extracted/')).iterdir():
-		if file.is_file() and file.suffix == '.jpg' or file.suffix == '.png' or file.suffix == '.jpeg':
+		if file.is_file() and file.suffix == '.jpg' or file.suffix == '.png' or file.suffix == '.jpeg' or file.suffix == '.jfif':
 			image_path = file.absolute().__str__()
 			image = cv2.imread(image_path)
 			predictions = model.predict(image)

@@ -19,11 +19,11 @@ def classify():
 	# 	os.rmdir(pathlib.Path(os.path.abspath(__file__)).parent.parent.absolute().__str__() + '/extracted/')
 
 	zips_path = args["zips"][0].split(":")
-	tags = args["tags"][0].split(":")
-	batch_name = args["name"][0]
+	tags = args["tags"][0].split(":") if args["tags"] is not None else None
+	batch_name = args["name"][0] if args["name"] is not None else None
 	extract_zip(zips_path, batch_name)
 	generated_tags = generate_tags("../../models/yolov8x.pt", tags)
-	json.dump(generated_tags, open(pathlib.Path(os.path.abspath(__file__)).parent.parent.absolute().__str__() + f"/extracted/{batch_name}.tags", "w"))
+	json.dump(generated_tags, open(pathlib.Path(os.path.abspath(__file__)).parent.parent.absolute().__str__() + f"/extracted/{batch_name if batch_name is not None else "generated_tags"}.tags", "w"))
 
 
 if __name__ == "__main__":
