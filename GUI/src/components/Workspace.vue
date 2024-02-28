@@ -10,8 +10,17 @@ const props = defineProps(['workspaceName', 'images']);
     </div>
 
     <!-- Workspace where images are managed -->
-    <div class="flex-1 border-gray-500 border-2 rounded-lg bg-gray-100 p-2">
-
+    <div class="flex-1 border-gray-500 border-2 rounded-lg bg-gray-100 p-2 overflow-auto">
+      <!-- Images Display -->
+      <div class="grid grid-cols-3 gap-4">
+        <div v-for="(image, index) in props.images" :key="index" class="max-w-xs mx-auto">
+          <img :src="image" :alt="`Workspace Image ${index + 1}`" class="rounded shadow">
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Add styles if necessary */
+</style>
