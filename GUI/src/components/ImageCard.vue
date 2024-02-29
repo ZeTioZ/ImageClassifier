@@ -6,7 +6,7 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
 
 <template>
   <!-- Image Container with a simple border -->
-  <div class="relative border border-black rounded-lg overflow-hidden h-[200px] w-[200px]">
+  <div class="relative border border-black rounded-lg overflow-hidden h-[200px] w-full">
     <!-- Image occupying 80% of the container -->
     <div class="h-2/3 w-full">
       <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover">
