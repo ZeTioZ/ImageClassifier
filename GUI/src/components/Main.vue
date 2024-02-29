@@ -9,8 +9,6 @@ import SidebarUpload from '@/components/SidebarUpload.vue';
   <main class="flex flex-col h-full">
     <Navbar />
 
-    <!-- Side component to add later  -->
-
     <div class="flex-1 flex flex-row">
       <SidebarUpload />
 
