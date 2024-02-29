@@ -34,7 +34,7 @@ const fileData = ref([
         <ArchiveCard :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" />
       </span>
 
-      <ArchiveSubmit class="absolute bottom-0 inset-x-0"/>
+      <ArchiveSubmit class="absolute bottom-2 inset-x-0"/>
 
     </div>
   </aside>

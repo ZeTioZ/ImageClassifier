@@ -14,24 +14,30 @@ const addNewTag = () => {
 };
 </script>
 
-
 <template>
-  <div class="p-3">
+  <div class="p-3 m-2 border border-gray-800 bg-gray-100 rounded-md">
     <!-- tags -->
     <div>
+      <!-- form -->
       <form v-on:submit.prevent="addNewTag">
-        <label for="new-tag">Ajouter un mot-clé</label>
-        <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." />
-        <button>+</button>
+        <div class="mb-2">
+          <label for="new-tag" class="italic text-sm">Ajouter un mot-clé</label>
+        </div>
+        <div class="flex flex-row w-full">
+          <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1" />
+          <button class="text-white bg-gray-500 hover:bg-gray-600 rounded-r-md p-2 w-full">+</button>
+        </div>
       </form>
+
+      <!-- added tags list -->
       <ul>
         <ArchiveSubmitNewTag v-for="tag in newTags" :tagName="tag" @remove="" />
       </ul>
     </div>
 
     <!-- submit button-->
-    <div>
-      <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 focus:outline-none w-full">Trier images</button>
+    <div class="mt-2">
+      <button class="text-white bg-gray-700 hover:bg-gray-900 font-medium rounded-lg text-xl px-5 py-2 focus:outline-none w-full">Trier images</button>
     </div>
   </div>
 </template>
