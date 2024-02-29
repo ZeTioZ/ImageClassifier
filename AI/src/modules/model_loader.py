@@ -1,10 +1,10 @@
 import torch
 import cv2
 import pathlib
-import os
 
 from ultralytics import YOLO
 
+from AI.src import extracted_path, supported_formats
 from .draw_utils import box_visualizer
 from .yolov8_converter_utils import convert_image_box_outputs
 
@@ -26,14 +26,14 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 	Generates tags for the given images using the given model.
 
 	:param model_path: The path to the model.
-	:param images_path: The path to the images.
 	:param default_tags: The default tags to be added to the images.
 	:return: The tags for the images inside a dictionary.
 	"""
+	default_tags = default_tags if default_tags is not None else []
 	model = ModelLoader(model_path)
 	tags = {}
-	for file in pathlib.Path(os.path.abspath(pathlib.Path(os.path.abspath(__file__)).parent.parent.parent.absolute().__str__() + '/extracted/')).iterdir():
-		if file.is_file() and file.suffix in ['.jpg', '.png', '.jpeg','.jfif']:
+	for file in pathlib.Path(extracted_path).iterdir():
+		if file.is_file() and file.suffix in supported_formats:
 			image_path = file.absolute().__str__()
 			image = cv2.imread(image_path)
 			predictions = model.predict(image)
@@ -41,7 +41,8 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 			# FOR DEMO
 			prediction_image = box_visualizer(image, boxes, print_classes=True)
 			multiplier = image.shape[1] / 1000
-			prediction_image = cv2.resize(prediction_image, (int(image.shape[1]/multiplier), int(image.shape[0]/multiplier)))
+			prediction_image = cv2.resize(prediction_image,
+			                              (int(image.shape[1] / multiplier), int(image.shape[0] / multiplier)))
 			cv2.imshow('Prediction', prediction_image)
 			cv2.waitKey(0)
 			cv2.destroyAllWindows()
