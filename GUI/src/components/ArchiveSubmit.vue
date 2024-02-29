@@ -21,7 +21,7 @@ const addNewTag = () => {
       <!-- form -->
       <form v-on:submit.prevent="addNewTag">
         <div class="mb-2">
-          <label for="new-tag" class="italic text-sm">Ajouter mots-clés manuellement</label>
+          <label for="new-tag" class="italic text-sm">Mots-clés par défaut</label>
         </div>
         <div class="flex flex-row w-full">
           <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
