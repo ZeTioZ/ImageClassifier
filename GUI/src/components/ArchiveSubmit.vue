@@ -21,16 +21,16 @@ const addNewTag = () => {
       <!-- form -->
       <form v-on:submit.prevent="addNewTag">
         <div class="mb-2">
-          <label for="new-tag" class="italic text-sm">Ajouter un mot-clé</label>
+          <label for="new-tag" class="italic text-sm">Ajouter mots-clés manuellement</label>
         </div>
         <div class="flex flex-row w-full">
-          <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1" />
-          <button class="text-white bg-gray-500 hover:bg-gray-600 rounded-r-md p-2 w-full">+</button>
+          <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
+          <button class="text-white bg-gray-500 hover:bg-gray-600 rounded-r-md p-1 w-8">+</button>
         </div>
       </form>
 
       <!-- added tags list -->
-      <ul>
+      <ul class="text-sm space-y-1 text-gray-700 list-disc list-inside mt-2">
         <ArchiveSubmitNewTag v-for="tag in newTags" :tagName="tag" @remove="" />
       </ul>
     </div>
