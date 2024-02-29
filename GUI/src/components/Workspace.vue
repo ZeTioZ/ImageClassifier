@@ -16,7 +16,7 @@ const props = defineProps(['workspaceName', 'images']);
       <!-- Images Display -->
       <div class="grid grid-cols-3 gap-4">
         <div v-for="(image, index) in props.images" :key="index" class="flex flex-col items-center">
-          <ImageCard :imgSrc="image" :index="index" fileName="filename.png" :tags="[]" />  
+          <ImageCard :imgSrc="image" :index="index" fileName="filename.png" :tags="['scout', 'enfant']" />  
         </div>
       </div>
     </div>

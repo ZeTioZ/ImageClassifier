@@ -1,23 +1,29 @@
 <script setup>
+import Tag from '@/components/Tag.vue';
+
 const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
 </script>
 
 <template>
   <!-- Image Container with a simple border -->
-  <div class="border border-black rounded-lg overflow-hidden" style="height: 200px; width: 200px;">
+  <div class="relative border border-black rounded-lg overflow-hidden h-[200px] w-[200px]">
     <!-- Image occupying 80% of the container -->
-    <div class="h-3/4 w-full">
+    <div class="h-2/3 w-full">
       <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover">
     </div>
     <!-- Three dots/menu icon -->
-    <div class="absolute top-0 right-0 p-2">
-      <button class="text-lg leading-none">⋮</button>
-    </div>
+    <a href="#" class="absolute top-0 right-0">
+      <div class="m-1 rounded-full bg-gray-100">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+        </svg>
+      </div>
+    </a>
     <!-- Tag occupying the remaining 20% -->
-    <div class="h-1/4 w-full flex flex-col justify-center p-1">
+    <div class="h-1/3 w-full flex flex-col justify-center p-1">
       <span class="text-sm font-bold text-center">{{ fileName }}</span>
-      <div class="text-sm overflow-auto">
-        <span>tag1, tag2, tag3,... </span>
+      <div class="text-sm flex flex-row mt-2">
+        <Tag v-for="tag in tags" :tagName="tag" class="bg-[#aa7777]" />
       </div>
     </div>
   </div>
