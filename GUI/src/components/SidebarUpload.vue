@@ -3,6 +3,7 @@ import { ref } from 'vue';
 
 import ArchiveDropzone from '@/components/ArchiveDropzone.vue';
 import ArchiveCard from '@/components/ArchiveCard.vue';
+import ArchiveSubmit from '@/components/ArchiveSubmit.vue';
 
 const fileData = ref([
   {
@@ -25,13 +26,15 @@ const fileData = ref([
 
 <template>
   <aside id="upload-sidebar" class="z-40 w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-100 border-e border-black flex flex-col space-y-3">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-100 border-e border-black flex flex-col space-y-3 relative">
 
       <ArchiveDropzone /> 
 
       <span v-for="file in fileData">
         <ArchiveCard :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" />
       </span>
+
+      <ArchiveSubmit class="absolute bottom-2 inset-x-0"/>
 
     </div>
   </aside>
