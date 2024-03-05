@@ -22,5 +22,5 @@ def rename_extracted_files(new_name: str = None, folder_path=extracted_path):
 	for index, file in enumerate(pathlib.Path(folder_path).iterdir()):
 		if file.suffix not in supported_formats:
 			continue
-		indexed_name = f"{new_name} #{index}" if len(new_name) > 0 else f"#{index}"
+		indexed_name = f"{new_name} #{index + 1}" if len(new_name) > 0 else f"#{index + 1}"
 		file.rename(pathlib.Path(folder_path) / f"{indexed_name}{file.suffix}")
