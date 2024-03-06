@@ -3,6 +3,17 @@ import Navbar from '@/components/Navbar.vue';
 import DeletedItemsWorkspace from '@/components/DeletedItemsWorkspace.vue';
 import SortedItemsWorkspace from '@/components/SortedItemsWorkspace.vue';
 import SidebarUpload from '@/components/SidebarUpload.vue';
+
+import ExampleAPI from '@/api/example.js';
+
+ExampleAPI
+  .getAll({})
+  .then(() => {
+    console.log("test");
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 </script>
 
 <template>
