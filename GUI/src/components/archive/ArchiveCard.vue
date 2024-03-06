@@ -1,5 +1,5 @@
 <script setup>
-import Tag from '@/components/icons/Tag.vue';
+import HEllipsis from '@/components/icons/HEllipsis.vue';
 
 const props = defineProps(['fileName', 'fileSize', 'nbImages']); 
 </script>
@@ -8,7 +8,7 @@ const props = defineProps(['fileName', 'fileSize', 'nbImages']);
   <div class="relative">
     <a href="#" class="absolute top-0 right-0">
       <div class="p-1 m-1 rounded-full hover:bg-gray-100">
-        <Tag class="w-6 h-6"/>
+        <HEllipsis class="w-6 h-6"/>
       </div>
     </a>
 

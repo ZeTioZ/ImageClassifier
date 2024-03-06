@@ -1,5 +1,5 @@
 <script setup>
-import Workspace from '@/components/Workspace.vue';
+import Workspace from '@/components/workspace/Workspace.vue';
 
 import IMG1 from '@/assets/IMG/1.webp';
 import IMG2 from '@/assets/IMG/2.jpg';

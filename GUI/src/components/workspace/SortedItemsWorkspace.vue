@@ -1,5 +1,5 @@
 <script setup>
-import Workspace from '@/components/Workspace.vue';
+import Workspace from '@/components/workspace/Workspace.vue';
 import Funnel from '@/components/icons/Funnel.vue';
 
 import IMG1 from '@/assets/IMG/7.jfif';

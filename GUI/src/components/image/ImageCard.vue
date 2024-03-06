@@ -1,5 +1,5 @@
 <script setup>
-import Tag from '@/components/Tag.vue';
+import Tag from '@/components/image/Tag.vue';
 import VEllipsis from '@/components/icons/VEllipsis.vue';
 
 const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
