@@ -23,7 +23,6 @@ const props = defineProps(['workspaceName', 'images']);
   </div>
 </template>
 
-
 <style scoped>
 /* Adjust styles if necessary */
 </style>

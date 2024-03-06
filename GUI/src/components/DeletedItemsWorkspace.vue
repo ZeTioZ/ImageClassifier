@@ -7,10 +7,8 @@ import IMG3 from '@/assets/IMG/11.jfif';
 import IMG4 from '@/assets/IMG/8.jfif';
 import IMG5 from '@/assets/IMG/13.jfif';
 import IMG6 from '@/assets/IMG/6.jpeg';
-
 </script>
 
 <template>
   <Workspace workspaceName="À supprimer" :images="[IMG1,IMG2,IMG3,IMG4,IMG5,IMG6]" />
-
 </template>
