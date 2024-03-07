@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 
-/* ----- */
-/* COLOR */
-/* ----- */
+/* ------ */
+/* COLORS */
+/* ------ */
 
 @layer base {
   :root {
@@ -35,15 +35,15 @@
 /* ----- */
 
 /*
-  Priorité d’utilisation des polices
+  Font usage priority
   
-  Principale : Muli
-  Secondaires :
+  main : Muli
+  secondary :
     - HousePaint
     - Caveat Brush
     - Mali bold
     - Roboto Mono
- */
+*/
 
 /* Muli */
 
@@ -204,6 +204,6 @@
 }
 
 .font-roboto, .font-secondary-4, .text-mono {
-  /* .text-monospace overrides Tailwind's rule */
+  /* .text-mono overrides Tailwind's rule */
   font-family: RobotoMono, monospace;
 }
