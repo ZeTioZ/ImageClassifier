@@ -19,8 +19,8 @@ def classify():
 	if os.path.exists(extracted_path):
 		shutil.rmtree(extracted_path)
 
-	zips_path = args["zips"][0].split(":")
-	tags = args["tags"][0].split(":") if args["tags"] is not None else None
+	zips_path = args["zips"]
+	tags = args["tags"] if args["tags"] is not None else None
 	batch_name = args["name"][0] if args["name"] is not None else None
 	extract_zip(zips_path, batch_name)
 	generated_tags = generate_tags(model_path, tags)

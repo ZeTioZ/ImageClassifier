@@ -1,5 +1,6 @@
 import zipfile
 import pathlib
+import os
 
 from AI.src import supported_formats, extracted_path
 
@@ -19,6 +20,8 @@ def extract_zip(zips_path, file_batch_name: str = None) -> bool:
 
 
 def rename_extracted_files(new_name: str = None, folder_path=extracted_path):
+	if not os.path.exists(folder_path):
+		os.makedirs(folder_path)
 	for index, file in enumerate(pathlib.Path(folder_path).iterdir()):
 		if file.suffix not in supported_formats:
 			continue
