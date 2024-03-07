@@ -1,0 +1,11 @@
+/*
+*   template to follow: https://template.lesscouts.be/documentation/
+*/
+
+@import url('@/assets/css/fonts.css');
+@import url('@/assets/css/colors.css');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
