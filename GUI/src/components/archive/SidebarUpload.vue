@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 
-import ArchiveDropzone from '@/components/ArchiveDropzone.vue';
-import ArchiveCard from '@/components/ArchiveCard.vue';
-import ArchiveSubmit from '@/components/ArchiveSubmit.vue';
+import ArchiveDropzone from '@/components/archive/ArchiveDropzone.vue';
+import ArchiveCard from '@/components/archive/ArchiveCard.vue';
+import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 const fileData = ref([
   {

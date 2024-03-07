@@ -1,5 +1,5 @@
 <script setup>
-import ImageCard from '@/components/ImageCard.vue';
+import ImageCard from '@/components/image/ImageCard.vue';
 
 const props = defineProps(['workspaceName', 'images']);
 </script>
@@ -22,7 +22,6 @@ const props = defineProps(['workspaceName', 'images']);
     </div>
   </div>
 </template>
-
 
 <style scoped>
 /* Adjust styles if necessary */

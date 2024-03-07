@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
-import ArchiveSubmitNewTag from '@/components/ArchiveSubmitNewTag.vue';
+import ArchiveSubmitNewTag from '@/components/archive/ArchiveSubmitNewTag.vue';
 
 const newTag = ref('');
 const newTags = ref([]);
