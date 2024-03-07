@@ -1,8 +1,8 @@
 <script setup>
-import Navbar from '@/components/Navbar.vue';
-import DeletedItemsWorkspace from '@/components/DeletedItemsWorkspace.vue';
-import SortedItemsWorkspace from '@/components/SortedItemsWorkspace.vue';
-import SidebarUpload from '@/components/SidebarUpload.vue';
+import Navbar from '@/components/navbar/Navbar.vue';
+import DeletedItemsWorkspace from '@/components/workspace/DeletedItemsWorkspace.vue';
+import SortedItemsWorkspace from '@/components/workspace/SortedItemsWorkspace.vue';
+import SidebarUpload from '@/components/archive/SidebarUpload.vue';
 
 import ExampleAPI from '@/api/example.js';
 
