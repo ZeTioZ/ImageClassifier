@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
-import './style.css';
+import '@/assets/css/main.css';
 import App from './App.vue';
+
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';

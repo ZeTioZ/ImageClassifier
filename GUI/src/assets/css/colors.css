@@ -1,0 +1,25 @@
+/* ------ */
+/* COLORS */
+/* ------ */
+
+@layer base {
+  :root {
+    --ls-vert-base:   #95c11f;
+    --ls-vert-fonce:  #304a3c;
+    --ls-bleu-fonce:  #0a4275;
+
+    --ls-prune:       #4e1d4f;
+    --ls-orange:      #ef7b00;
+    --ls-gris:        #809aaf;
+    --ls-turquoise:   #2b99a4;
+    --ls-bleu-clair:  #15adea;
+    --ls-rouge:       #d60f3c;
+    --ls-rose:        #e03f7b;
+
+    --ls-baladins:    #00a0de;
+    --ls-louveteaux:  #296f52;
+    --ls-eclaireurs:  #004f9f;
+    --ls-pionniers:   #d51317;
+    --ls-mondial:     #622599;
+  }
+}
