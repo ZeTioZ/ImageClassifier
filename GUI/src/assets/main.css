@@ -203,7 +203,7 @@
   src: url("@/assets/fonts/RobotoMono-Light.ttf") format('truetype');
 }
 
-.font-roboto, .font-secondary-4, .text-mono {
-  /* .text-mono overrides Tailwind's rule */
+.font-roboto, .font-secondary-4, .font-mono {
+  /* .font-mono overrides Tailwind's rule */
   font-family: RobotoMono, monospace;
 }
