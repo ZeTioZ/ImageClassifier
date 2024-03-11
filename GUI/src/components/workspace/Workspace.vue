@@ -32,7 +32,18 @@ const draggableImages = ref(props.images);
 
 <script>
 function onEnd(event,index) {
-  console.log(`Élément déplacé de ${event.oldIndex} à ${event.newIndex}`);
+  // Vérifie si l'élément a été déplacé vers une liste différente
+  if (event.from !== event.to) {
+    // TO DO modifier les information de l'image 
+    console.log('L\'élément a été déplacé vers une autre liste.');
+    
+    // Affiche les indices de départ et d'arrivée
+    console.log('Indice de départ:', event.oldIndex);
+    console.log('Nouvel indice:', event.newIndex);
+
+    } else {
+    console.log('L\'élément a été réorganisé dans la même liste.');
+  }
 }
 </script>
 
