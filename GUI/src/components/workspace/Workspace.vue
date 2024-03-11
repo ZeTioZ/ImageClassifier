@@ -5,6 +5,7 @@ import { ref } from 'vue';
 
 const props = defineProps(['workspaceName', 'images']);
 
+//référence réactive pour les images
 const draggableImages = ref(props.images);
 </script>
 
@@ -18,7 +19,7 @@ const draggableImages = ref(props.images);
     <!-- Workspace where images are managed -->
     <div class="flex-1 border-gray-500 border-2 rounded-lg bg-gray-100 p-2 overflow-auto">
       <!-- Images Display -->
-      <draggable class="grid grid-cols-3 gap-4" v-model="draggableImages" item-key="index" @end="onEnd">
+      <draggable class="grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center">
             <ImageCard :imgSrc="element" :index="index" fileName="filename.png" :tags="['scout', 'enfant']"/>
@@ -30,8 +31,8 @@ const draggableImages = ref(props.images);
 </template>
 
 <script>
-function onEnd(event) {
-  console.log('Élément déplacé:', event);
+function onEnd(event,index) {
+  console.log(`Élément déplacé de ${event.oldIndex} à ${event.newIndex}`);
 }
 </script>
 
