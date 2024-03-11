@@ -20,7 +20,7 @@ const draggableImages = ref(props.images);
     <!-- Workspace where images are managed -->
     <div class="flex-1 border-gray-500 border-2 rounded-lg bg-gray-100 p-2 overflow-auto">
       <!-- Images Display -->
-      <draggable class="placeholder grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
+      <draggable class="min-h-[200px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center">
             <ImageCard :imgSrc="element" :index="index" fileName="filename.png" :tags="['scout', 'enfant']"/>
@@ -49,10 +49,4 @@ function onEnd(event) {
   }
 }
 </script>
-
-<style scoped>
-.placeholder {
-  min-height: 200px;;
-  }
-</style>
 
