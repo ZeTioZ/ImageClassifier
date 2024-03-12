@@ -8,7 +8,7 @@
           <h3 class="text-lg leading-6 font-medium text-gray-900">Triez par tag</h3>
           <!-- Input -->
           <div class="mt-2 px-7 py-3">
-            <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc."
+            <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="searchTags"
             autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
           </div>
           <!-- Search button -->
