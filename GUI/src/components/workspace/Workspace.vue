@@ -8,6 +8,22 @@ const props = defineProps(['workspaceName', 'images']);
 //référence réactive pour les images
 const draggableImages = ref(props.images);
 
+function onEnd(event) {
+  // Vérifie si l'élément a été déplacé vers une liste différente
+  if (event.from !== event.to) {
+    // TO DO modifier les information de l'image 
+    console.log('L\'élément a été déplacé vers une autre liste.');
+
+    // Affiche les indices de départ et d'arrivée
+    console.log('Indice de départ:', event.oldIndex);
+    console.log('Nouvel indice:', event.newIndex);
+
+    console.log(draggableImages.value)
+
+    } else {
+    console.log('L\'élément a été réorganisé dans la même liste.');
+  }
+}
 </script>
 
 <template>
@@ -30,23 +46,4 @@ const draggableImages = ref(props.images);
     </div>
   </div>
 </template>
-
-<script>
-function onEnd(event) {
-  // Vérifie si l'élément a été déplacé vers une liste différente
-  if (event.from !== event.to) {
-    // TO DO modifier les information de l'image 
-    console.log('L\'élément a été déplacé vers une autre liste.');
-
-    // Affiche les indices de départ et d'arrivée
-    console.log('Indice de départ:', event.oldIndex);
-    console.log('Nouvel indice:', event.newIndex);
-
-    console.log(draggableImages.value)
-
-    } else {
-    console.log('L\'élément a été réorganisé dans la même liste.');
-  }
-}
-</script>
 
