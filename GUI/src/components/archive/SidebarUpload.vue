@@ -21,12 +21,12 @@ const fileData = ref([
     fileSize: "1.05GB",
     nbImages: "188"
   }
-])
+]);
 </script>
 
 <template>
   <aside id="upload-sidebar" class="z-40 w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-100 border-e border-black flex flex-col space-y-3 relative">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-200 flex flex-col space-y-3 relative">
 
       <ArchiveDropzone /> 
 
