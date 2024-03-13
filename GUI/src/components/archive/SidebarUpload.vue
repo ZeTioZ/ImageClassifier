@@ -8,17 +8,17 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 const fileData = ref([
   {
     fileName: "archive3.zip",
-    fileSize: "95MB",
+    fileSize: "95 Mo",
     nbImages: "97"
   },
   {
     fileName: "camp57A.zip",
-    fileSize: "1.65GB",
+    fileSize: "1.65 Go",
     nbImages: "256"
   },
   {
     fileName: "20230605.zip",
-    fileSize: "1.05GB",
+    fileSize: "1.05 Go",
     nbImages: "188"
   }
 ]);
@@ -34,7 +34,7 @@ const fileData = ref([
         <ArchiveCard :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" />
       </span>
 
-      <ArchiveSubmit class="absolute bottom-2 inset-x-0"/>
+      <ArchiveSubmit class="absolute bottom-0 inset-x-0"/>
 
     </div>
   </aside>
