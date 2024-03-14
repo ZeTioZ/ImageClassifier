@@ -75,14 +75,16 @@ function handleSearch(term) {
 </script>
 
 <template>
-  <Workspace :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
-  <div class="relative">
-    <Workspace :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
-    <!-- sort button (TODO: move to its own component later) -->
-    <button @click="toggleModal" class="absolute top-0 right-0 text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-3 mt-6 me-3">
-      <Funnel class="w-6 h-6" />
-    </button>
-    <!-- Modal conditionnel -->
-    <Modal v-if="showModal" @close="toggleModal" @search ="handleSearch" />
+  <div class="flex flex-row h-screen">
+    <Workspace class="w-1/2" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
+    <div class="w-1/2 relative">
+      <Workspace :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
+      <!-- sort button (TODO: move to its own component later) -->
+      <button @click="toggleModal" class="absolute top-0 right-0 text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-3 mt-6 me-3">
+        <Funnel class="w-6 h-6" />
+      </button>
+      <!-- Modal conditionnel -->
+      <Modal v-if="showModal" @close="toggleModal" @search ="handleSearch" />
+    </div>
   </div>
 </template>
