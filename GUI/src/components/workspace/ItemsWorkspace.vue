@@ -57,11 +57,11 @@ function filterImages(imagesList) {
   const unmatchedImages = imagesList.filter(image => 
     !image.tags.some(tag => tag.toLowerCase().includes(searchTerm.value.toLowerCase()))
   );
-  // Retourner d'abord les images correspondantes, puis les autres
-  return [...matchedImages, ...unmatchedImages];
 
   //alternative ne retourner que les images correspondantes
   return matchedImages;
+  // Retourner d'abord les images correspondantes, puis les autres
+  return [...matchedImages, ...unmatchedImages];
 }
 
 const filteredGoodImages = computed(() => filterImages(GoodImages));
