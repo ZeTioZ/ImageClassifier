@@ -1,7 +1,6 @@
 <script setup>
 import Navbar from '@/components/navbar/Navbar.vue';
-import DeletedItemsWorkspace from '@/components/workspace/DeletedItemsWorkspace.vue';
-import SortedItemsWorkspace from '@/components/workspace/SortedItemsWorkspace.vue';
+import ItemsWorkspace from '@/components/workspace/ItemsWorkspace.vue';
 import SidebarUpload from '@/components/archive/SidebarUpload.vue';
 
 import ExampleAPI from '@/api/example.js';
@@ -22,9 +21,7 @@ ExampleAPI
 
     <div class="flex-1 flex flex-row">
       <SidebarUpload />
-
-      <DeletedItemsWorkspace class="flex-1" />
-      <SortedItemsWorkspace class="flex-1"/>
+      <ItemsWorkspace class="flex-1"/>
     </div>
   </main>
 </template>
