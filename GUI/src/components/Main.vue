@@ -1,6 +1,6 @@
 <script setup>
 import Navbar from '@/components/navbar/Navbar.vue';
-import ItemsWorkspace from '@/components/workspace/ItemsWorkspace.vue';
+import Workspace from '@/components/workspace/Workspace.vue';
 import SidebarUpload from '@/components/archive/SidebarUpload.vue';
 
 import ExampleAPI from '@/api/example.js';
@@ -21,7 +21,7 @@ ExampleAPI
 
     <div class="flex-1 flex flex-row">
       <SidebarUpload />
-      <ItemsWorkspace class="flex-1"/>
+      <Workspace class="flex-1"/>
     </div>
   </main>
 </template>

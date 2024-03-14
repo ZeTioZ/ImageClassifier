@@ -1,49 +1,90 @@
 <script setup>
-import ImageCard from '@/components/image/ImageCard.vue';
-import draggable from 'vuedraggable';
-import { ref } from 'vue';
+import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
+import Funnel from '@/components/icons/Funnel.vue';
+import Modal from '@/components/workspace/SortModal.vue';
+import { ref, watch, computed } from 'vue';
 
-const props = defineProps({
-  workspaceName: String,
-  images: Array
-});
+import IMG1 from '@/assets/IMG/7.jfif';
+import IMG2 from '@/assets/IMG/4.jfif';
+import IMG3 from '@/assets/IMG/9.jfif';
+import IMG4 from '@/assets/IMG/10.jfif';
+import IMG5 from '@/assets/IMG/3.jpg';
+import IMG7 from '@/assets/IMG/5.jfif';
 
-// Référence réactive pour les images 
-const draggableImages = ref(props.images);
+// Définir les bonnes images avec leurs tags correspondants
+const GoodImages = [
+  { imgSrc: IMG1, tags: ['Enfant','Arbre' ,'Chapeau'] },
+  { imgSrc: IMG2, tags: ['Rassemblement','Arbre'] },
+  { imgSrc: IMG3, tags: ['Feu', 'Groupe'] },
+  { imgSrc: IMG4, tags: ['Tobogan','Groupe'] },
+  { imgSrc: IMG5, tags: ['Groupe','Danse','Drapeau'] },
+  { imgSrc: IMG7, tags: ['Main', 'Groupe'] },
+];
 
-function onEnd(event) {
-  // Vérifie si l'élément a été déplacé vers une liste différente
-  if (event.from !== event.to) {
-    // TO DO modifier les information de l'image 
-    console.log('L\'élément a été déplacé vers une autre liste.');
+import IMG11 from '@/assets/IMG/1.webp';
+import IMG12 from '@/assets/IMG/2.jpg';
+import IMG13 from '@/assets/IMG/11.jfif';
+import IMG14 from '@/assets/IMG/8.jfif';
+import IMG15 from '@/assets/IMG/13.jfif';
+import IMG16 from '@/assets/IMG/6.jpeg';
 
-    // Affiche les indices de départ et d'arrivée
-    console.log('Indice de départ:', event.oldIndex);
-    console.log('Nouvel indice:', event.newIndex);
+// Définir les mauvaises images avec leurs tags correspondants
+const BadImages = [
+  { imgSrc: IMG11, tags: ['Groupe', 'Assis'] },
+  { imgSrc: IMG12, tags: ['Course','Arbre'] },
+  { imgSrc: IMG13, tags: ['Roche'] },
+  { imgSrc: IMG14, tags: ['Ville'] },
+  { imgSrc: IMG15, tags: ['Livre','Flou'] },
+  { imgSrc: IMG16, tags: ['Brouillard', 'Arbre'] },
+];
 
-    console.log(draggableImages.value)
+const searchTerm = ref('');
+const showModal = ref(false);
+const refreshKey = ref(0);
 
-    } else {
-    console.log('L\'élément a été réorganisé dans la même liste.');
-  }
+function toggleModal() {
+  showModal.value = !showModal.value;
 }
+
+// Fonction de filtrage 
+function filterImages(imagesList) {
+  if (!searchTerm.value) {
+    return imagesList;
+  }
+  const matchedImages = imagesList.filter(image => 
+    image.tags.some(tag => tag.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  );
+  const unmatchedImages = imagesList.filter(image => 
+    !image.tags.some(tag => tag.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  );
+
+  //alternative ne retourner que les images correspondantes
+  return matchedImages;
+  // Retourner d'abord les images correspondantes, puis les autres
+  return [...matchedImages, ...unmatchedImages];
+}
+
+const filteredGoodImages = computed(() => filterImages(GoodImages));
+const filteredBadImages = computed(() => filterImages(BadImages));
+
+function handleSearch(term) {
+  searchTerm.value = term;
+  refreshKey.value++;
+}
+
 </script>
 
 <template>
-  <div class="flex flex-col text-center p-3 h-full">
-    <!-- Title -->
-    <div class="p-5">
-      <h2 class="text-2xl font-bold">{{ props.workspaceName }}</h2>
-    </div>
-    <!-- Workspace where images are managed -->
-    <div class="flex-1 border-gray-500 border-2 rounded-lg bg-gray-100 p-2 overflow-auto">
-      <draggable class="min-h-[200px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
-        <template #item="{ element, index }">
-          <div class="flex flex-col items-center">
-            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags"/>
-          </div>
-        </template>
-      </draggable>
+  <div class="flex flex-row h-full">
+    <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
+    <div class="w-1/2 relative">
+      <WorkspaceTable :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
+      <!-- sort button (TODO: move to its own component later) -->
+      <button @click="toggleModal" class="absolute top-0 right-0 text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-3 mt-6 me-3">
+        <Funnel class="w-6 h-6" />
+      </button>
+      <!-- Modal conditionnel -->
+      <Modal v-if="showModal" @close="toggleModal" @search ="handleSearch" />
     </div>
   </div>
 </template>
