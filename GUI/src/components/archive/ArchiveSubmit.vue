@@ -37,7 +37,7 @@ const addNewTag = () => {
 
     <!-- submit button-->
     <div class="mt-2">
-      <button class="text-ls-bleu-fonce bg-white hover:bg-gray-900 font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full">Trier les images</button>
+      <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-white border border-white font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300">Trier les images</button>
     </div>
   </div>
 </template>
