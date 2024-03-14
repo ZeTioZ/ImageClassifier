@@ -23,11 +23,26 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
       <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
     </div>
     <!-- Tag occupying the remaining 20% -->
-    <div class="h-1/3 w-full flex flex-col justify-center p-1">
+    <div class="h-1/3 w-full flex flex-col p-1">
       <span class="text-sm font-bold text-center">{{ fileName }}</span>
-      <div class="text-sm flex flex-row mt-2">
-        <Tag v-for="tag in tags" :tagName="tag" class="bg-[#aa7777]" />
+      <!-- Container pour les tags avec défilement horizontal -->
+      <div class="mt-0.5 overflow-y-auto scrollbar-hide">
+        <div class="flex flex-wrap">
+          <Tag v-for="tag in tags" :key="tag" :tagName="tag" class="bg-[#aa7777]" />
+        </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Pour les navigateurs Webkit */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Pour IE et Edge */
+  scrollbar-width: none;  /* Pour Firefox */
+}
+</style>
