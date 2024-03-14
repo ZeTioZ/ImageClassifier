@@ -1,3 +1,8 @@
+
+
+<!--Deprecated, moved to ItemWorkspace-->
+
+
 <script setup>
 import Workspace from '@/components/workspace/Workspace.vue';
 
