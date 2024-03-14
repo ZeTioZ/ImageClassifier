@@ -20,7 +20,7 @@ const removeTag = (tagIndex) => {
 </script>
 
 <template>
-  <div class="p-3 bg-ls-vert-fonce">
+  <div class="p-3 bg-ls-eclaireurs">
     <!-- tags -->
     <div>
       <!-- form -->
@@ -29,8 +29,8 @@ const removeTag = (tagIndex) => {
           <label for="new-tag" class="italic text-sm text-white">Mots-clés par défaut</label>
         </div>
         <div class="flex flex-row w-full">
-          <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s" />
-          <button class="text-white bg-ls-bleu-fonce p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
+          <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s border" />
+          <button class="text-white bg-ls-vert-fonce p-1 w-10 rounded-e text-xl border"><strong>+</strong></button>
         </div>
       </form>
 
