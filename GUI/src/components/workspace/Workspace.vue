@@ -1,7 +1,7 @@
 <script setup>
 import ImageCard from '@/components/image/ImageCard.vue';
 import draggable from 'vuedraggable';
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   workspaceName: String,

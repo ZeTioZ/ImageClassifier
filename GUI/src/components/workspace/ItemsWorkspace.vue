@@ -75,7 +75,7 @@ function handleSearch(term) {
 </script>
 
 <template>
-  <div class="flex flex-row h-screen">
+  <div class="flex flex-row h-full">
     <Workspace class="w-1/2" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
     <div class="w-1/2 relative">
       <Workspace :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
