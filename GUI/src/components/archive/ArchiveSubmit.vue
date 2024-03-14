@@ -29,7 +29,7 @@ const removeTag = (tagIndex) => {
           <label for="new-tag" class="italic text-sm text-white">Mots-clés par défaut</label>
         </div>
         <div class="flex flex-row w-full">
-          <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s" />
+          <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s focus:outline-none" />
           <button class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
         </div>
       </form>
