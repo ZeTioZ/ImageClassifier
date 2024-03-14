@@ -3,11 +3,11 @@ import os
 import shutil
 import sys
 
-from modules.args_parser import parse_arguments
-from modules.model_loader import generate_tags
-from modules.zip import extract_zip
+from AI.src.modules.args_parser import parse_arguments
+from AI.src.modules.model_loader import generate_tags
+from AI.src.modules.zip import extract_zip
 
-from __init__ import extracted_path, model_path
+from AI.src import extracted_path, model_path
 
 args = parse_arguments(sys.argv[1:])
 

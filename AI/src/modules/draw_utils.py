@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 from PIL.Image import Image
 
-from objects import Box
-from objects import Position
+from AI.src.objects import Box
+from AI.src.objects import Position
 
 
 def print_class(param_image: np.ndarray | Image, position: Position, cls: str, color: tuple = (200, 200, 200), thickness: int = 2):

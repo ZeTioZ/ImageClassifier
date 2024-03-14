@@ -1,6 +1,6 @@
 import os
 
-from modules.path_utils import get_parent_path
+from AI.src.modules.path_utils import get_parent_path
 
 root_path = get_parent_path(__file__, 2)
 join_char = os.path.sep

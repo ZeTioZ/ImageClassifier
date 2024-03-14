@@ -1,5 +1,5 @@
-from objects import Box
-from objects import Position
+from AI.src.objects import Box
+from AI.src.objects import Position
 
 
 def convert_image_box_outputs(outputs) -> list:
