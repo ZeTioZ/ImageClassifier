@@ -1,8 +1,7 @@
 <script setup>
 import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
-import Funnel from '@/components/icons/Funnel.vue';
-import Modal from '@/components/workspace/SortModal.vue';
+import SortModal from '@/components/workspace/SortModal.vue';
 import { ref, watch, computed } from 'vue';
 
 import IMG1 from '@/assets/IMG/7.jfif';
@@ -62,7 +61,7 @@ function filterImages(imagesList) {
   //alternative ne retourner que les images correspondantes
   return matchedImages;
   // Retourner d'abord les images correspondantes, puis les autres
-  return [...matchedImages, ...unmatchedImages];
+  // return [...matchedImages, ...unmatchedImages];
 }
 
 const filteredGoodImages = computed(() => filterImages(GoodImages));
@@ -76,20 +75,18 @@ function handleSearch(term) {
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <WorkspaceNavbar />
+  <div class="flex-1 flex flex-col w-full">
+    <!-- navbar -->
+    <WorkspaceNavbar @toggleSortModal="toggleModal" />
 
+    <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
       <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
-      <div class="w-1/2 relative">
-        <WorkspaceTable :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
-        <!-- sort button (TODO: move to its own component later) -->
-        <button @click="toggleModal" class="absolute top-0 right-0 text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-3 mt-6 me-3">
-          <Funnel class="w-6 h-6" />
-        </button>
-        <!-- Modal conditionnel -->
-        <Modal v-if="showModal" @close="toggleModal" @search ="handleSearch" />
-      </div>
+      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
     </div>
   </div>
+
+  <!-- MODALS -->
+  <SortModal v-if="showModal" @close="toggleModal" @search="handleSearch" />
+
 </template>

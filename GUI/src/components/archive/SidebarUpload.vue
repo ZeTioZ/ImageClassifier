@@ -25,7 +25,7 @@ const fileData = ref([
 </script>
 
 <template>
-  <aside id="upload-sidebar" class="z-40 w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
+  <aside id="upload-sidebar" class="w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-200 flex flex-col space-y-3 relative">
 
       <ArchiveDropzone /> 
