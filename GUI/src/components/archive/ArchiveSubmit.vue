@@ -29,8 +29,8 @@ const removeTag = (tagIndex) => {
           <label for="new-tag" class="italic text-sm text-white">Mots-clés par défaut</label>
         </div>
         <div class="flex flex-row w-full">
-          <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s border" />
-          <button class="text-white bg-ls-vert-fonce p-1 w-10 rounded-e text-xl border"><strong>+</strong></button>
+          <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s" />
+          <button class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
         </div>
       </form>
 
@@ -42,7 +42,7 @@ const removeTag = (tagIndex) => {
 
     <!-- submit button-->
     <div class="mt-2">
-      <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-white border border-white font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300">Trier les images</button>
+      <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300">Trier les images</button>
     </div>
   </div>
 </template>

@@ -21,7 +21,7 @@ import Download from '@/components/icons/Download.vue';
           <!--   <a href="#" class="block py-2 p-0 text-white font-semibold rounded border-0">Action3</a> -->
           <!-- </li> -->
           <li>
-            <a href="#" class="block py-2 px-3 p-0 text-ls-bleu-fonce font-semibold rounded-full bg-white flex flex-row items-center transition duration-300 hover:bg-ls-bleu-fonce hover:text-white border border-white">
+            <a href="#" class="block py-2 px-3 p-0 text-ls-bleu-fonce font-semibold rounded-full bg-white flex flex-row items-center transition duration-300 hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base">
               <Download class="w-6 h-6" />
               <span class="ms-1">Sauvegarder</span>
             </a>
