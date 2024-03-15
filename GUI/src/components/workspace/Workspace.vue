@@ -72,10 +72,10 @@ function filterImages(imagesList) {
     return imagesList;
   }
   const matchedImages = imagesList.filter(image => 
-    image.tags.some(tag => tag.toLowerCase().includes(searchTerm.value.toLowerCase()))
+    image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
   );
   const unmatchedImages = imagesList.filter(image => 
-    !image.tags.some(tag => tag.toLowerCase().includes(searchTerm.value.toLowerCase()))
+    !image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
   );
 
   //alternative ne retourner que les images correspondantes
