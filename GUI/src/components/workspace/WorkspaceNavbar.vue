@@ -5,7 +5,7 @@ const emits = defineEmits(['toggleSortModal']);
 </script>
 
 <template>
-  <nav class="w-full bg-ls-vert-base p-3">
+  <nav class="w-full bg-ls-vert-base p-1">
     <div class="flex flex-wrap items-center justify-between mx-auto">
      
       <!-- hack to put right part on the right -->
