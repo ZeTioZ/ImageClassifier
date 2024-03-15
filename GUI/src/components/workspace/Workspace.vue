@@ -4,6 +4,7 @@ import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
 import { ref, watch, computed } from 'vue';
 
+// tags
 const tags = {
   enfant:         {name: 'Enfant',        color: 'bg-ls-vert-base'},
   arbre:          {name: 'Arbre',         color: 'bg-ls-vert-fonce'},

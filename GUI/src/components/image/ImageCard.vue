@@ -10,12 +10,12 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
   <div class="relative rounded bg-gray-200 overflow-hidden w-full p-1">
 
     <!-- Image header -->
-    <div class="flex justify-between py-1 ps-1">
+    <div class="flex justify-between py-1 ps-2">
       <!-- Image name -->
       <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce">{{ fileName }}</span>
       <!-- Three dots/menu icon -->
-      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce">
-        <VEllipsis class="w-6 h-6" />
+      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1">
+        <VEllipsis class="w-4 h-4" />
       </a>
     </div>
 
@@ -30,8 +30,8 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
       <div class="mt-0.5 overflow-y-auto scrollbar-hide">
         <div class="flex">
           <Tag v-for="tag in tags" :key="tag.name" :tagName="tag.name" :class="tag.color" />
-          <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" class="bg-[#aa7777]" /> -->
-          <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" class="bg-[#aa7777]" /> -->
+          <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" :class="tag.color" /> -->
+          <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" :class="tag.color" /> -->
         </div>
       </div>
     </div>
