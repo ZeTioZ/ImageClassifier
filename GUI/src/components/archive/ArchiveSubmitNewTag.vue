@@ -7,9 +7,9 @@ const emits = defineEmits(['remove']);
 
 <template>
   <li class="flex items-center">
-    <button @click="$emit('remove')" class="bg-red-500 text-white">
+    <button @click="$emit('remove')" class="bg-ls-rouge text-white rounded border">
       <XMark class="w-4 h-4" />
     </button>
-    <span class="ms-1">{{ tagName }}</span>
+    <p class="ms-1 text-white">{{ tagName }}</p>
   </li>
 </template>

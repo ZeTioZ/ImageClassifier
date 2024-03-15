@@ -8,25 +8,25 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 const fileData = ref([
   {
     fileName: "archive3.zip",
-    fileSize: "95MB",
+    fileSize: "95 Mo",
     nbImages: "97"
   },
   {
     fileName: "camp57A.zip",
-    fileSize: "1.65GB",
+    fileSize: "1.65 Go",
     nbImages: "256"
   },
   {
     fileName: "20230605.zip",
-    fileSize: "1.05GB",
+    fileSize: "1.05 Go",
     nbImages: "188"
   }
-])
+]);
 </script>
 
 <template>
-  <aside id="upload-sidebar" class="z-40 w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-100 border-e border-black flex flex-col space-y-3 relative">
+  <aside id="upload-sidebar" class="w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-200 flex flex-col space-y-3 relative">
 
       <ArchiveDropzone /> 
 
@@ -34,7 +34,7 @@ const fileData = ref([
         <ArchiveCard :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" />
       </span>
 
-      <ArchiveSubmit class="absolute bottom-2 inset-x-0"/>
+      <ArchiveSubmit class="absolute bottom-0 inset-x-0"/>
 
     </div>
   </aside>
