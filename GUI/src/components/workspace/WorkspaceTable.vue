@@ -30,13 +30,13 @@ function onEnd(event) {
 </script>
 
 <template>
-  <div class="flex flex-col text-center p-3 h-full">
+  <div class="flex flex-col text-center h-full">
     <!-- Title -->
-    <div class="p-5">
-      <h2 class="text-2xl font-bold">{{ props.workspaceName }}</h2>
+    <div class="p-2">
+      <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
     </div>
     <!-- Workspace where images are managed -->
-    <div class="flex-1 border-gray-500 border-2 rounded-lg bg-gray-100 p-2 overflow-auto">
+    <div class="flex-1 p-2 pt-0 overflow-auto">
       <draggable class="min-h-[200px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center">

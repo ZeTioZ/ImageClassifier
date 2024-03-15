@@ -81,7 +81,7 @@ function handleSearch(term) {
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
-      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
+      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
       <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
     </div>
   </div>
