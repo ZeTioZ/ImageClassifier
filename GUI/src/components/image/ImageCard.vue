@@ -29,7 +29,7 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
       <!-- Container pour les tags avec défilement horizontal -->
       <div class="mt-0.5 overflow-y-auto scrollbar-hide">
         <div class="flex">
-          <Tag v-for="tag in tags" :key="tag" :tagName="tag" class="bg-[#aa7777]" />
+          <Tag v-for="tag in tags" :key="tag.name" :tagName="tag.name" :class="tag.color" />
           <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" class="bg-[#aa7777]" /> -->
           <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" class="bg-[#aa7777]" /> -->
         </div>
