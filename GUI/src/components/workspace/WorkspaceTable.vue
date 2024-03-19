@@ -36,8 +36,8 @@ function onEnd(event) {
       <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
     </div>
     <!-- Workspace where images are managed -->
-    <div class="flex-1 p-2 pt-0 ">
-      <draggable class="min-h-[200px] overflow-y-auto grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
+    <div class="flex-1 p-2 pt-0 overflow-y-auto scrollbar-hide">
+      <draggable class="min-h-[200px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center">
             <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags"/>
@@ -47,3 +47,15 @@ function onEnd(event) {
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Pour les navigateurs Webkit */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Pour IE et Edge */
+  scrollbar-width: none;  /* Pour Firefox */
+}
+</style>
