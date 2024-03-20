@@ -61,6 +61,14 @@ async function loadZip(archive, filenameEncoding) {
   const entries = _getEntries(archive, { filenameEncoding });
 
   if (entries && entries.length) {
+
+    // const filenamesUTF8 = Boolean(!entries.find(entry => !entry.filenameUTF8));
+    // const encrypted = Boolean(entries.find(entry => entry.encrypted));
+    // encodingInput.value = filenamesUTF8 ? "utf-8" : filenameEncoding || "cp437";
+    // encodingInput.disabled = filenamesUTF8;
+    // passwordInput.value = "";
+    // passwordInput.disabled = !encrypted;
+
     return _getFileList();
   } else {
     return [];
