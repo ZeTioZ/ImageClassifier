@@ -2,7 +2,21 @@
 import { ref } from 'vue';
 
 const emit = defineEmits(['close', 'search']);
-const newTag = ref('');
+
+const newTag = ref('');   // text in the input
+const newTags = ref([]);  // array containing the new tags
+
+// function to add a new tag in the newTags array
+const addNewTag = () => {
+  if (newTag.value) {
+    newTags.value.push(newTag.value);
+    newTag.value = '';
+  }
+};
+// function to remove a tag from the newTags array with its given index
+const removeTag = (tagIndex) => {
+  newTags.value.splice(tagIndex, 1);
+};
 
 function closeModal() {
   emit('close');
@@ -23,7 +37,7 @@ function searchTags() {
         <h3 class="text-lg leading-6 font-medium text-gray-900">Triez par tag</h3>
         <!-- Input -->
         <div class="mt-2 px-7 py-3">
-          <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="searchTags"
+          <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="addNewTag"
             autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
         </div>
         <!-- Search button -->
