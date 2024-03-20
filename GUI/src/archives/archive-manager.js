@@ -2,7 +2,6 @@ import {
   ZipReader,
   BlobReader,
   BlobWriter,
-  Entry,
 } from '@zip.js/zip.js';
 
 
@@ -10,21 +9,22 @@ import {
  * Get a list of entries from a file
  * @param {Blob} file - blob of the file in which entries must be read
  * @param {object} options - options
- * @return {Entry[]} - list of entries read
+ * @return {Array.<import('@zip.js/zip.js').Entry>} - list of entries read
  */
-function _getEntries(file, options) {
+async function getEntries(file, options) {
   const blobReader = new BlobReader(file);
   const zipReader = new ZipReader(blobReader);
 
-  return zipReader.getEntries(options);
+  return await zipReader.getEntries(options);
 }
 
 /**
  * Get the URL of an entry
  * @param {Entry} entry - the entry
  * @param {object} options - options to get data from the entry
+ * @return {string} - the URL to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
  */
-async function _getURL(entry, options) {
+async function getURL(entry, options) {
   const entryData = await entry.getData(new BlobWriter(), options);
 
   return URL.createObjectURL(entryData);
@@ -33,17 +33,16 @@ async function _getURL(entry, options) {
 /**
  * Get a list of files present in the archive
  * @param {Entry[]} entries - list of entries to process
- * @return {object[]} - list of object representing an image entry 
+ * @return {Array.<{file: import('@zip.js/zip.js').Entry, index: Number}>} - list of object representing an image entry 
  */
-function _getFileList(entries) {
+function getFileList(entries) {
   const fileList = [];
 
   entries.forEach((entry, entryIndex) => {
     if (!entry.directory /* && isImage */) {
       fileList.push({
-        index: entryIndex,
-        filename: entry.filename,
-        lastModDate: entry.lastModDate.toLocaleString(),
+        file: entry,
+        index: entryIndex
       });
     }
   });
@@ -55,10 +54,10 @@ function _getFileList(entries) {
  * Load an archive and get a list of entries
  * @param {Blob} archive - blob of the archive in which entries must be read
  * @param {string} filenameEncoding - the encoding of the filename of the entry
- * @return {Entry[]} - list of the entries
+ * @return {Array.<import('@zip.js/zip.js').Entry>} - list of the entries
  */
 async function loadZip(archive, filenameEncoding) {
-  const entries = _getEntries(archive, { filenameEncoding });
+  let entries = await getEntries(archive, { filenameEncoding });
 
   if (entries && entries.length) {
 
@@ -69,7 +68,7 @@ async function loadZip(archive, filenameEncoding) {
     // passwordInput.value = "";
     // passwordInput.disabled = !encrypted;
 
-    return _getFileList();
+    return getFileList(entries);
   } else {
     return [];
   }
@@ -77,10 +76,10 @@ async function loadZip(archive, filenameEncoding) {
 
 /**
  * get entry filename and URL
- * @param {Entry} entry - the entry 
+ * @param {import('@zip.js/zip.js').Entry} entry - the entry 
  * @return {} -
  */
-async function download(entry /*, li, a*/) {
+async function download(entry) {
   let busy = false;
 
 
@@ -102,7 +101,7 @@ async function download(entry /*, li, a*/) {
     // li.onclick = event => event.preventDefault();
 
     try {
-      const blobURL = await _getURL(entry, {
+      const blobURL = await getURL(entry, {
         // password: passwordInput.value,
         onprogress: (index, max) => {
           unzipProgress.index = index;
@@ -111,7 +110,7 @@ async function download(entry /*, li, a*/) {
         signal
       });
 
-      blobURL;
+      console.log(blobURL);
       entry.filename;
 
     } catch (error) {
@@ -126,3 +125,9 @@ async function download(entry /*, li, a*/) {
     }
   }
 }
+
+
+export {
+  loadZip,
+  download
+};

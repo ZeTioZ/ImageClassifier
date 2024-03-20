@@ -1,5 +1,14 @@
 <script setup>
 import Cloud from '@/components/icons/Cloud.vue';
+import { loadZip, download } from '@/archives/archive-manager.js';
+
+
+async function click () {
+  const fileInput = document.getElementById("dropzone-file");
+
+  let a = await loadZip(fileInput.files[0], 'cp437');
+  download(a[0].file); 
+}
 </script>
 
 <template>
@@ -12,5 +21,8 @@ import Cloud from '@/components/icons/Cloud.vue';
       </div>
       <input id="dropzone-file" type="file" class="hidden" />
     </label>
+    
+    <button @click="click">click</button>
+
   </div> 
 </template>
