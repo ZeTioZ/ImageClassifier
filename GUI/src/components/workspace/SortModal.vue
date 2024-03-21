@@ -4,18 +4,18 @@ import { ref } from 'vue';
 const emit = defineEmits(['close', 'search']);
 
 const newTag = ref('');   // text in the input
-const newTags = ref([]);  // array containing the new tags
+const Tags = ref([]);  // array containing the new tags
 
-// function to add a new tag in the newTags array
+// function to add a new tag in the Tags array
 const addNewTag = () => {
   if (newTag.value) {
-    newTags.value.push(newTag.value);
+    Tags.value.push(newTag.value);
     newTag.value = '';
   }
 };
-// function to remove a tag from the newTags array with its given index
+// function to remove a tag from the Tags array with its given index
 const removeTag = (tagIndex) => {
-  newTags.value.splice(tagIndex, 1);
+  Tags.value.splice(tagIndex, 1);
 };
 
 function closeModal() {
@@ -23,7 +23,7 @@ function closeModal() {
 }
 
 function searchTags() {
-  emit('search', newTag.value);
+  emit('search', Tags.value);
   closeModal();
 }
 </script>

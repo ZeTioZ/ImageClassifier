@@ -59,7 +59,7 @@ const BadImages = [
   { imgSrc: IMG16, tags: [tags['brouillard'], tags['arbre']] },
 ];
 
-const searchTerm = ref('');
+const searchTerms = ref([]);
 const showModal = ref(false);
 const refreshKey = ref(0);
 
@@ -69,27 +69,41 @@ function toggleModal() {
 
 // Fonction de filtrage 
 function filterImages(imagesList) {
-  if (!searchTerm.value) {
+  if (!searchTerms.value || searchTerms.value.length === 0) {
     return imagesList;
   }
   const matchedImages = imagesList.filter(image => 
-    image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
+    image.tags.some(imageTag =>
+      searchTerms.value.some(searchTag =>
+        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+      )
+    )
   );
-  const unmatchedImages = imagesList.filter(image => 
-    !image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  // Pour également retourner les images non correspondantes après celles correspondantes,
+  // il faut décommenter le code suivant et retourner la combinaison des deux listes.
+  /*
+  const unmatchedImages = imagesList.filter(image =>
+    !image.tags.some(imageTag =>
+      searchTerms.value.some(searchTag =>
+        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+      )
+    )
   );
 
-  //alternative ne retourner que les images correspondantes
+  return [...matchedImages, ...unmatchedImages];
+  */
+
+  // Pour l'instant, on retourne seulement les images correspondantes
   return matchedImages;
-  // Retourner d'abord les images correspondantes, puis les autres
-  // return [...matchedImages, ...unmatchedImages];
 }
 
 const filteredGoodImages = computed(() => filterImages(GoodImages));
 const filteredBadImages = computed(() => filterImages(BadImages));
 
-function handleSearch(term) {
-  searchTerm.value = term;
+function handleSearch(terms) {
+  console.log(terms);
+  searchTerms.value = terms;
+  console.log(searchTerms.value);
   refreshKey.value++;
 }
 
