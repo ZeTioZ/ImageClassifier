@@ -12,23 +12,7 @@ const fileBuffer = new DataTransfer();
 // data to display in archive cards, each one representing an archive
 const fileData = ref([]);
 
-/**
- * get a human readable file size (in 'Octets')
- * 
- * @param {Number} sizeInBytes - the size of the file in bytes 
- * @return {string} - the size of the file in a human readable format
- */
-function humanFileSize(sizeInBytes) {
-  const units = ['o', 'Ko', 'Mo', 'Go', 'To'];
-  const i = sizeInBytes == 0 
-    ? 0 
-    : Math.floor(Math.log(sizeInBytes) / Math.log(1000));
 
-  const size = (sizeInBytes / Math.pow(1000, i)).toFixed(2) * 1;
-  const unit = units[i];
-
-  return `${size} ${unit}`;
-}
 
 /**
  * update the archive list and buffer (new archives)
