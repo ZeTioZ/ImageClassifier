@@ -80,11 +80,13 @@ function getImageList(entries) {
  * @param {string} filenameEncoding - the encoding of the filename of the entry
  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of the entries
  */
-async function loadZip(archive, filenameEncoding) {
+async function loadArchive(archive, filenameEncoding) {
   let entries = await getEntries(archive, { filenameEncoding });
 
   if (entries && entries.length) {
 
+    // TODO: manage archive encoding and encryption
+    //
     // const filenamesUTF8 = Boolean(!entries.find(entry => !entry.filenameUTF8));
     // const encrypted = Boolean(entries.find(entry => entry.encrypted));
     // encodingInput.value = filenamesUTF8 ? "utf-8" : filenameEncoding || "cp437";
@@ -105,6 +107,8 @@ async function loadZip(archive, filenameEncoding) {
  * @return {} -
  */
 async function download(entry) {
+  // WIP 
+
   let busy = false;
 
 
@@ -154,6 +158,6 @@ async function download(entry) {
 
 
 export {
-  loadZip,
+  loadArchive,
   download
 };
