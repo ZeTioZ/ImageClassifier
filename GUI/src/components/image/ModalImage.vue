@@ -31,6 +31,7 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'size', 'resol
         </div>
     </div>
 </div>
+</template>
 
 
 <!---
