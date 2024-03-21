@@ -26,7 +26,7 @@ function closeModal() {
 
 function searchTags() {
   addNewTag();
-  emit('search', Tags.value, invertShearch.value);
+  emit('search', [Tags.value, invertShearch.value]);
   closeModal();
 }
 </script>
@@ -48,6 +48,17 @@ function searchTags() {
             autocomplete="off" class="bg-white border border-gray-300 text-gray-700 text-xs block p-1 w-full rounded-s focus:outline-none" />
           <button @click="addNewTag" class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
         </div>
+        <!-- Invert search button -->
+        <button v-if=invertShearch id="invert-btn" @click="invertShearch = !invertShearch" 
+          class="px-2 bg-red-700 hover:bg-red-800 focus:outline-none
+          focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md shadow-sm ">
+          Sans ces tags
+        </button>
+        <button v-if=!invertShearch id="invert-btn" @click="invertShearch = !invertShearch" 
+          class="px-2 bg-green-700 hover:bg-green-800 focus:outline-none
+          focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md shadow-sm ">
+          Avec ces tags
+        </button>
         <!-- Search button -->
         <div class="items-center px-4 py-3">
           <button id="ok-btn" @click="searchTags" 
