@@ -5,7 +5,7 @@ const props = defineProps(['fileName', 'fileSize', 'nbImages']);
 </script>
 
 <template>
-  <div class="relative m-1">
+  <div class="relative">
     <a href="#" class="absolute top-0 right-0">
       <div class="p-1 m-1 rounded-full text-ls-bleu-fonce hover:bg-gray-100">
         <HEllipsis class="w-6 h-6"/>

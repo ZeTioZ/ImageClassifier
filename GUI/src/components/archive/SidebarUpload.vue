@@ -26,22 +26,42 @@ const fileData = ref([
     fileSize: "1.65 Go",
     nbImages: "256"
   },
+  {
+    fileName: "camp57A.zip",
+    fileSize: "1.65 Go",
+    nbImages: "256"
+  },
+  {
+    fileName: "camp57A.zip",
+    fileSize: "1.65 Go",
+    nbImages: "256"
+  },
+  {
+    fileName: "camp57A.zip",
+    fileSize: "1.65 Go",
+    nbImages: "256"
+  },
+  {
+    fileName: "camp57A.zip",
+    fileSize: "1.65 Go",
+    nbImages: "256"
+  },
 ]);
 </script>
 
 <template>
   <aside id="upload-sidebar" class="w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
-    <div class="h-full overflow-y-clip px-3 py-4 bg-gray-200 flex flex-col space-y-3 relative">
+    <div class="h-full overflow-y-clip bg-gray-200 flex flex-col relative justify-between">
 
-      <ArchiveDropzone /> 
+      <ArchiveDropzone class="p-3" /> 
 
-      <div class="h-1/2 overflow-y-auto scrollbar-hide">
+      <div class="overflow-y-auto space-y-3 flex flex-col px-3 flex-1">
         <span v-for="file in fileData">
           <ArchiveCard :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" />
         </span>
       </div>
 
-      <ArchiveSubmit class="absolute bottom-0 inset-x-0"/>
+      <ArchiveSubmit class="mt-3"/>
 
     </div>
   </aside>
