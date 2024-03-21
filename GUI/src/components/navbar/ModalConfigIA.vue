@@ -7,7 +7,7 @@ function closeModal() {
 </script>
 
 <template>
-  <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto" @click.self="closeModal">
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto z-50" @click.self="closeModal">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
       <div class="mt-3 text-center">
         <!-- Modal content -->

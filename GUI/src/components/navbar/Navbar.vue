@@ -1,6 +1,8 @@
 <script setup>
 import Download from '@/components/icons/Download.vue'; 
 import ModalConfigIA from './ModalConfigIA.vue';
+import {ref} from 'vue';
+
 const showModalC = ref(false);
 function toggleModalConfigIA(){
   showModalC.value = !showModalC.value;
