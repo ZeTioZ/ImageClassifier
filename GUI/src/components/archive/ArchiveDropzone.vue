@@ -1,15 +1,7 @@
 <script setup>
 import Cloud from '@/components/icons/Cloud.vue';
-import { loadZip, download } from '@/archives/archive-manager.js';
 
 const emit = defineEmits(['filesUpdated']);
-
-async function click () {
-  const fileInput = document.getElementById("dropzone-file");
-
-  let a = await loadZip(fileInput.files[0], 'cp437');
-  download(a[0].file); 
-}
 
 function updateFileList(event) {
   // emit event with files as parameter
@@ -30,8 +22,5 @@ function updateFileList(event) {
       </div>
       <input id="dropzone-file" type="file" accept=".zip" class="hidden" @change="updateFileList" multiple />
     </label>
-    
-    <button @click="click">click</button>
-
   </div> 
 </template>
