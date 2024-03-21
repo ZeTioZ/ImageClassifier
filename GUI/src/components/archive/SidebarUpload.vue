@@ -5,24 +5,14 @@ import ArchiveDropzone from '@/components/archive/ArchiveDropzone.vue';
 import ArchiveCard from '@/components/archive/ArchiveCard.vue';
 import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
-const fileData = ref([
-  {
-    fileName: "archive3.zip",
-    fileSize: "95 Mo",
-    nbImages: "97"
-  },
-  {
-    fileName: "camp57A.zip",
-    fileSize: "1.65 Go",
-    nbImages: "256"
-  },
-  {
-    fileName: "20230605.zip",
-    fileSize: "1.05 Go",
-    nbImages: "188"
-  }
-]);
+const fileData = ref([]);
 
+/**
+ * get a human readable file size (in 'Octets')
+ * 
+ * @param {Number} sizeInBytes - the size of the file in bytes 
+ * @return {string} - the size of the file in a human readable format
+ */
 function humanFileSize(sizeInBytes) {
   const units = ['o', 'Ko', 'Mo', 'Go', 'To'];
   const i = sizeInBytes == 0 
@@ -35,17 +25,25 @@ function humanFileSize(sizeInBytes) {
   return `${size} ${unit}`;
 }
 
+/**
+ * update the archive list (ie. fileData)
+ *
+ * @param {object} archives - object containing new archives to process
+ */
 function updateArchiveList(archives) {
   console.log(archives);
+  const newFileData = [];
 
   archives.forEach(archive => {
 
-    fileData.value.push({
+    newFileData.push({
       fileName: archive.name,
       fileSize: humanFileSize(archive.size),
       nbImages: 0
     });
   });
+
+  fileData.value = newFileData;
 }
 </script>
 
