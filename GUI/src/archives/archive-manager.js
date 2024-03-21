@@ -5,21 +5,40 @@ import {
 } from '@zip.js/zip.js';
 
 
+// allowed formats for images
+const allowedImageFormats = [
+  'bmp', 'dib',
+  'jpeg','jpg', 'jpe',
+  'jp2',
+  'png',
+  'webp',
+  'avif',
+  'pbm', 'pgm', 'ppm', 'pxm', 'pnm',
+  'pfm',
+  'sr', 'ras',
+  'tiff', 'tif',
+  'exr',
+  'hdr', 'pic'
+];
+
+
 /**
- * Get a list of entries from a file
- * @param {Blob} file - blob of the file in which entries must be read
+ * Get a list of entries from a blob
+ *
+ * @param {Blob} blob - blob of the file in which entries must be read (must be a zip)
  * @param {object} options - options
  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of entries read
  */
-async function getEntries(file, options) {
-  const blobReader = new BlobReader(file);
+async function getEntries(blob, options) {
+  const blobReader = new BlobReader(blob);
   const zipReader = new ZipReader(blobReader);
 
   return await zipReader.getEntries(options);
 }
 
 /**
- * Get the URL of an entry
+ * Get the URL for an entry
+ *
  * @param {Entry} entry - the entry
  * @param {object} options - options to get data from the entry
  * @return {string} - the URL to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
@@ -31,27 +50,32 @@ async function getURL(entry, options) {
 }
 
 /**
- * Get a list of files present in the archive
+ * Get a list of image files present in the archive
+ *
  * @param {Entry[]} entries - list of entries to process
- * @return {Array.<{file: import('@zip.js/zip.js').Entry, index: Number}>} - list of object representing an image entry 
+ * @return {Array.<{file: import('@zip.js/zip.js').Entry, index: Number}>} - list of object representing an image entry on the root 
  */
-function getFileList(entries) {
-  const fileList = [];
+function getImageList(entries) {
+  const imageList = [];
 
   entries.forEach((entry, entryIndex) => {
-    if (!entry.directory /* && isImage */) {
-      fileList.push({
+    const isImage = Boolean(allowedImageFormats.find(f => entry.filename.toLowerCase().endsWith(f)));
+    const isInRootFolder = !entry.filename.includes("/");
+  
+    if (!entry.directory && isImage && isInRootFolder) {
+      imageList.push({
         file: entry,
         index: entryIndex
       });
     }
   });
 
-  return fileList;
+  return imageList;
 }
 
 /**
  * Load an archive and get a list of entries
+ *
  * @param {Blob} archive - blob of the archive in which entries must be read
  * @param {string} filenameEncoding - the encoding of the filename of the entry
  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of the entries
@@ -68,14 +92,15 @@ async function loadZip(archive, filenameEncoding) {
     // passwordInput.value = "";
     // passwordInput.disabled = !encrypted;
 
-    return getFileList(entries);
-  } else {
-    return [];
+    return getImageList(entries);
   }
+  
+  return [];
 }
 
 /**
  * get entry filename and URL
+ *
  * @param {import('@zip.js/zip.js').Entry} entry - the entry 
  * @return {} -
  */
