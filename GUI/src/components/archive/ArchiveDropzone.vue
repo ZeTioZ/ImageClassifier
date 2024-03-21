@@ -12,7 +12,11 @@ async function click () {
 }
 
 function updateFileList(event) {
+  // emit event with files as parameter
   emit('filesUpdated', event.target.files);
+
+  // clear files in the input for clean view when user's host popup opens
+  event.target.value = null;
 }
 </script>
 

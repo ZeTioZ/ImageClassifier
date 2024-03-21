@@ -1,10 +1,15 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, toRaw } from 'vue';
 
 import ArchiveDropzone from '@/components/archive/ArchiveDropzone.vue';
 import ArchiveCard from '@/components/archive/ArchiveCard.vue';
 import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
+// buffer used to store changeable file references before submitting them to the backend,
+// allowing user to select file more than once without a reset
+const fileBuffer = new DataTransfer();
+
+// data to display in archive cards, each one representing an archive
 const fileData = ref([]);
 
 /**
@@ -26,24 +31,51 @@ function humanFileSize(sizeInBytes) {
 }
 
 /**
- * update the archive list (ie. fileData)
+ * update the archive list and buffer (new archives)
  *
  * @param {object} archives - object containing new archives to process
  */
-function updateArchiveList(archives) {
-  console.log(archives);
-  const newFileData = [];
-
+function addArchives(archives) {
+  // iterate through new archives 
   archives.forEach(archive => {
-
-    newFileData.push({
+    // add data to card placeholder
+    fileData.value.push({
       fileName: archive.name,
       fileSize: humanFileSize(archive.size),
       nbImages: 0
     });
-  });
 
+    // update file buffer
+    fileBuffer.items.add(archive);
+    console.log(fileBuffer)
+  });
+}
+ 
+/**
+ * update the archive list and buffer (remove an archive)
+ *
+ * @param {Number} index - index of the archive to remove
+ */
+function removeArchive(index) {
+  // remove archive from card place holder
+  let newFileData = [];
+
+  for (var i = 0; i < fileData.value.length; i++) {
+    // manual filter by index with a for loop due to Vue reactivity with nested ref objects (i.e. Proxy)
+    if (i !== index) {
+      newFileData.push(fileData.value[i]);
+    }
+  }
+  
   fileData.value = newFileData;
+
+  // remove associated images
+  // TODO  
+
+  // remove file from file buffer
+  console.log(fileBuffer)
+  fileBuffer.items.remove(index);
+  console.log(fileBuffer)
 }
 </script>
 
@@ -51,10 +83,10 @@ function updateArchiveList(archives) {
   <aside id="upload-sidebar" class="w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-200 flex flex-col space-y-3 relative">
 
-      <ArchiveDropzone @filesUpdated="updateArchiveList" /> 
+      <ArchiveDropzone @filesUpdated="addArchives" /> 
 
-      <span v-for="file in fileData">
-        <ArchiveCard :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" />
+      <span v-for="file, i in fileData">
+        <ArchiveCard :index="i" :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" @deleteItself="removeArchive" />
       </span>
 
       <ArchiveSubmit class="absolute bottom-0 inset-x-0"/>
