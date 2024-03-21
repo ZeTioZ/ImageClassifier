@@ -22,19 +22,13 @@ function toggleModalImage(){
       <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce">{{ fileName }}</span>
       <!-- Three dots/menu icon -->
       <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1">
-        <VEllipsis class="w-4 h-4" @click="toggleModalImage"/>
+        <VEllipsis class="w-4 h-4" />
       </a>
     </div>
 
     <!-- Image in the container -->
     <div class="h-40 w-full p-1">
-      <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded"onclick="document.getElementById('modal01').style.display='block'">
-    </div>
-    <div id="modal01" class="w3-modal" onclick="this.style.display='none'">
-      <span class="w3-closebtn w3-hover-red w3-container w3-padding-hor-16 w3-display-topright">&times;</span>
-      <div class="w3-modal-content w3-animate-zoom">
-        <img :src="imgSrc" style="width:100%">
-      </div>
+      <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded" @click="toggleModalImage">
     </div>
     
 
