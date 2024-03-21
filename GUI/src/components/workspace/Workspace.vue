@@ -101,9 +101,7 @@ const filteredGoodImages = computed(() => filterImages(GoodImages));
 const filteredBadImages = computed(() => filterImages(BadImages));
 
 function handleSearch(terms) {
-  console.log(terms);
   searchTerms.value = terms;
-  console.log(searchTerms.value);
   refreshKey.value++;
 }
 

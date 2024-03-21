@@ -35,7 +35,7 @@ const removeTag = (tagIndex) => {
       </form>
 
       <!-- added tags list -->
-      <ul class="text-sm space-y-1 text-gray-700 list-disc list-inside mt-2">
+      <ul class="text-sm space-y-1 text-white list-disc list-inside mt-2">
         <ArchiveSubmitNewTag v-for="tag, i in newTags" :tagName="tag" @remove="removeTag(i)" />
       </ul>
     </div>

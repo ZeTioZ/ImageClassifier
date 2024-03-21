@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import ArchiveSubmitNewTag from '@/components/archive/ArchiveSubmitNewTag.vue';
 
 const emit = defineEmits(['close', 'search']);
 
 const newTag = ref('');   // text in the input
 const Tags = ref([]);  // array containing the new tags
+const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 
 // function to add a new tag in the Tags array
 const addNewTag = () => {
@@ -23,7 +25,8 @@ function closeModal() {
 }
 
 function searchTags() {
-  emit('search', Tags.value);
+  addNewTag();
+  emit('search', Tags.value, invertShearch.value);
   closeModal();
 }
 </script>
@@ -35,10 +38,15 @@ function searchTags() {
       <div class="mt-3 text-center">
         <!-- Title -->
         <h3 class="text-lg leading-6 font-medium text-gray-900">Triez par tag</h3>
+        <!-- added tags list -->
+        <ul class="text-sm space-y-1 text-black-700 list-disc list-inside mt-2">
+          <ArchiveSubmitNewTag v-for="tag, i in Tags" :tagName="tag" @remove="removeTag(i)" />
+        </ul>
         <!-- Input -->
-        <div class="mt-2 px-7 py-3">
-          <input v-model="newTag" id="new-tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="addNewTag"
-            autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
+        <div class="mt-2 px-7 py-3 flex flex-row w-full">
+          <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." @keyup.enter="addNewTag"
+            autocomplete="off" class="bg-white border border-gray-300 text-gray-700 text-xs block p-1 w-full rounded-s focus:outline-none" />
+          <button @click="addNewTag" class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
         </div>
         <!-- Search button -->
         <div class="items-center px-4 py-3">
