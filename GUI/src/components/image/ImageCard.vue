@@ -21,8 +21,15 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
 
     <!-- Image in the container -->
     <div class="h-40 w-full p-1">
-      <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded">
+      <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded"onclick="document.getElementById('modal01').style.display='block'">
     </div>
+    <div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+      <span class="w3-closebtn w3-hover-red w3-container w3-padding-hor-16 w3-display-topright">&times;</span>
+      <div class="w3-modal-content w3-animate-zoom">
+        <img :src="imgSrc" style="width:100%">
+      </div>
+    </div>
+    
 
     <!-- Tags -->
     <div class="w-full flex flex-col p-1">
