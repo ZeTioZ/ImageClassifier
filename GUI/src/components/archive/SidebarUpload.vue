@@ -73,9 +73,7 @@ function removeArchive(index) {
   // TODO  
 
   // remove file from file buffer
-  console.log(fileBuffer)
   fileBuffer.items.remove(index);
-  console.log(fileBuffer)
 }
 </script>
 
