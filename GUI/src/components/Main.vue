@@ -21,7 +21,7 @@ import SidebarUpload from '@/components/archive/SidebarUpload.vue';
     <Navbar />
 
     <!-- Page content -->
-    <div class="flex-1 flex flex-row">
+    <div class="overflow-hidden flex-1 flex flex-row">
       <SidebarUpload />
       <Workspace />
     </div>
