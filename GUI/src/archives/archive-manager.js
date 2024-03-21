@@ -142,6 +142,7 @@ async function download(entry) {
       if (!signal.reason || signal.reason.code != error.code) {
         throw error;
       }
+
     } finally {
       busy = false;
 
