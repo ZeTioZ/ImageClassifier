@@ -1,8 +1,15 @@
 <script setup>
-import Tag from '@/components/image/Tag.vue';
+import Tag from '@/components/image/Tag.vue'
 import VEllipsis from '@/components/icons/VEllipsis.vue';
+import ModalImage from './ModalImage.vue';
+import {ref} from 'vue';
 
 const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
+const showModalI = ref(false);
+
+function toggleModalImage(){
+  showModalI.value = !showModalI.value;
+}
 </script>
 
 <template>
@@ -15,7 +22,7 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
       <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce">{{ fileName }}</span>
       <!-- Three dots/menu icon -->
       <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1">
-        <VEllipsis class="w-4 h-4" />
+        <VEllipsis class="w-4 h-4" @click="toggleModalImage"/>
       </a>
     </div>
 
@@ -43,6 +50,8 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
       </div>
     </div>
   </div>
+<!-- MODALS -->
+<ModalImage v-if="showModalI" @close="toggleModalImage"/>
 </template>
 
 <style scoped>
