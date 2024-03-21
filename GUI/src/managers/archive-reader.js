@@ -5,8 +5,8 @@ import {
 } from '@zip.js/zip.js';
 
 
-// allowed formats for images
-const allowedImageFormats = [
+// allowed extension for images
+const allowedImageExtensions = [
   'bmp', 'dib',
   'jpeg','jpg', 'jpe',
   'jp2',
@@ -59,7 +59,7 @@ function getImageList(entries) {
   const imageList = [];
 
   entries.forEach((entry, entryIndex) => {
-    const isImage = Boolean(allowedImageFormats.find(f => entry.filename.toLowerCase().endsWith(f)));
+    const isImage = Boolean(allowedImageExtensions.find(f => entry.filename.toLowerCase().endsWith(f)));
     const isInRootFolder = !entry.filename.includes("/");
   
     if (!entry.directory && isImage && isInRootFolder) {
