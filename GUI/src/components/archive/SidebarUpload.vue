@@ -55,7 +55,7 @@ const fileData = ref([
 
       <ArchiveDropzone class="p-3" /> 
 
-      <div class="overflow-y-auto space-y-3 flex flex-col px-3 flex-1">
+      <div class="overflow-y-auto space-y-3 flex flex-col px-3 flex-1 scrollbar-hide">
         <span v-for="file in fileData">
           <ArchiveCard :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" />
         </span>
