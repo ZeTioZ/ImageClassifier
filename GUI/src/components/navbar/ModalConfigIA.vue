@@ -21,24 +21,25 @@ function closeModal() {
           <!-- Modal body -->
           <div class="p-6 space-y-6">
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              blur precision :
-              <label for="steps-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Range steps</label>
+              Blur precision :
               <input id="steps-range" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
             </p>
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              image minimum width :   
-              <label for="steps-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Range steps</label>
+              Image minimum width :   
               <input id="steps-range" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
             </p>
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              image minimum height :
-              <label for="steps-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Range steps</label>
+              Image minimum height :
               <input id="steps-range" type="range" min="0" max="200" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
             </p>
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              image minimum luminance :
-              <label for="steps-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Range steps</label>
+              Image minimum luminance :
               <input id="steps-range" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+            </p>
+            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              Tag à blacklisté :
+              <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
+              autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
             </p>
           </div>
           <!-- Modal footer -->
