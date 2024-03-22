@@ -1,4 +1,5 @@
 import { loadArchive } from './archive-reader';
+import { Image } from './image';
 
 
 export class Archive {
@@ -49,12 +50,12 @@ export class Archive {
   }
 
   /**
-  * get the number of images within the archive 
+  * get the list of images within the archive 
   *
-  * @return {Number} - the number of images present on the root of the archive, 0 if the archive is not loaded
+  * @return {Array.<Image>} - the number of images present on the root of the archive, 0 if the archive is not loaded
   */
-  get nbImages() {
-    return this.#images.length;
+  get images() {
+    return this.#images;
   }
 
   /**

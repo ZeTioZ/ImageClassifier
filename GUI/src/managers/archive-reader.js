@@ -37,13 +37,13 @@ async function getEntries(blob, options) {
 }
 
 /**
- * Get the URL for an entry
+ * Create the URL for an entry
  *
  * @param {Entry} entry - the entry
  * @param {object} options - options to get data from the entry
  * @return {string} - the URL to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
  */
-async function getURL(entry, options) {
+async function createURL(entry, options) {
   const entryData = await entry.getData(new BlobWriter(), options);
 
   return URL.createObjectURL(entryData);
@@ -101,63 +101,49 @@ async function loadArchive(archive, filenameEncoding) {
 }
 
 /**
- * get entry filename and URL
+ * Get the URL for an entry
  *
  * @param {import('@zip.js/zip.js').Entry} entry - the entry 
  * @return {} -
  */
-async function download(entry) {
-  // WIP 
+async function getURL(entry) {
+  // to keep track of the extraction progress
+  let unzipProgress = {
+    index: null,
+    max: null
+  };
 
-  let busy = false;
+  const controller = new AbortController();
+  const signal = controller.signal;
 
+  // To abort the extraction, execute the following instruction:
+  // `controller.abort()`
 
-  if (!busy) {
-    let unzipProgress = {
-      index: null,
-      max: null
-    };
+  try {
+    const blobURL = await createURL(entry, {
+      // password: passwordInput.value,
+      onprogress: (index, max) => {
+        unzipProgress.index = index;
+        unzipProgress.max = max;
+      },
+      signal
+    });
 
-    const controller = new AbortController();
-    const signal = controller.signal;
-    // const abortButton = document.createElement("button");
-    // abortButton.onclick = () => controller.abort();
-    // abortButton.textContent = "✖";
-    // abortButton.title = "Abort";
+    return blobURL;
 
-    busy = true;
-
-    // li.onclick = event => event.preventDefault();
-
-    try {
-      const blobURL = await getURL(entry, {
-        // password: passwordInput.value,
-        onprogress: (index, max) => {
-          unzipProgress.index = index;
-          unzipProgress.max = max;
-        },
-        signal
-      });
-
-      console.log(blobURL);
-      entry.filename;
-
-    } catch (error) {
-      if (!signal.reason || signal.reason.code != error.code) {
-        throw error;
-      }
-
-    } finally {
-      busy = false;
-
-      // unzipProgress.remove();
-      // abortButton.remove();
+  } catch (error) {
+    if (!signal.reason || signal.reason.code != error.code) {
+      throw error;
     }
+
+  } finally {
+    // unzipProgress.remove();
+    // abortButton.remove();
   }
 }
 
 
 export {
   loadArchive,
-  download
+  getURL
 };
