@@ -7,7 +7,9 @@ import {
 
 export class ArchiveManager {
 
-  // allowed extension for images
+  /**
+  * list of allowed extensions
+  */
   static allowedImageExtensions = [
     'bmp', 'dib',
     'jpeg','jpg', 'jpe',
@@ -54,7 +56,7 @@ export class ArchiveManager {
   /**
   * Get a list of image files present in the archive
   *
-  * @param {Entry[]} entries - list of entries to process
+  * @param {Array.<import('@zip.js/zip.js').Entry>} entries - list of entries to process
   * @return {Array.<{file: import('@zip.js/zip.js').Entry, index: Number}>} - list of object representing an image entry on the root 
   */
   #getImageList(entries) {
