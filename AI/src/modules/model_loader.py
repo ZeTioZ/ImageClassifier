@@ -16,6 +16,15 @@ class ModelLoader:
 		self.predictions = None
 
 	def predict(self, image, classes=None, img_size=(640, 640), device: str | None = None):
+		"""
+		Predicts the classes of the given image.
+
+		:param image: The image to predict the classes of.
+		:param classes: The classes to predict.
+		:param img_size: The size of the image.
+		:param device: The device to use for the prediction.
+		:return: The predictions of the model for the given image.
+		"""
 		if device is None:
 			device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 		self.predictions = self.model(image, classes=classes, device=device, imgsz=img_size, verbose=False)
@@ -37,20 +46,27 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 		if file.is_file() and file.suffix in supported_formats:
 			image_path = file.absolute().__str__()
 			image = cv2.imread(image_path)
-			is_qualitative, quality_tags = quality_check.is_qualitative(image)
 			predictions = model.predict(image)
 			boxes = convert_image_box_outputs(predictions)
+			found_tags = list(dict.fromkeys([box.cls for box in boxes]))
+			is_qualitative, quality_tags = quality_check.is_qualitative(image, found_tags)
+			for banned_tag in quality_tags["banned_tags"]:
+				if banned_tag in found_tags:
+					found_tags.remove(banned_tag)
 			# FOR DEMO
 			prediction_image = box_visualizer(image, boxes, print_classes=True)
 			multiplier = image.shape[1] / 1000
 			prediction_image = cv2.resize(prediction_image,
-										 (int(image.shape[1] / multiplier), int(image.shape[0] / multiplier)))
+										  (int(image.shape[1] / multiplier), int(image.shape[0] / multiplier)))
 			cv2.imshow('Prediction', prediction_image)
 			cv2.waitKey(0)
 			cv2.destroyAllWindows()
 			# END FOR DEMO
-			tags[file.name] = {"detection_tags": list(dict.fromkeys([box.cls for box in boxes])) +
-									   default_tags,
+			tags[file.name] = {"hash": file.__hash__(),
+							   "detection_tags": list(dict.fromkeys([box.cls for box in boxes])) +
+												 default_tags,
 							   "is_qualitative": is_qualitative,
-							   "quality_tags": list(filter(lambda x: quality_tags[x], quality_tags.keys()))}
+							   "quality_tags": list(
+								   filter(lambda x: not isinstance(quality_tags[x], list) and quality_tags[x],
+										  quality_tags.keys())) + quality_tags["banned_tags"]}
 	return tags

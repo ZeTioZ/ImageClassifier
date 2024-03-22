@@ -1,12 +1,12 @@
 import shutil
 import os
-import subprocess
 from typing import List
 
 import pathlib
 import json
 
 from models.config import Config
+from __init__ import resources_path, extracted_path, uploads_path, get_parent_path, join_char
 
 from fastapi import FastAPI, UploadFile, File, Form
 
@@ -15,10 +15,10 @@ app = FastAPI()
 
 @app.post("/tags")
 async def update_tags(tags: dict):
-	if not os.path.exists("../../AI/extracted/"):
-		os.makedirs("../../AI/extracted/")
+	if not os.path.exists(extracted_path):
+		os.makedirs(extracted_path)
 	try:
-		with open("../../AI/extracted/generated_tags.json", 'w') as f:
+		with open(f"{extracted_path}{join_char}generated_tags.tags", 'w') as f:
 			json.dump(tags, f, indent=4)
 	except Exception:
 		return {"message": "There was an error updating the tags!"}
@@ -28,21 +28,23 @@ async def update_tags(tags: dict):
 @app.get("/tags")
 async def get_tags():
 	try:
-		with open("../../AI/extracted/generated_tags.json", 'r') as f:
-			tags = json.load(f)
-	except Exception:
+		with open(f"{extracted_path}{join_char}generated_tags.tags", 'r') as f:
+			tags = json.loads(f.read())
+	except Exception as e:
+		print(f"Tags error: {e}")
 		return {"message": "There was an error reading the tags!"}
 	return tags
 
 
 @app.post("/configs")
 async def update_configs(config: Config):
-	if not os.path.exists("../../AI/resources/configs"):
-		os.makedirs("../../AI/resources/configs")
+	if not os.path.exists(resources_path):
+		os.makedirs(resources_path)
 	try:
-		with open("../../AI/resources/configs/config.json", 'w') as f:
+		with open(f"{resources_path}{join_char}config.json", 'w') as f:
 			json.dump(config.dict(), f, indent=4)
-	except Exception:
+	except Exception as e:
+		print(f"Config error: {e}")
 		return {"message": "There was an error uploading the configuration file!"}
 	return {"message": "Configuration file updated", "updated-config": await get_configs()}
 
@@ -50,20 +52,21 @@ async def update_configs(config: Config):
 @app.get("/configs")
 async def get_configs():
 	try:
-		with open("../../AI/resources/configs/config.json", 'r') as f:
+		with open(f"{resources_path}{join_char}config.json", 'r') as f:
 			config = json.load(f)
-	except Exception:
+	except Exception as e:
+		print(f"Config error: {e}")
 		return {"message": "There was an error reading the configuration file!"}
 	return config
 
 
 @app.post("/uploads")
 async def uploads(batch_name: str = Form(None), default_tags: list[str] = Form(None), files: List[UploadFile] = File(...)):
-	if not os.path.exists("../uploads"):
-		os.mkdir("../uploads")
+	if not os.path.exists(uploads_path):
+		os.mkdir(uploads_path)
 	for file in files:
 		try:
-			with open(f"../uploads/{file.filename}", 'wb') as f:
+			with open(f"{uploads_path}{join_char}{file.filename}", 'wb') as f:
 				shutil.copyfileobj(file.file, f)
 		except Exception:
 			return {"message": "There was an error uploading the file(s)!"}
@@ -71,12 +74,12 @@ async def uploads(batch_name: str = Form(None), default_tags: list[str] = Form(N
 			file.file.close()
 	batch_name = f"-n {batch_name} " if batch_name else ""
 	default_tags = "-t " + " -t ".join(default_tags) if default_tags else ""
-	zips = "-z " + " -z ".join(list(filter(lambda x: x.endswith(".zip"), [os.path.abspath(f'../uploads/{file}') for file in pathlib.Path("../uploads").iterdir()]))) + " "
-	print(f"{batch_name}{zips}{default_tags}")
-	process = subprocess.run(["py", "../../AI/src/main.py", f"{batch_name}{zips}{default_tags}"])
-	if process.returncode != 0:
-		return {"message": "There was an error processing the file(s)!"}
-	return {"message": f"Successfuly uploaded {[file.filename for file in files]}!"}
+	zips = "-z " + (" -z ".join(list(filter(lambda x: x.endswith(".zip"), [os.path.abspath(f"{file}") for file in pathlib.Path(uploads_path).iterdir()])))) + " "
+	process = os.system(f"cd {get_parent_path(__file__, 3)} && python -m AI.src.main {batch_name}{zips}{default_tags}")
+	if process != 0:
+		return {"message": "There was an error processing the file(s)!", "error": process}
+	return {"message": f"Successfuly uploaded {[file.filename for file in files]}!", "generated_tags": await get_tags()}
+
 
 if __name__ == "__main__":
 	import requests
