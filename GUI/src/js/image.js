@@ -1,3 +1,4 @@
+import { ArchiveManager } from './archive-manager'
 
 
 export class Image {
@@ -121,6 +122,21 @@ export class Image {
   async getBlobURL(thumbnail = true) {
     // create blob url if this.blobURL is undefined, create it otherwise 
 
-    return "";
+    if (thumbnail) {
+      if (this.#thumbnailBlobURL == null) {
+        const newBlobURL = await ArchiveManager.getURL(this.#archiveEntry)
+        this.#thumbnailBlobURL = newBlobURL;
+      }
+
+      return this.#thumbnailBlobURL;
+    }
+    else {
+      if (this.#blobURL == null) {
+        const newBlobURL = await ArchiveManager.getURL(this.#archiveEntry)
+        this.#blobURL = newBlobURL;
+      }
+
+      return this.#thumbnailBlobURL;
+    }
   }
 }
