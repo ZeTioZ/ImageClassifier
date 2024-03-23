@@ -33,7 +33,7 @@ export class ArchiveManager {
   * @param {object} options - options
   * @return {Array.<import('@zip.js/zip.js').Entry>} - list of entries read
   */
-  async #getEntries(blob, options) {
+  static async #getEntries(blob, options) {
     const blobReader = new BlobReader(blob);
     const zipReader = new ZipReader(blobReader);
 
@@ -47,7 +47,7 @@ export class ArchiveManager {
   * @param {object} options - options to get data from the entry
   * @return {string} - the URL to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
   */
-  async #createURL(entry, options) {
+  static async #createURL(entry, options) {
     const entryData = await entry.getData(new BlobWriter(), options);
 
     return URL.createObjectURL(entryData);
@@ -59,7 +59,7 @@ export class ArchiveManager {
   * @param {Array.<import('@zip.js/zip.js').Entry>} entries - list of entries to process
   * @return {Array.<{file: import('@zip.js/zip.js').Entry, index: Number}>} - list of object representing an image entry on the root 
   */
-  #getImageList(entries) {
+  static #getImageList(entries) {
     const imageList = [];
 
     entries.forEach((entry, entryIndex) => {
@@ -86,8 +86,8 @@ export class ArchiveManager {
   * @param {string} filenameEncoding - the encoding of the filename of the entry
   * @return {Array.<import('@zip.js/zip.js').Entry>} - list of the entries
   */
-  async loadArchive(archive, filenameEncoding) {
-    let entries = await this.#getEntries(archive, { filenameEncoding });
+  static async loadArchive(archive, filenameEncoding) {
+    let entries = await ArchiveManager.#getEntries(archive, { filenameEncoding });
 
     if (entries && entries.length) {
 
@@ -100,7 +100,7 @@ export class ArchiveManager {
       // passwordInput.value = "";
       // passwordInput.disabled = !encrypted;
 
-      return this.#getImageList(entries);
+      return ArchiveManager.#getImageList(entries);
     }
 
     return [];
@@ -112,7 +112,7 @@ export class ArchiveManager {
   * @param {import('@zip.js/zip.js').Entry} entry - the entry 
   * @return {} -
   */
-  async getURL(entry) {
+  static async getURL(entry) {
     // to keep track of the extraction progress
     let unzipProgress = {
       index: null,
@@ -126,7 +126,7 @@ export class ArchiveManager {
     // `controller.abort()`
 
     try {
-      const blobURL = await this.#createURL(entry, {
+      const blobURL = await ArchiveManager.#createURL(entry, {
         // password: passwordInput.value,
         onprogress: (index, max) => {
           unzipProgress.index = index;
