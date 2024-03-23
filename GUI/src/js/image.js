@@ -2,13 +2,16 @@
 
 export class Image {
 
-  #archiveEntry
   #hash
   #filename
   #size
   #tags
   #toBeDeleted
   #reasonForDeletion
+
+  #archiveEntry
+  #thumbnailBlobURL
+  #blobURL
 
   constructor(entry) {
     this.#archiveEntry = entry;
@@ -67,5 +70,9 @@ export class Image {
 
   get reasonForDeletion() {
     return this.#reasonForDeletion;
+  }
+
+  async getBlobURL(thumbnail = true) {
+    return "";
   }
 }
