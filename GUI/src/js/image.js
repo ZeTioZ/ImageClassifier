@@ -7,12 +7,15 @@ export class Image {
   #filename
   #size
   #tags
+  #toBeDeleted
+  #reasonForDeletion
 
   constructor(entry) {
     this.#archiveEntry = entry;
     this.#filename = entry.filename;
     this.#size = entry.uncompressedSize;
     this.#tags = [];
+    this.#toBeDeleted = false;
   }
 
   get archiveEntry() {
@@ -56,5 +59,13 @@ export class Image {
 
   get tags() {
     return this.#tags;
+  }
+
+  get toBeDeleted() {
+    return this.#toBeDeleted;
+  }
+
+  get reasonForDeletion() {
+    return this.#reasonForDeletion;
   }
 }
