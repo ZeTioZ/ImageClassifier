@@ -132,7 +132,7 @@ export class Image {
     }
     else {
       if (this.#blobURL == null) {
-        const newBlobURL = await ArchiveManager.getURL(this.#archiveEntry)
+        const newBlobURL = await ArchiveManager.getURL(this.#archiveEntry) //TODO: add compression option in getURL
         this.#blobURL = newBlobURL;
       }
 
