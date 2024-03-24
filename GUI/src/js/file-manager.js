@@ -1,16 +1,17 @@
-import {
-  ZipReader,
-  BlobReader,
-  BlobWriter,
-  getMimeType,
-} from '@zip.js/zip.js';
+import { ZipReader, BlobReader, BlobWriter, getMimeType } from '@zip.js/zip.js';
 import imageCompression from 'browser-image-compression';
 
 
+/**
+*
+* Class used to manage and manipulate files on the page.
+* Functions are archives reading, images extraction, URL creation etc.
+*
+*/
 export class FileManager {
 
   /**
-  * list of allowed extensions
+  * List of allowed extensions.
   */
   static ALLOWED_IMAGE_EXTENSIONS = [
     'bmp', 'dib',
@@ -28,7 +29,7 @@ export class FileManager {
   ];
 
   /**
-  * options for image compression
+  * Options for image compression.
   */
   static MAX_SIZE_MB = 0.5;
   static MAX_SIZE_PX = 400;
@@ -36,11 +37,11 @@ export class FileManager {
 
 
   /**
-  * Get a list of entries from a blob
+  * Get a list of entries from a blob.
   *
-  * @param {Blob} blob - blob of the file in which entries must be read (must be a zip)
-  * @param {object} options - options
-  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of entries read
+  * @param {Blob} blob - Blob of the file in which entries must be read (must be a zip).
+  * @param {object} options - Options.
+  * @return {Array.<import('@zip.js/zip.js').Entry>} - List of entries read.
   */
   static async #getEntries(blob, options) {
     const blobReader = new BlobReader(blob);
@@ -50,11 +51,11 @@ export class FileManager {
   }
 
   /**
-  * Create the URL for an entry
+  * Create the URL for an entry.
   *
-  * @param {Entry} entry - the entry
-  * @param {object} options - options to get data from the entry
-  * @return {string} - the URL to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
+  * @param {Entry} entry - The entry.
+  * @param {object} options - Options to get data from the entry.
+  * @return {string} - The URL pointing to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c).
   */
   static async #createURL(entry, compressed, options) {
     let entryData = await entry.getData(new BlobWriter(), options);
@@ -69,10 +70,10 @@ export class FileManager {
   }
 
   /**
-  * Get a list of image files present in the archive
+  * Get a list of image files present in the archive.
   *
-  * @param {Array.<import('@zip.js/zip.js').Entry>} entries - list of entries to process
-  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of object representing an image entry on the root 
+  * @param {Array.<import('@zip.js/zip.js').Entry>} entries - List of entries to process.
+  * @return {Array.<import('@zip.js/zip.js').Entry>} - List of object representing an image entry on the root. 
   */
   static #getImageList(entries) {
     const imageList = [];
@@ -92,12 +93,12 @@ export class FileManager {
   }
 
   /**
-  * compress the raw data of an image
+  * Compress the raw data of an image.
   *
-  * @param {Blob} data - the raw data of the image
-  * @param {string} - the name of the file
-  * @param {string} mimeType - the MIME type of the image
-  * @return {Blob} - the compressed data of the image
+  * @param {Blob} data - The raw data of the image.
+  * @param {string} - The name of the file.
+  * @param {string} mimeType - The MIME type of the image.
+  * @return {Blob} - The compressed data of the image.
   */
   static async #compressImage(data, filename, mimeType) {
     // options for image compression
@@ -116,10 +117,10 @@ export class FileManager {
 
 
   /**
-  * Get the extension of a file given it filename
+  * Get the extension of a file given it filename.
   * 
-  * @param {string} filename - the name of the file
-  * @return {string} - the extension of the file
+  * @param {string} filename - The name of the file.
+  * @return {string} - The extension of the file.
   */
   static getExtension(filename) {
     const re = /(?:\.([^.]+))?$/;
@@ -128,11 +129,11 @@ export class FileManager {
   }
 
   /**
-  * Load an archive and get a list of image entries
+  * Load an archive and get a list of image entries.
   *
-  * @param {Blob} archive - blob of the archive in which entries must be read
-  * @param {string} filenameEncoding - the encoding of the filename of the entry
-  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of image entries
+  * @param {Blob} archive - Blob of the archive in which entries must be read.
+  * @param {string} filenameEncoding - The encoding of the filename of the entry.
+  * @return {Array.<import('@zip.js/zip.js').Entry>} - List of image entries.
   */
   static async getImageEntries(archive, filenameEncoding) {
     let entries = await FileManager.#getEntries(archive, { filenameEncoding });
@@ -155,11 +156,12 @@ export class FileManager {
   }
 
   /**
-  * Get the URL for an entry
+  * Get the URL for an entry.
   *
-  * @param {import('@zip.js/zip.js').Entry} entry - the entry 
-  * @param {boolean} compressed - if the URL created should be of a compressed image or not
-  * @return {string} - the URL for an image, in a blob URL format (i.e. https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static)
+  * @param {import('@zip.js/zip.js').Entry} entry - The entry .
+  * @param {boolean} compressed - If the URL created should be of a compressed image or not.
+  * @return {string} - The URL for an image, in a blob URL format 
+  *                    (i.e. https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static).
   */
   static async getURL(entry, compressed = true) {
     // to keep track of the extraction progress
@@ -202,7 +204,7 @@ export class FileManager {
   * a blob URL is persistant to the page when created. It should be used when
   * an image is to be removed.
   *
-  * @param {string} url - the URL of the blob object to remove
+  * @param {string} url - The URL of the blob object to remove.
   */
   static destroyURL(url) {
     URL.revokeObjectURL(url);

@@ -2,6 +2,11 @@ import { FileManager } from './file-manager';
 import { Image } from './image';
 
 
+/**
+*
+* Class represention an archive. Can be used to access its images and load them.
+*
+*/
 export class Archive {
 
   // All fields are private and should not be accessed outside of the class.
@@ -27,18 +32,18 @@ export class Archive {
   }
 
   /**
-  * get size of the file in bytes
+  * Get size of the file in bytes.
   *
-  * @return {Number} - the size of the file in bytes 
+  * @return {Number} - The size of the file in bytes.
   */
   get size() {
     return this._size;
   } 
 
   /**
-  * get a human readable file size (in 'Octets'/bytes)
+  * Get a human readable file size (in 'Octets'/bytes).
   * 
-  * @return {string} - the size of the file in a human readable format
+  * @return {string} - The size of the file in a human readable format.
   */
   get readableSize() {
     const units = ['o', 'Ko', 'Mo', 'Go', 'To'];
@@ -53,27 +58,27 @@ export class Archive {
   }
 
   /**
-  * get the list of images within the archive 
+  * Get the list of images within the archive.
   *
-  * @return {Array.<Image>} - the number of images present on the root of the archive, 0 if the archive is not loaded
+  * @return {Array.<Image>} - The number of images present on the root of the archive, 0 if the archive is not loaded.
   */
   get images() {
     return this._images;
   }
 
   /**
-  * get a representation of the archive as a File object
+  * Get a representation of the archive as a File object.
   *
-  * @return {File} - the archive as a File object
+  * @return {File} - The archive as a File object.
   */
   get file() {
     return this._file;
   }
 
   /**
-  * tells if the content of the archive has been seen through (analyze images, prepare blobs, etc.)
+  * Tells if the content of the archive has been seen through (analyze images, prepare blobs, etc.).
   *
-  * @return {Boolean} - true if the archive has been loaded, false otherwise
+  * @return {Boolean} - True if the archive has been loaded, false otherwise.
   */
   get loaded() {
     return this._loaded;
