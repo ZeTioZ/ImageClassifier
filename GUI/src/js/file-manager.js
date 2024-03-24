@@ -5,7 +5,7 @@ import {
 } from '@zip.js/zip.js';
 
 
-export class ArchiveManager {
+export class FileManager {
 
   /**
   * list of allowed extensions
@@ -64,7 +64,7 @@ export class ArchiveManager {
 
     entries.forEach((entry, entryIndex) => {
       const extEndsWith = (ext) => entry.filename.toLowerCase().endsWith(ext);
-      const isImage = Boolean(ArchiveManager.allowedImageExtensions.find(extEndsWith));
+      const isImage = Boolean(FileManager.allowedImageExtensions.find(extEndsWith));
 
       const isInRootFolder = !entry.filename.includes("/");
 
@@ -87,7 +87,7 @@ export class ArchiveManager {
   * @return {Array.<import('@zip.js/zip.js').Entry>} - list of the entries
   */
   static async loadArchive(archive, filenameEncoding) {
-    let entries = await ArchiveManager.#getEntries(archive, { filenameEncoding });
+    let entries = await FileManager.#getEntries(archive, { filenameEncoding });
 
     if (entries && entries.length) {
 
@@ -100,7 +100,7 @@ export class ArchiveManager {
       // passwordInput.value = "";
       // passwordInput.disabled = !encrypted;
 
-      return ArchiveManager.#getImageList(entries);
+      return FileManager.#getImageList(entries);
     }
 
     return [];
@@ -126,7 +126,7 @@ export class ArchiveManager {
     // `controller.abort()`
 
     try {
-      const blobURL = await ArchiveManager.#createURL(entry, {
+      const blobURL = await FileManager.#createURL(entry, {
         // password: passwordInput.value,
         onprogress: (index, max) => {
           unzipProgress.index = index;

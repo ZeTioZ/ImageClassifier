@@ -1,4 +1,4 @@
-import { ArchiveManager } from './archive-manager'
+import { FileManager } from './file-manager';
 
 
 export class Image {
@@ -124,7 +124,7 @@ export class Image {
 
     if (thumbnail) {
       if (this.#thumbnailBlobURL == null) {
-        const newBlobURL = await ArchiveManager.getURL(this.#archiveEntry)
+        const newBlobURL = await FileManager.getURL(this.#archiveEntry)
         this.#thumbnailBlobURL = newBlobURL;
       }
 
@@ -132,7 +132,7 @@ export class Image {
     }
     else {
       if (this.#blobURL == null) {
-        const newBlobURL = await ArchiveManager.getURL(this.#archiveEntry) //TODO: add compression option in getURL
+        const newBlobURL = await FileManager.getURL(this.#archiveEntry) //TODO: add compression option in getURL
         this.#blobURL = newBlobURL;
       }
 
