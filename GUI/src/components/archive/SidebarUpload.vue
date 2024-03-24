@@ -65,7 +65,7 @@ function test() {
   archiveList.value.forEach(archive => {
     // console.log(archive.images[0].getBlobURL());
     archive.images.forEach(image => {
-      console.log(image.getBlobURL());
+      console.log(image.getBlobURL(false));
     });
   });
 }

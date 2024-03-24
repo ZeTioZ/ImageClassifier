@@ -12,7 +12,7 @@ export class FileManager {
   /**
   * list of allowed extensions
   */
-  static allowedImageExtensions = [
+  static ALLOWED_IMAGE_EXTENSIONS = [
     'bmp', 'dib',
     'jpeg','jpg', 'jpe',
     'jp2',
@@ -26,6 +26,13 @@ export class FileManager {
     'exr',
     'hdr', 'pic'
   ];
+
+  /**
+  * options for image compression
+  */
+  static MAX_SIZE_MB = 0.5;
+  static MAX_SIZE_PX = 400;
+  static NEW_FORMAT  = 'image/webp';
 
 
   /**
@@ -55,7 +62,7 @@ export class FileManager {
     // compress the image if compressed is true
     if (compressed) {
       const mimeType = getMimeType(FileManager.getExtension(entry.filename));
-      entryData = await FileManager.#compressImage(entryData, mimeType);
+      entryData = await FileManager.#compressImage(entryData, filename, mimeType);
     }
 
     return URL.createObjectURL(entryData);
@@ -72,7 +79,7 @@ export class FileManager {
 
     entries.forEach(entry => {
       const extEndsWith = (ext) => entry.filename.toLowerCase().endsWith(ext);
-      const isImage = Boolean(FileManager.allowedImageExtensions.find(extEndsWith));
+      const isImage = Boolean(FileManager.ALLOWED_IMAGE_EXTENSIONS.find(extEndsWith));
 
       const isInRootFolder = !entry.filename.includes("/");
 
@@ -88,18 +95,19 @@ export class FileManager {
   * compress the raw data of an image
   *
   * @param {Blob} data - the raw data of the image
+  * @param {string} - the name of the file
   * @param {string} mimeType - the MIME type of the image
   * @return {Blob} - the compressed data of the image
   */
-  static async #compressImage(data, mimeType) {
+  static async #compressImage(data, filename, mimeType) {
     // options for image compression
     const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 400,
-      fileType: 'image/webp'
+      maxSizeMB: FileManager.MAX_SIZE_MB,
+      maxWidthOrHeight: FileManager.MAX_SIZE_PX,
+      fileType: FileManager.NEW_FORMAT
     }
 
-    const file = new File([data], "file", {
+    const file = new File([data], `compressed_${filename}`, {
       type: mimeType,
     });
 
