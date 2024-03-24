@@ -69,7 +69,7 @@ function removeArchive(index) {
       <ArchiveDropzone @filesUpdated="addArchives" class="p-3" /> 
 
       <div class="overflow-y-auto space-y-3 flex flex-col px-3 flex-1 scrollbar-hide">
-        <span v-for="file in fileData">
+        <span v-for="archive, i in archiveList">
           <ArchiveCard :index="i" :fileName="archive.filename" :fileSize="archive.readableSize" :nbImages="archive.images.length" @deleteItself="removeArchive" />
         </span>
       </div>
