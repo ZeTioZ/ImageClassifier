@@ -47,8 +47,13 @@ export class FileManager {
   * @param {object} options - options to get data from the entry
   * @return {string} - the URL to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
   */
-  static async #createURL(entry, options) {
+  static async #createURL(entry, compressed, options) {
     const entryData = await entry.getData(new BlobWriter(), options);
+
+    // compress the image if compressed is true
+    if (compressed) {
+      entryData = await FileManager.#compressImage(entryData);
+    }
 
     return URL.createObjectURL(entryData);
   }
@@ -110,9 +115,10 @@ export class FileManager {
   * Get the URL for an entry
   *
   * @param {import('@zip.js/zip.js').Entry} entry - the entry 
-  * @return {} -
+  * @param {boolean} compressed - if the URL created should be of a compressed image or not
+  * @return {string} - the URL for an image, in a blob URL format (i.e. https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static)
   */
-  static async getURL(entry) {
+  static async getURL(entry, compressed = false) {
     // to keep track of the extraction progress
     let unzipProgress = {
       index: null,
@@ -126,7 +132,7 @@ export class FileManager {
     // `controller.abort()`
 
     try {
-      const blobURL = await FileManager.#createURL(entry, {
+      const blobURL = await FileManager.#createURL(entry, compressed, {
         // password: passwordInput.value,
         onprogress: (index, max) => {
           unzipProgress.index = index;
