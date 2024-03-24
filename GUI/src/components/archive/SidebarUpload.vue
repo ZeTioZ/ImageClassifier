@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, toRaw } from 'vue';
+import { ref, computed } from 'vue';
 
 import ArchiveDropzone from '@/components/archive/ArchiveDropzone.vue';
 import ArchiveCard from '@/components/archive/ArchiveCard.vue';
@@ -14,26 +14,26 @@ const fileBuffer = new DataTransfer();
 // data to display in archive cards, each one representing an archive object
 const archiveList = ref([]);
 
-
-
 /**
  * update the archive list and buffer (new archives)
  *
  * @param {object} archives - object containing new archives to process
  */
-function addArchives(archives) {
+async function addArchives(archives) {
   // iterate through new archives 
-  archives.forEach(archiveFile => {
-    // add data to card placeholder
+  for await (const archiveFile of archives) {
     const newArchive = new Archive(archiveFile);
-    archiveList.value.push(newArchive);
 
-    console.log(newArchive);
+    // load archive
+    await newArchive.load();
+    console.log(`archive '${newArchive.filename}' loaded: ${newArchive.images.length} image(s)`);
+
+    // add data to card placeholder
+    archiveList.value.push(newArchive);
 
     // update file buffer
     fileBuffer.items.add(archiveFile);
-    console.log(fileBuffer);
-  });
+  }
 }
  
 /**

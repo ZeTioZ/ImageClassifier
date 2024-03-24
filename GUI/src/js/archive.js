@@ -79,7 +79,7 @@ export class Archive {
     return this._loaded;
   }
 
-  async loadArchive() {
+  async load() {
     if(!this._loaded) {
       const entries = await FileManager.loadArchive(this._file);
       
