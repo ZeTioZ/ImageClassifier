@@ -64,15 +64,30 @@ function removeArchive(index) {
 
 <template>
   <aside id="upload-sidebar" class="w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-200 flex flex-col space-y-3 relative">
+    <div class="h-full overflow-y-clip bg-gray-200 flex flex-col relative justify-between">
 
-      <ArchiveDropzone @filesUpdated="addArchives" /> 
+      <ArchiveDropzone @filesUpdated="addArchives" class="p-3" /> 
 
-      <span v-for="archive, i in archiveList">
-        <ArchiveCard :index="i" :fileName="archive.filename" :fileSize="archive.readableSize" :nbImages="archive.images.length" @deleteItself="removeArchive" />
-      </span>
+      <div class="overflow-y-auto space-y-3 flex flex-col px-3 flex-1 scrollbar-hide">
+        <span v-for="file in fileData">
+          <ArchiveCard :index="i" :fileName="archive.filename" :fileSize="archive.readableSize" :nbImages="archive.images.length" @deleteItself="removeArchive" />
+        </span>
+      </div>
 
-      <ArchiveSubmit @submit="" class="absolute bottom-0 inset-x-0"/> 
+      <ArchiveSubmit @submit="" class="mt-3"/>
+
     </div>
   </aside>
 </template>
+
+<style scoped>
+/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Pour les navigateurs Webkit */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Pour IE et Edge */
+  scrollbar-width: none;  /* Pour Firefox */
+}
+</style>
