@@ -3,23 +3,26 @@ import { FileManager } from './file-manager';
 
 export class Image {
 
-  #hash
-  #filename
-  #size
-  #tags
-  #toBeDeleted
-  #reasonForDeletion
+  // All fields are private and should not be accessed outside of the class.
+  // The getters bellow should be used instead.
+  // ES6 introduced private variable (#myVar), but are currently incompatible with Vue.js.
+  _hash
+  _filename
+  _size
+  _tags
+  _toBeDeleted
+  _reasonForDeletion
 
-  #archiveEntry
-  #thumbnailBlobURL
-  #blobURL
+  _archiveEntry
+  _thumbnailBlobURL
+  _blobURL
 
   constructor(entry) {
-    this.#archiveEntry = entry;
-    this.#filename = entry.filename;
-    this.#size = entry.uncompressedSize;
-    this.#tags = [];
-    this.#toBeDeleted = false;
+    this._archiveEntry = entry;
+    this._filename = entry.filename;
+    this._size = entry.uncompressedSize;
+    this._tags = [];
+    this._toBeDeleted = false;
   }
 
   /**
@@ -28,7 +31,7 @@ export class Image {
   * @return {import('@zip.js/zip.js').Entry} - the entry of the image 
   */
   get archiveEntry() {
-    return this.#archiveEntry;
+    return this._archiveEntry;
   }
   
   /**
@@ -37,7 +40,7 @@ export class Image {
   * @return {string} - a hash 
   */
   get hash() {
-    return this.#hash;
+    return this._hash;
   }
 
   /**
@@ -46,7 +49,7 @@ export class Image {
   * @return {string} - the name of the image
   */
   get filename() {
-    return this.filename;
+    return this._filename;
   }
 
   /**
@@ -57,7 +60,7 @@ export class Image {
   get extension() {
     const re = /(?:\.([^.]+))?$/;
    
-    return re.exec(this.#filename)[1];
+    return re.exec(this._filename)[1];
   }
 
   /**
@@ -66,7 +69,7 @@ export class Image {
   * @return {number} - the size of the image
   */
   get size() {
-    return this.#size;
+    return this._size;
   }
 
   /**
@@ -76,11 +79,11 @@ export class Image {
   */
   get readableSize() {
     const units = ['o', 'Ko', 'Mo', 'Go', 'To'];
-    const i = this.#size == 0 
+    const i = this._size == 0 
       ? 0 
-      : Math.floor(Math.log(this.#size) / Math.log(1000));
+      : Math.floor(Math.log(this._size) / Math.log(1000));
 
-    const size = (this.#size / Math.pow(1000, i)).toFixed(2) * 1;
+    const size = (this._size / Math.pow(1000, i)).toFixed(2) * 1;
     const unit = units[i];
 
     return `${size} ${unit}`;
@@ -92,7 +95,7 @@ export class Image {
   * @return {Array.<Tag>} - a list of tags
   */
   get tags() {
-    return this.#tags;
+    return this._tags;
   }
 
   /**
@@ -101,7 +104,7 @@ export class Image {
   * @return {boolean} - true if the image is to be deleted, false otherwise
   */
   get toBeDeleted() {
-    return this.#toBeDeleted;
+    return this._toBeDeleted;
   }
 
   /**
@@ -110,7 +113,7 @@ export class Image {
   * @return ? 
   */
   get reasonForDeletion() {
-    return this.#reasonForDeletion;
+    return this._reasonForDeletion;
   }
 
   /**
@@ -122,19 +125,19 @@ export class Image {
   */
   async getBlobURL(thumbnail = true) {
     // which blob url to use
-    const blobURLToUse = thumbnail ? this.#thumbnailBlobURL : this.#blobURL;
+    const blobURLToUse = thumbnail ? this._thumbnailBlobURL : this._blobURL;
 
     // if blob url is null (undefined), create it 
     if (blobURLToUse == null) {
-      const newBlobURL = await FileManager.getURL(this.#archiveEntry, thumbnail);
+      const newBlobURL = await FileManager.getURL(this._archiveEntry, thumbnail);
 
       if (thumbnail) {
-        this.#thumbnailBlobURL = newBlobURL;
+        this._thumbnailBlobURL = newBlobURL;
       } else {
-        this.#blobURL = newBlobURL;
+        this._blobURL = newBlobURL;
       }
     }
 
-    return thumbnail ? this.#thumbnailBlobURL : this.#blobURL;
+    return thumbnail ? this._thumbnailBlobURL : this._blobURL;
   }
 }

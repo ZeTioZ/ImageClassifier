@@ -3,7 +3,7 @@ import {
   BlobReader,
   BlobWriter,
 } from '@zip.js/zip.js';
-import { imageCompression } from 'browser-image-compression';
+import imageCompression from 'browser-image-compression';
 
 
 export class FileManager {

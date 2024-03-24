@@ -5,12 +5,14 @@ import ArchiveDropzone from '@/components/archive/ArchiveDropzone.vue';
 import ArchiveCard from '@/components/archive/ArchiveCard.vue';
 import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
+import { Archive } from '@/js/archive';
+
 // buffer used to store changeable file references before submitting them to the backend,
 // allowing user to select file more than once without a reset
 const fileBuffer = new DataTransfer();
 
-// data to display in archive cards, each one representing an archive
-const fileData = ref([]);
+// data to display in archive cards, each one representing an archive object
+const archiveList = ref([]);
 
 
 
@@ -21,17 +23,16 @@ const fileData = ref([]);
  */
 function addArchives(archives) {
   // iterate through new archives 
-  archives.forEach(archive => {
+  archives.forEach(archiveFile => {
     // add data to card placeholder
-    fileData.value.push({
-      fileName: archive.name,
-      fileSize: humanFileSize(archive.size),
-      nbImages: 0
-    });
+    const newArchive = new Archive(archiveFile);
+    archiveList.value.push(newArchive);
+
+    console.log(newArchive);
 
     // update file buffer
-    fileBuffer.items.add(archive);
-    console.log(fileBuffer)
+    fileBuffer.items.add(archiveFile);
+    console.log(fileBuffer);
   });
 }
  
@@ -42,16 +43,16 @@ function addArchives(archives) {
  */
 function removeArchive(index) {
   // remove archive from card place holder
-  let newFileData = [];
+  let newArchiveList = [];
 
-  for (var i = 0; i < fileData.value.length; i++) {
+  for (var i = 0; i < archiveList.value.length; i++) {
     // manual filter by index with a for loop due to Vue reactivity with nested ref objects (i.e. Proxy)
     if (i !== index) {
-      newFileData.push(fileData.value[i]);
+      newArchiveList.push(archiveList.value[i]);
     }
   }
   
-  fileData.value = newFileData;
+  archiveList.value = newArchiveList;
 
   // remove associated images
   // TODO  
@@ -67,8 +68,8 @@ function removeArchive(index) {
 
       <ArchiveDropzone @filesUpdated="addArchives" /> 
 
-      <span v-for="file, i in fileData">
-        <ArchiveCard :index="i" :fileName="file.fileName" :fileSize="file.fileSize" :nbImages="file.nbImages" @deleteItself="removeArchive" />
+      <span v-for="archive, i in archiveList">
+        <ArchiveCard :index="i" :fileName="archive.filename" :fileSize="archive.readableSize" :nbImages="archive.images.length" @deleteItself="removeArchive" />
       </span>
 
       <ArchiveSubmit class="absolute bottom-0 inset-x-0"/>
