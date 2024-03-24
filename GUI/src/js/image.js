@@ -58,9 +58,7 @@ export class Image {
   * @return {string} - the extension of the image
   */
   get extension() {
-    const re = /(?:\.([^.]+))?$/;
-   
-    return re.exec(this._filename)[1];
+    return FileManager.getExtension(this._filename);
   }
 
   /**

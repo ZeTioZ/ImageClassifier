@@ -2,6 +2,7 @@ import {
   ZipReader,
   BlobReader,
   BlobWriter,
+  getMimeType,
 } from '@zip.js/zip.js';
 import imageCompression from 'browser-image-compression';
 
@@ -49,11 +50,12 @@ export class FileManager {
   * @return {string} - the URL to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
   */
   static async #createURL(entry, compressed, options) {
-    const entryData = await entry.getData(new BlobWriter(), options);
+    let entryData = await entry.getData(new BlobWriter(), options);
 
     // compress the image if compressed is true
     if (compressed) {
-      entryData = await FileManager.#compressImage(entryData);
+      const mimeType = getMimeType(FileManager.getExtension(entry.filename));
+      entryData = await FileManager.#compressImage(entryData, mimeType);
     }
 
     return URL.createObjectURL(entryData);
@@ -63,22 +65,19 @@ export class FileManager {
   * Get a list of image files present in the archive
   *
   * @param {Array.<import('@zip.js/zip.js').Entry>} entries - list of entries to process
-  * @return {Array.<{file: import('@zip.js/zip.js').Entry, index: Number}>} - list of object representing an image entry on the root 
+  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of object representing an image entry on the root 
   */
   static #getImageList(entries) {
     const imageList = [];
 
-    entries.forEach((entry, entryIndex) => {
+    entries.forEach(entry => {
       const extEndsWith = (ext) => entry.filename.toLowerCase().endsWith(ext);
       const isImage = Boolean(FileManager.allowedImageExtensions.find(extEndsWith));
 
       const isInRootFolder = !entry.filename.includes("/");
 
       if (!entry.directory && isImage && isInRootFolder) {
-        imageList.push({
-          file: entry,
-          index: entryIndex
-        });
+        imageList.push(entry);
       }
     });
 
@@ -89,17 +88,35 @@ export class FileManager {
   * compress the raw data of an image
   *
   * @param {Blob} data - the raw data of the image
+  * @param {string} mimeType - the MIME type of the image
   * @return {Blob} - the compressed data of the image
   */
-  static async #compressImage(data) {
-    // options for the compression
+  static async #compressImage(data, mimeType) {
+    // options for image compression
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 400,
       fileType: 'image/webp'
     }
 
-    return await imageCompression(data, options);    
+    const file = new File([data], "file", {
+      type: mimeType,
+    });
+
+    return await imageCompression(file, options);    
+  }
+
+
+  /**
+  * Get the extension of a file given it filename
+  * 
+  * @param {string} filename - the name of the file
+  * @return {string} - the extension of the file
+  */
+  static getExtension(filename) {
+    const re = /(?:\.([^.]+))?$/;
+   
+    return re.exec(filename)[1];
   }
 
   /**
@@ -136,7 +153,7 @@ export class FileManager {
   * @param {boolean} compressed - if the URL created should be of a compressed image or not
   * @return {string} - the URL for an image, in a blob URL format (i.e. https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static)
   */
-  static async getURL(entry, compressed = false) {
+  static async getURL(entry, compressed = true) {
     // to keep track of the extraction progress
     let unzipProgress = {
       index: null,

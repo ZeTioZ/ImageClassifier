@@ -82,7 +82,7 @@ export class Archive {
   async load() {
     if(!this._loaded) {
       const entries = await FileManager.loadArchive(this._file);
-      
+
       entries.forEach(entry => {
         this._images.push(new Image(entry));
       });
