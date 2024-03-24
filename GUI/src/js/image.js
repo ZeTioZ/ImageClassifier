@@ -114,29 +114,27 @@ export class Image {
   }
 
   /**
-  * get the url pointing to the image (i.e. src in img tag)
+  * get the url pointing to the image (i.e. src in img tag).
+  * create the blob url if the blob URL is undefined, return it otherwise
   *
   * @param {boolean} [thumbnail=true] - if a thumbnail or the full image should be sourced
   * @returns {string} - the url of the image
   */
   async getBlobURL(thumbnail = true) {
-    // create blob url if this.blobURL is undefined, create it otherwise 
+    // which blob url to use
+    const blobURLToUse = thumbnail ? this.#thumbnailBlobURL : this.#blobURL;
 
-    if (thumbnail) {
-      if (this.#thumbnailBlobURL == null) {
-        const newBlobURL = await FileManager.getURL(this.#archiveEntry)
+    // if blob url is null (undefined), create it 
+    if (blobURLToUse == null) {
+      const newBlobURL = await FileManager.getURL(this.#archiveEntry, thumbnail);
+
+      if (thumbnail) {
         this.#thumbnailBlobURL = newBlobURL;
-      }
-
-      return this.#thumbnailBlobURL;
-    }
-    else {
-      if (this.#blobURL == null) {
-        const newBlobURL = await FileManager.getURL(this.#archiveEntry) //TODO: add compression option in getURL
+      } else {
         this.#blobURL = newBlobURL;
       }
-
-      return this.#thumbnailBlobURL;
     }
+
+    return thumbnail ? this.#thumbnailBlobURL : this.#blobURL;
   }
 }
