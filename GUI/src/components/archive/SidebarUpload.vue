@@ -60,15 +60,6 @@ function removeArchive(index) {
   // remove file from file buffer
   fileBuffer.items.remove(index);
 }
-
-function test() {
-  archiveList.value.forEach(archive => {
-    // console.log(archive.images[0].getBlobURL());
-    archive.images.forEach(image => {
-      console.log(image.getBlobURL(false));
-    });
-  });
-}
 </script>
 
 <template>
@@ -81,8 +72,7 @@ function test() {
         <ArchiveCard :index="i" :fileName="archive.filename" :fileSize="archive.readableSize" :nbImages="archive.images.length" @deleteItself="removeArchive" />
       </span>
 
-      <ArchiveSubmit @submit="test" class="absolute bottom-0 inset-x-0"/>
-
+      <ArchiveSubmit @submit="" class="absolute bottom-0 inset-x-0"/> 
     </div>
   </aside>
 </template>

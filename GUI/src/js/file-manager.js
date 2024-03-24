@@ -63,7 +63,7 @@ export class FileManager {
     // compress the image if compressed is true
     if (compressed) {
       const mimeType = getMimeType(FileManager.getExtension(entry.filename));
-      entryData = await FileManager.#compressImage(entryData, filename, mimeType);
+      entryData = await FileManager.#compressImage(entryData, entry.filename, mimeType);
     }
 
     return URL.createObjectURL(entryData);
