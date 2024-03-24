@@ -196,5 +196,16 @@ export class FileManager {
       // abortButton.remove();
     }
   }
+
+  /**
+  * Remove a previously created blob URL. This function exists because
+  * a blob URL is persistant to the page when created. It should be used when
+  * an image is to be removed.
+  *
+  * @param {string} url - the URL of the blob object to remove
+  */
+  static destroyURL(url) {
+    URL.revokeObjectURL(url);
+  }
 }
 
