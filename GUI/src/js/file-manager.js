@@ -3,6 +3,7 @@ import {
   BlobReader,
   BlobWriter,
 } from '@zip.js/zip.js';
+import { imageCompression } from 'browser-image-compression';
 
 
 export class FileManager {
@@ -82,6 +83,23 @@ export class FileManager {
     });
 
     return imageList;
+  }
+
+  /**
+  * compress the raw data of an image
+  *
+  * @param {Blob} data - the raw data of the image
+  * @return {Blob} - the compressed data of the image
+  */
+  static async #compressImage(data) {
+    // options for the compression
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 400,
+      fileType: 'image/webp'
+    }
+
+    return await imageCompression(data, options);    
   }
 
   /**
