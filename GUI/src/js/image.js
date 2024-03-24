@@ -138,4 +138,13 @@ export class Image {
 
     return thumbnail ? this._thumbnailBlobURL : this._blobURL;
   }
+
+  /**
+  * Destroy URLs for both the preview and full image.
+  * Nothing happens if they don't exist.
+  */
+  destroyBlobURLs() {
+    FileManager.destroyURL(this._thumbnailBlobURL);
+    FileManager.destroyURL(this._blobURL);
+  }
 }

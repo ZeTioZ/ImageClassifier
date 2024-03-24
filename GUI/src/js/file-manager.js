@@ -128,13 +128,13 @@ export class FileManager {
   }
 
   /**
-  * Load an archive and get a list of entries
+  * Load an archive and get a list of image entries
   *
   * @param {Blob} archive - blob of the archive in which entries must be read
   * @param {string} filenameEncoding - the encoding of the filename of the entry
-  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of the entries
+  * @return {Array.<import('@zip.js/zip.js').Entry>} - list of image entries
   */
-  static async loadArchive(archive, filenameEncoding) {
+  static async getImageEntries(archive, filenameEncoding) {
     let entries = await FileManager.#getEntries(archive, { filenameEncoding });
 
     if (entries && entries.length) {

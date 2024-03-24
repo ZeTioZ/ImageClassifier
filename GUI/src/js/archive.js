@@ -79,9 +79,12 @@ export class Archive {
     return this._loaded;
   }
 
+  /**
+  * Load the archive and get image entries.
+  */
   async load() {
     if(!this._loaded) {
-      const entries = await FileManager.loadArchive(this._file);
+      const entries = await FileManager.getImageEntries(this._file);
 
       entries.forEach(entry => {
         this._images.push(new Image(entry));
@@ -89,5 +92,23 @@ export class Archive {
 
       this._loaded = true;
     }
+  }
+
+  /**
+  * Unload the archive to free resources.
+  *
+  * /!\ THIS FUNCTION MUST BE CALLED BEFORE THE ARCHIVE INSTANCE
+  * IS DESTROYED BY THE GARBAGE COLLECTOR /!\
+  *
+  * Why ? To remove the blob URL created for images (this process can't be automated).
+  */
+  unload() {
+    // destroy blob URLs for each images (free unused RAM in the browser)
+    this._images.forEach(image => {
+      image.destroyBlobURLs();
+    });
+
+    this._images = [];
+    this._loaded = false;
   }
 }
