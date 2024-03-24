@@ -46,16 +46,23 @@ function removeArchive(index) {
   let newArchiveList = [];
 
   for (var i = 0; i < archiveList.value.length; i++) {
+    const archive = archiveList.value[i];
+
     // manual filter by index with a for loop due to Vue reactivity with nested ref objects (i.e. Proxy)
     if (i !== index) {
-      newArchiveList.push(archiveList.value[i]);
+      // keep archive
+      newArchiveList.push(archive);
+    } else {
+      // unload archive to free resources used for blob URLs
+      archive.unload();
+      console.log(`archive '${archive.filename}' unloaded`);
     }
   }
   
   archiveList.value = newArchiveList;
 
   // remove associated images
-  // TODO  
+  // TODO
 
   // remove file from file buffer
   fileBuffer.items.remove(index);
