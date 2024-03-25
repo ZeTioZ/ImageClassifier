@@ -1,12 +1,14 @@
 <script setup>
 import HEllipsis from '@/components/icons/HEllipsis.vue';
 
-const props = defineProps(['fileName', 'fileSize', 'nbImages']); 
+const emit = defineEmits(['deleteItself']);
+
+const props = defineProps(['index', 'fileName', 'fileSize', 'nbImages']);
 </script>
 
 <template>
   <div class="relative">
-    <a href="#" class="absolute top-0 right-0">
+    <a href="#" class="absolute top-0 right-0" @click="$emit('deleteItself', index)"> <!-- TODO: put remove card on other DOM -->
       <div class="p-1 m-1 rounded-full text-ls-bleu-fonce hover:bg-gray-100">
         <HEllipsis class="w-6 h-6"/>
       </div>

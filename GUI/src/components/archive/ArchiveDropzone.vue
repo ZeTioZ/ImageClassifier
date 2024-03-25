@@ -1,5 +1,15 @@
 <script setup>
 import Cloud from '@/components/icons/Cloud.vue';
+
+const emit = defineEmits(['filesUpdated']);
+
+function updateFileList(event) {
+  // emit event with files as parameter
+  emit('filesUpdated', event.target.files);
+
+  // clear files in the input for clean view when user's host popup opens
+  event.target.value = null;
+}
 </script>
 
 <template>
@@ -10,7 +20,7 @@ import Cloud from '@/components/icons/Cloud.vue';
         <p class="mb-2 text-sm text-ls-bleu-fonce text-center"><strong>Cliquer pour uploader</strong><br>(ou glisser et déposer)</p>
         <p class="text-xs font-bold text-gray-700">.zip</p>
       </div>
-      <input id="dropzone-file" type="file" class="hidden" />
+      <input id="dropzone-file" type="file" accept=".zip" class="hidden" @change="updateFileList" multiple />
     </label>
   </div> 
 </template>
