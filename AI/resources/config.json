@@ -1,0 +1,7 @@
+{
+    "blur_precision": 151.0,
+    "image_min_width": 400,
+    "image_min_height": 400,
+    "image_min_brightness": 51.0,
+    "banned_tags": ["nasty"]
+}
