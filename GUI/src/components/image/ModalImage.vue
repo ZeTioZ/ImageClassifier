@@ -64,6 +64,7 @@ function toggleDel(){
 </div>
 </template>
 
+
 <!---
 <img :id="fileName" :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover">
 -->
