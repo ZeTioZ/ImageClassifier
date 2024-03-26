@@ -6,6 +6,7 @@ import ArchiveCard from '@/components/archive/ArchiveCard.vue';
 import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
+import { post } from '@/api/uploads';
 
 // buffer used to store changeable file references before submitting them to the backend,
 // allowing user to select file more than once without a reset
@@ -72,8 +73,10 @@ function removeArchive(index) {
  * Submit archive(s), tags and batch name and call endpoint
  */
 function submit(newTags) {
-  
-}
+  const files = archiveList.value.map(archive => archive.file);
+
+  post(files, ["test"], "test");
+} 
 </script>
 
 <template>
