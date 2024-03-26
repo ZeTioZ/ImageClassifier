@@ -68,5 +68,5 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 							   "is_qualitative": is_qualitative,
 							   "quality_tags": list(
 								   filter(lambda x: not isinstance(quality_tags[x], list) and quality_tags[x],
-										  quality_tags.keys())) + quality_tags["banned_tags"]}
+										  quality_tags.keys()))}
 	return tags
