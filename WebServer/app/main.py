@@ -9,8 +9,24 @@ from models.config import Config
 from __init__ import resources_path, extracted_path, uploads_path, get_parent_path, join_char
 
 from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+
+# CORS settings (see https://fastapi.tiangolo.com/tutorial/cors)
+origins = [
+    "http://localhost:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/tags")
