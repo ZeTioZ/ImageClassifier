@@ -7,7 +7,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 
 // axios setup
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'http://localhost:8000';
 
 
 const app = createApp(App);
