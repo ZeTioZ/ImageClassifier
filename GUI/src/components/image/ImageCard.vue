@@ -10,6 +10,17 @@ const showModalI = ref(false);
 function toggleModalImage(){
   showModalI.value = !showModalI.value;
 }
+function handleAdd(term){
+  tags.push(term)
+}
+
+function handleDel(term){
+  for (tag in tags){
+    if (tag == term){
+      tags.splice(tag.indexOf())
+    }
+  }
+}
 </script>
 
 <template>
@@ -45,7 +56,7 @@ function toggleModalImage(){
     </div>
   </div>
 <!-- MODALS -->
-<ModalImage v-if="showModalI" @close="toggleModalImage"/>
+<ModalImage v-if="showModalI" @close="toggleModalImage" @add="handleAdd" @del="handleDel"/>
 </template>
 
 <style scoped>

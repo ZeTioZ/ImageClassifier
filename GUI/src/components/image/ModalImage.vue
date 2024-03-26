@@ -4,6 +4,7 @@ import {ref} from 'vue';
 const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'size', 'resolution']);
 const showAdd = ref(false);
 const showDel = ref(false);
+const emit = defineEmits(['close', 'add', 'del']);
 
 function closeModal() {
   emit('close');
@@ -13,6 +14,12 @@ function toggleAdd(){
 }
 function toggleDel(){
   showDel.value = !showDel.value;
+}
+function tagToAdd() {
+  emit('add', addTag.value);
+}
+function tagToDel() {
+  emit('del', delTag.value);
 }
 
 </script>
@@ -40,11 +47,11 @@ function toggleDel(){
                 <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                   <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600" @click="toggleAdd">Add</button> 
                   <div v-if="showAdd">
-                    <input type="text" id="tagAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tag to add" required />
+                    <input v-model="addTag" type="text" id="tagAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tag to add" @keyup.enter="tagToAdd"/>
                   </div>
                   <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600" @click="toggleDel">Delete</button>
                   <div v-if="showDel">
-                    <input type="text" id="tagDel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tag to delete" required />
+                    <input v-model="delTag" type="text" id="tagDel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tag to delete" @keyup.enter="tagToDel"/>
                   </div>
                 </p>
                 <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
