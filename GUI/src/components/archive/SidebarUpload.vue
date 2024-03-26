@@ -67,6 +67,13 @@ function removeArchive(index) {
   // remove file from file buffer
   fileBuffer.items.remove(index);
 }
+
+/**
+ * Submit archive(s), tags and batch name and call endpoint
+ */
+function submit(newTags) {
+  
+}
 </script>
 
 <template>
@@ -81,7 +88,7 @@ function removeArchive(index) {
         </span>
       </div>
 
-      <ArchiveSubmit @submit="" class="mt-3"/>
+      <ArchiveSubmit @submit="submit" class="mt-3"/>
 
     </div>
   </aside>
