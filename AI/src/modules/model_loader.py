@@ -54,13 +54,13 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 				if banned_tag in found_tags:
 					found_tags.remove(banned_tag)
 			# FOR DEMO
-			prediction_image = box_visualizer(image, boxes, print_classes=True)
-			multiplier = image.shape[1] / 1000
-			prediction_image = cv2.resize(prediction_image,
-										  (int(image.shape[1] / multiplier), int(image.shape[0] / multiplier)))
-			cv2.imshow('Prediction', prediction_image)
-			cv2.waitKey(0)
-			cv2.destroyAllWindows()
+			#prediction_image = box_visualizer(image, boxes, print_classes=True)
+			#multiplier = image.shape[1] / 1000
+			#prediction_image = cv2.resize(prediction_image,
+			#							  (int(image.shape[1] / multiplier), int(image.shape[0] / multiplier)))
+			#cv2.imshow('Prediction', prediction_image)
+			#cv2.waitKey(0)
+			#cv2.destroyAllWindows()
 			# END FOR DEMO
 			tags[file.name] = {"hash": file.__hash__(),
 							   "detection_tags": list(dict.fromkeys([box.cls for box in boxes])) +
