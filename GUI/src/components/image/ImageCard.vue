@@ -21,8 +21,8 @@ function toggleModalImage(){
       <!-- Image name -->
       <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce">{{ fileName }}</span>
       <!-- Three dots/menu icon -->
-      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1">
-        <VEllipsis class="w-4 h-4" />
+      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1" >
+        <VEllipsis class="w-4 h-4"/>
       </a>
     </div>
 
