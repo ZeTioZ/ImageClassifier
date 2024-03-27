@@ -12,6 +12,20 @@ const props = defineProps({
 // Référence réactive pour les images 
 const draggableImages = ref(props.images);
 
+// Référence réactive pour les images sélectionnées
+const selectedImages = ref([]);
+
+// Fonction pour basculer la sélection d'une image
+function toggleImageSelection(index) {
+  const selectedIndex = selectedImages.value.indexOf(index);
+  if (selectedIndex >= 0) {
+    selectedImages.value.splice(selectedIndex, 1); // Désélectionner
+  } else {
+    selectedImages.value.push(index); // Sélectionner
+  }
+  console.log(selectedImages.value);
+}
+
 function onEnd(event) {
   // Vérifie si l'élément a été déplacé vers une liste différente
   if (event.from !== event.to) {
@@ -40,8 +54,8 @@ function onEnd(event) {
     <div class="flex-1 p-2 pt-0 pb-12 overflow-y-auto scrollbar-hide">
       <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
-          <div class="flex flex-col items-center">
-            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags"/>
+          <div class="flex flex-col items-center" @click="toggleImageSelection(index)">
+            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags" :imageSelection="selectedImages.value"/>
           </div>
         </template>
       </draggable>

@@ -4,7 +4,7 @@ import VEllipsis from '@/components/icons/VEllipsis.vue';
 
 import '@/assets/css/scrollbar-hide.css'; 
 
-const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
+const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'imageSelection']);
 </script>
 
 <template>
