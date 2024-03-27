@@ -14,9 +14,13 @@ export class Uploads {
   static async post(files, defaultTags, batchName) {
     const data = new FormData();
 
-    // append non-file fields
-    data.append("batch_name", batchName);
-    data.append("default_tags", defaultTags.join(','));
+    // append non-file fields if not null
+    if (batchName) {
+      data.append("batch_name", batchName);
+    }
+    if (defaultTags) {
+      data.append("default_tags", defaultTags.join(','));
+    }
 
     // append files
     files.forEach(file => {
