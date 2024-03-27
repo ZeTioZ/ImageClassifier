@@ -18,7 +18,7 @@ export class Uploads {
     if (batchName) {
       data.append("batch_name", batchName);
     }
-    if (defaultTags) {
+    if (defaultTags && defaultTags.length > 0) {
       data.append("default_tags", defaultTags.join(','));
     }
 

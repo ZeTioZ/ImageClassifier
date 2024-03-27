@@ -3,10 +3,7 @@ import ImageCard from '@/components/image/ImageCard.vue';
 import draggable from 'vuedraggable';
 import { ref } from 'vue';
 
-const props = defineProps({
-  workspaceName: String,
-  images: Array
-});
+const props = defineProps(['workspaceName', 'images']);
 
 // Référence réactive pour les images 
 const draggableImages = ref(props.images);
@@ -40,7 +37,9 @@ function onEnd(event) {
       <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center">
-            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags"/>
+            <!-- HERE -->
+            {{element.getBlobURL().then(a => alert(a))}}
+            <ImageCard :imgSrc="element.getBlobURL()" :index="index" :fileName="element.filename" :tags="element.tags"/>
           </div>
         </template>
       </draggable>

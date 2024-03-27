@@ -8,6 +8,8 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 import { Archive } from '@/js/archive';
 import { API } from '@/api/';
 
+const emits = defineEmits(['onNewImages']);
+
 // buffer used to store changeable file references before submitting them to the backend,
 // allowing user to select file more than once without a reset
 const fileBuffer = new DataTransfer();
@@ -72,10 +74,13 @@ function removeArchive(index) {
 /**
  * Submit archive(s), tags and batch name and call endpoint
  */
-function submit(newTags) {
+async function submit(newTags) {
   const files = archiveList.value.map(archive => archive.file);
 
-  const response = API.uploads.post(files, newTags, null);
+  const response = await API.uploads.post(files, newTags, null);
+
+  const images = archiveList.value[0].images;
+  emits('onNewImages', images);
 } 
 </script>
 

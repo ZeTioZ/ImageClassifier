@@ -4,6 +4,9 @@ import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
 import { ref, watch, computed } from 'vue';
 
+const props = defineProps(['images']);
+
+
 // tags
 const tags = {
   enfant:         {name: 'Enfant',        color: 'bg-ls-vert-base'},
@@ -25,43 +28,46 @@ const tags = {
   livre:          {name: 'Livre',         color: 'bg-black'}
 };
 
-import IMG1 from '@/assets/IMG/7.jfif';
-import IMG2 from '@/assets/IMG/4.jfif';
-import IMG3 from '@/assets/IMG/9.jfif';
-import IMG4 from '@/assets/IMG/10.jfif';
-import IMG5 from '@/assets/IMG/3.jpg';
-import IMG7 from '@/assets/IMG/5.jfif';
+// import IMG1 from '@/assets/IMG/7.jfif';
+// import IMG2 from '@/assets/IMG/4.jfif';
+// import IMG3 from '@/assets/IMG/9.jfif';
+// import IMG4 from '@/assets/IMG/10.jfif';
+// import IMG5 from '@/assets/IMG/3.jpg';
+// import IMG7 from '@/assets/IMG/5.jfif';
 
 // Définir les bonnes images avec leurs tags correspondants
-const GoodImages = [
-  { imgSrc: IMG1, tags: [tags['enfant'], tags['arbre'], tags['chapeau']] },
-  { imgSrc: IMG2, tags: [tags['rassemblement'], tags['arbre']] },
-  { imgSrc: IMG3, tags: [tags['feu'], tags['groupe']] },
-  { imgSrc: IMG4, tags: [tags['tobogan'], tags['groupe']] },
-  { imgSrc: IMG5, tags: [tags['groupe'], tags['danse'], tags['drapeau']] },
-  { imgSrc: IMG7, tags: [tags['main'], tags['groupe']] },
-];
+// const GoodImages = [
+//   { imgSrc: IMG1, tags: [tags['enfant'], tags['arbre'], tags['chapeau']] },
+//   { imgSrc: IMG2, tags: [tags['rassemblement'], tags['arbre']] },
+//   { imgSrc: IMG3, tags: [tags['feu'], tags['groupe']] },
+//   { imgSrc: IMG4, tags: [tags['tobogan'], tags['groupe']] },
+//   { imgSrc: IMG5, tags: [tags['groupe'], tags['danse'], tags['drapeau']] },
+//   { imgSrc: IMG7, tags: [tags['main'], tags['groupe']] },
+// ];
 
-import IMG11 from '@/assets/IMG/1.webp';
-import IMG12 from '@/assets/IMG/2.jpg';
-import IMG13 from '@/assets/IMG/11.jfif';
-import IMG14 from '@/assets/IMG/8.jfif';
-import IMG15 from '@/assets/IMG/13.jfif';
-import IMG16 from '@/assets/IMG/6.jpeg';
+// import IMG11 from '@/assets/IMG/1.webp';
+// import IMG12 from '@/assets/IMG/2.jpg';
+// import IMG13 from '@/assets/IMG/11.jfif';
+// import IMG14 from '@/assets/IMG/8.jfif';
+// import IMG15 from '@/assets/IMG/13.jfif';
+// import IMG16 from '@/assets/IMG/6.jpeg';
 
 // Définir les mauvaises images avec leurs tags correspondants
-const BadImages = [
-  { imgSrc: IMG11, tags: [tags['groupe'], tags['assis']] },
-  { imgSrc: IMG12, tags: [tags['course'], tags['arbre']] },
-  { imgSrc: IMG13, tags: [tags['roche']] },
-  { imgSrc: IMG14, tags: [tags['ville']] },
-  { imgSrc: IMG15, tags: [tags['livre'], tags['flou']] },
-  { imgSrc: IMG16, tags: [tags['brouillard'], tags['arbre']] },
-];
+// const BadImages = [
+//   { imgSrc: IMG11, tags: [tags['groupe'], tags['assis']] },
+//   { imgSrc: IMG12, tags: [tags['course'], tags['arbre']] },
+//   { imgSrc: IMG13, tags: [tags['roche']] },
+//   { imgSrc: IMG14, tags: [tags['ville']] },
+//   { imgSrc: IMG15, tags: [tags['livre'], tags['flou']] },
+//   { imgSrc: IMG16, tags: [tags['brouillard'], tags['arbre']] },
+// ];
 
 const searchTerm = ref('');
 const showModal = ref(false);
 const refreshKey = ref(0);
+
+const goodImages = computed(() => props['images'].filter(img => !img.toBeDeleted));
+const badImages = computed(() => props['images'].filter(img => img.toBeDeleted));
 
 function toggleModal() {
   showModal.value = !showModal.value;
@@ -85,8 +91,8 @@ function filterImages(imagesList) {
   // return [...matchedImages, ...unmatchedImages];
 }
 
-const filteredGoodImages = computed(() => filterImages(GoodImages));
-const filteredBadImages = computed(() => filterImages(BadImages));
+const filteredGoodImages = computed(() => filterImages(goodImages));
+const filteredBadImages = computed(() => filterImages(badImages));
 
 function handleSearch(term) {
   searchTerm.value = term;

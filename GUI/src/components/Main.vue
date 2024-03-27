@@ -1,18 +1,15 @@
 <script setup>
+import { ref } from 'vue';
 import Navbar from '@/components/navbar/Navbar.vue';
 import Workspace from '@/components/workspace/Workspace.vue';
 import SidebarUpload from '@/components/archive/SidebarUpload.vue';
 
-// import ExampleAPI from '@/api/example.js';
-//
-// ExampleAPI
-//   .getAll({})
-//   .then(() => {
-//     console.log("test");
-//   })
-//   .catch((e) => {
-//     console.log(e);
-//   });
+const images = ref([]);
+
+function newImages(newImages) {
+  console.log(newImages)
+  images.value = newImages;
+}
 </script>
 
 <template>
@@ -22,8 +19,8 @@ import SidebarUpload from '@/components/archive/SidebarUpload.vue';
 
     <!-- Page content -->
     <div class="overflow-hidden flex-1 flex flex-row">
-      <SidebarUpload />
-      <Workspace />
+      <SidebarUpload @onNewImages="newImages" />
+      <Workspace :images="images" />
     </div>
   </main>
 </template>
