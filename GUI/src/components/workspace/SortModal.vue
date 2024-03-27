@@ -86,10 +86,10 @@ input:checked ~ .w-10 {
   background-color: #4F46E5; /* Bleu */
 }
 
-/* Optionnel: changer la couleur du dot lorsqu'il est coché */
+/*changer la couleur du dot lorsqu'il est coché */
 input:checked ~ .toggle-dot {
   border: 2px solid #4F46E5;
-  background-color: #FFF; /* Garder le dot blanc ou choisir une autre couleur */
-  transform: translateX(24px); /* Assurez-vous que cette valeur correspond à la logique de déplacement */
+  background-color: #FFF; 
+  transform: translateX(24px);
 }
 </style>
