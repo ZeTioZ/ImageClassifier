@@ -10,6 +10,6 @@ const emits = defineEmits(['remove']);
     <button @click="$emit('remove')" class="bg-ls-rouge text-white rounded border">
       <XMark class="w-4 h-4" />
     </button>
-    <p class="ms-1 text-white">{{ tagName }}</p>
+    <p class="ms-1">{{ tagName }}</p>
   </li>
 </template>

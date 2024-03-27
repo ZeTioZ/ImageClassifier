@@ -59,9 +59,10 @@ const BadImages = [
   { imgSrc: IMG16, tags: [tags['brouillard'], tags['arbre']] },
 ];
 
-const searchTerm = ref('');
+const searchTerms = ref([]);
 const showModal = ref(false);
 const refreshKey = ref(0);
+const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 
 function toggleModal() {
   showModal.value = !showModal.value;
@@ -69,27 +70,35 @@ function toggleModal() {
 
 // Fonction de filtrage 
 function filterImages(imagesList) {
-  if (!searchTerm.value) {
+  if (!searchTerms.value || searchTerms.value.length === 0) {
     return imagesList;
   }
-  const matchedImages = imagesList.filter(image => 
-    image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  if (!invertShearch.value){
+  return imagesList.filter(image => 
+    image.tags.some(imageTag =>
+      searchTerms.value.some(searchTag =>
+        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+      )
+    )
   );
-  const unmatchedImages = imagesList.filter(image => 
-    !image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  }
+  else{
+  return imagesList.filter(image =>
+    !image.tags.some(imageTag =>
+      searchTerms.value.some(searchTag =>
+        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+      )
+    )
   );
-
-  //alternative ne retourner que les images correspondantes
-  return matchedImages;
-  // Retourner d'abord les images correspondantes, puis les autres
-  // return [...matchedImages, ...unmatchedImages];
+  }
 }
 
 const filteredGoodImages = computed(() => filterImages(GoodImages));
 const filteredBadImages = computed(() => filterImages(BadImages));
 
-function handleSearch(term) {
-  searchTerm.value = term;
+function handleSearch(terms) {
+  invertShearch.value = terms[1];
+  searchTerms.value = terms[0];
   refreshKey.value++;
 }
 
