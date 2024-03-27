@@ -54,4 +54,4 @@ def is_qualitative(image: Mat | np.ndarray[Any, np.dtype[np.generic]] | np.ndarr
     has_banned_tags = any([tag in classes for tag in config["banned_tags"]])
     result = not is_blurry and is_bright and has_min_width and has_min_height and not has_banned_tags
     return (result, {"blurry": is_blurry, "not_bright": not is_bright, "min_width": not has_min_width,
-                     "min_height": not has_min_height, "banned_tags": filter(lambda x: x in classes, config["banned_tags"])})
+                     "min_height": not has_min_height, "banned_tags": list(filter(lambda x: x in classes, config["banned_tags"]))})

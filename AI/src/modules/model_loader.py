@@ -1,3 +1,4 @@
+import hashlib
 import torch
 import cv2
 import pathlib
@@ -6,7 +7,6 @@ from ultralytics import YOLO
 
 from AI.src import extracted_path, supported_formats
 from AI.src.modules import quality_check
-from .draw_utils import box_visualizer
 from .yolov8_converter_utils import convert_image_box_outputs
 
 
@@ -41,7 +41,7 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 	"""
 	default_tags = default_tags if default_tags is not None else []
 	model = ModelLoader(model_path)
-	tags = {}
+	tags = {"classes": model.model.names}
 	for file in pathlib.Path(extracted_path).iterdir():
 		if file.is_file() and file.suffix in supported_formats:
 			image_path = file.absolute().__str__()
@@ -53,20 +53,22 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 			for banned_tag in quality_tags["banned_tags"]:
 				if banned_tag in found_tags:
 					found_tags.remove(banned_tag)
-			# FOR DEMO
-			#prediction_image = box_visualizer(image, boxes, print_classes=True)
-			#multiplier = image.shape[1] / 1000
-			#prediction_image = cv2.resize(prediction_image,
-			#							  (int(image.shape[1] / multiplier), int(image.shape[0] / multiplier)))
-			#cv2.imshow('Prediction', prediction_image)
-			#cv2.waitKey(0)
-			#cv2.destroyAllWindows()
-			# END FOR DEMO
-			tags[file.name] = {"hash": file.__hash__(),
-							   "detection_tags": list(dict.fromkeys([box.cls for box in boxes])) +
-												 default_tags,
-							   "is_qualitative": is_qualitative,
-							   "quality_tags": list(
-								   filter(lambda x: not isinstance(quality_tags[x], list) and quality_tags[x],
-										  quality_tags.keys()))}
+
+			tags[file.name] = {"hash": md5_hash_file(file.absolute().__str__()),
+			                   "detection_tags": list(dict.fromkeys([box.cls for box in boxes])) +
+			                                     default_tags,
+			                   "is_qualitative": is_qualitative,
+			                   "quality_tags": list(
+				                   filter(lambda x: not isinstance(quality_tags[x], list) and quality_tags[x],
+				                          quality_tags.keys())) + quality_tags["banned_tags"]}
 	return tags
+
+
+def md5_hash_file(file_path: str):
+	h = hashlib.md5()
+	b = bytearray(128*1024)
+	mv = memoryview(b)
+	with open(file_path, 'rb', buffering=0) as f:
+		while n := f.readinto(mv):
+			h.update(mv[:n])
+	return h.hexdigest()
