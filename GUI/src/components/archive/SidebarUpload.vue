@@ -75,7 +75,7 @@ function removeArchive(index) {
 function submit(newTags) {
   const files = archiveList.value.map(archive => archive.file);
 
-  API.uploads.post(files, null, null);
+  const response = API.uploads.post(files, newTags, null);
 } 
 </script>
 
