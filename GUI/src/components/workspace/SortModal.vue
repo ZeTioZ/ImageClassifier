@@ -48,17 +48,21 @@ function searchTags() {
             autocomplete="off" class="bg-white border border-gray-300 text-gray-700 text-xs block p-1 w-full rounded-s focus:outline-none" />
           <button @click="addNewTag" class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
         </div>
-        <!-- Invert search button -->
-        <button v-if=invertShearch id="invert-btn" @click="invertShearch = !invertShearch" 
-          class="px-2 bg-red-700 hover:bg-red-800 focus:outline-none
-          focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md shadow-sm ">
-          Sans ces tags
-        </button>
-        <button v-if=!invertShearch id="invert-btn" @click="invertShearch = !invertShearch" 
-          class="px-2 bg-green-700 hover:bg-green-800 focus:outline-none
-          focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md shadow-sm ">
-          Avec ces tags
-        </button>
+        <!-- Toggle pour inverser la recherche -->
+        <div class="mt-4">
+          <label for="toggle" class="flex items-center cursor-pointer">
+            <!-- Toggle -->
+            <div class="relative">
+              <input type="checkbox" id="toggle" class="sr-only" v-model="invertShearch">
+              <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+              <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+            </div>
+            <!-- Label -->
+            <div class="ml-3 text-gray-700 font-medium">
+              Rechercher sans les tags indiqués
+            </div>
+          </label>
+        </div>
         <!-- Search button -->
         <div class="items-center px-4 py-3">
           <button id="ok-btn" @click="searchTags" 
@@ -72,3 +76,20 @@ function searchTags() {
   </div>
 </template>
 
+<style>
+.toggle-dot {
+  border: 2px solid gray;
+  transition: transform 0.2s ease-in-out;
+}
+/* Fond du toggle quand il est coché */
+input:checked ~ .w-10 {
+  background-color: #4F46E5; /* Bleu */
+}
+
+/* Optionnel: changer la couleur du dot lorsqu'il est coché */
+input:checked ~ .toggle-dot {
+  border: 2px solid #4F46E5;
+  background-color: #FFF; /* Garder le dot blanc ou choisir une autre couleur */
+  transform: translateX(24px); /* Assurez-vous que cette valeur correspond à la logique de déplacement */
+}
+</style>
