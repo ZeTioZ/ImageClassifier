@@ -37,7 +37,7 @@ function searchTags() {
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
       <div class="mt-3 text-center">
         <!-- Title -->
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Triez par tag</h3>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Triez par mots-clés</h3>
         <!-- added tags list -->
         <ul class="text-sm space-y-1 text-black-700 list-disc list-inside mt-2">
           <ArchiveSubmitNewTag v-for="tag, i in Tags" :tagName="tag" @remove="removeTag(i)" />
@@ -59,7 +59,7 @@ function searchTags() {
             </div>
             <!-- Label -->
             <div class="ml-3 text-gray-700 font-medium">
-              Rechercher sans les tags indiqués
+              Rechercher sans les mots-clés indiqués
             </div>
           </label>
         </div>
@@ -78,17 +78,17 @@ function searchTags() {
 
 <style>
 .toggle-dot {
-  border: 2px solid gray;
+  border: 2px solid var(--ls-gris);
   transition: transform 0.2s ease-in-out;
 }
 /* Fond du toggle quand il est coché */
 input:checked ~ .w-10 {
-  background-color: #4F46E5; /* Bleu */
+  background-color: var(--ls-bleu-fonce); /* Bleu */
 }
 
 /*changer la couleur du dot lorsqu'il est coché */
 input:checked ~ .toggle-dot {
-  border: 2px solid #4F46E5;
+  border: 2px solid var(--ls-bleu-fonce);
   background-color: #FFF; 
   transform: translateX(24px);
 }
