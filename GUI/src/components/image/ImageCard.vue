@@ -2,6 +2,8 @@
 import Tag from '@/components/image/Tag.vue';
 import VEllipsis from '@/components/icons/VEllipsis.vue';
 
+import '@/assets/css/scrollbar-hide.css'; 
+
 const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
 </script>
 
@@ -38,14 +40,3 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
   </div>
 </template>
 
-<style scoped>
-/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Pour les navigateurs Webkit */
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* Pour IE et Edge */
-  scrollbar-width: none;  /* Pour Firefox */
-}
-</style>

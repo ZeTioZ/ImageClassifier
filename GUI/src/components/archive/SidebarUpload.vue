@@ -7,6 +7,8 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
 
+import '@/assets/css/scrollbar-hide.css'; 
+
 // buffer used to store changeable file references before submitting them to the backend,
 // allowing user to select file more than once without a reset
 const fileBuffer = new DataTransfer();
@@ -87,14 +89,3 @@ function removeArchive(index) {
   </aside>
 </template>
 
-<style scoped>
-/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Pour les navigateurs Webkit */
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* Pour IE et Edge */
-  scrollbar-width: none;  /* Pour Firefox */
-}
-</style>

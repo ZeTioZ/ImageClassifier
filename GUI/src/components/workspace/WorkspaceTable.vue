@@ -2,6 +2,7 @@
 import ImageCard from '@/components/image/ImageCard.vue';
 import draggable from 'vuedraggable';
 import { ref } from 'vue';
+import '@/assets/css/scrollbar-hide.css'; 
 
 const props = defineProps({
   workspaceName: String,
@@ -47,15 +48,3 @@ function onEnd(event) {
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Pour les navigateurs Webkit */
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* Pour IE et Edge */
-  scrollbar-width: none;  /* Pour Firefox */
-}
-</style>
