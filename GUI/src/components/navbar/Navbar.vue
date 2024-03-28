@@ -13,7 +13,7 @@ function toggleModalConfigIA(){
   <nav class="bg-ls-bleu-fonce">
     <div class="flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="#" class="flex items-center space-x-3 space-x-reverse">
-        <img src="@/components/icons/Logo.png" class="h-12" alt="Scout Lens" />
+        <img src="@/components/icons/Logo.png" class="h-12 m-2" alt="Scout Lens" />
         <span class="self-center text-2xl font-bold whitespace-nowrap text-white">Scout Lens</span>
       </a>
       <div class="block w-auto" id="navbar-solid-bg">
