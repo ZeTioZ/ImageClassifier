@@ -1,6 +1,6 @@
 <script>
     // tags
-    export const tags = {
+    const tags = {
     enfant:         {name: 'Enfant',        color: 'bg-ls-vert-base'},
     arbre:          {name: 'Arbre',         color: 'bg-ls-vert-fonce'},
     chapeau:        {name: 'Chapeau',       color: 'bg-ls-bleu-fonce'},
@@ -55,5 +55,5 @@
     ];
 
 
-    export default { tags, GoodImages, BadImages };
+    export default { GoodImages, BadImages };
 </script>

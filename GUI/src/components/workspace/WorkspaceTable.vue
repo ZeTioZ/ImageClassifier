@@ -33,7 +33,7 @@ function onEnd(event) {
   console.log('Nouvel indice:', event.newIndex);
 
   // Mettre à jour les indices dans selectedImages en fonction du déplacement
-  props.updateSelectedImagesIndices(event.oldIndex, event.newIndex, newlist);
+  props.updateSelectedImagesIndices(event.oldIndex, event.newIndex, newlist, props.workspaceName);
 }
 
 
@@ -47,7 +47,7 @@ function onEnd(event) {
         <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
       </div>
       <div>
-        <button @click="moveImages" class=" px-1 py-1 bg-gray-700 hover:bg-gray-800 focus:outline-none
+        <button @click="moveImages(props.workspaceName)" class=" px-1 py-1 bg-gray-700 hover:bg-gray-800 focus:outline-none
           focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">Déplacer la sélection</button>
       </div>
     </div>

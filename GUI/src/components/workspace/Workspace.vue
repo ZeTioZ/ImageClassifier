@@ -2,8 +2,8 @@
 import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
-import { GoodImages, BadImages, tags } from './ImageData.vue';
-import { ref, watch, computed } from 'vue';
+import { GoodImages, BadImages } from './ImageData.vue';
+import { ref, computed } from 'vue';
 
     const searchTerms = ref([]);
     const showModal = ref(false);
@@ -68,27 +68,26 @@ function toggleImageSelection(imageIndex, workspace) {
   console.log(imageIndex);
   console.log("selected images:",selectedImages.value);
 }
-// Fonction pour déplacer les images sélectionnées
-function moveImages() {
-  selectedImages.value.forEach((selectedImage) => {
-    // Déterminer la source et la destination en fonction du workspace de l'image sélectionnée
-    const source = selectedImage.workspace === 'Triées' ? GoodImages : BadImages;
-    const target = selectedImage.workspace === 'Triées' ? BadImages : GoodImages;
-    
-    // Trouver l'image dans la source en utilisant l'index
-    const image = source.find((img, index) => index === selectedImage.index);
+// Fonction pour déplacer les images sélectionnées d'un workspace spécifique
+function moveImages(workspace) {
+  // Filtrer pour obtenir uniquement les images sélectionnées du workspace spécifié
+  const imagesToMove = selectedImages.value.filter(selectedImage => selectedImage.workspace === workspace);
 
-    // Supprimer l'image de la source
-    if (image) {
-      source.splice(source.indexOf(image), 1);
+  imagesToMove.forEach(selectedImage => {
+    // Déterminer la source et la destination basées sur le workspace spécifié
+    const source = workspace === 'Triées' ? GoodImages : BadImages;
+    const target = workspace === 'Triées' ? BadImages : GoodImages;
 
-      // Ajouter l'image à la destination
-      target.push(image);
+    // Trouver l'image dans la source en utilisant l'index et la déplacer vers la cible
+    const imageIndex = source.findIndex((img, index) => index === selectedImage.index);
+    if (imageIndex !== -1) {
+      const [image] = source.splice(imageIndex, 1); // Supprimer l'image de la source
+      target.push(image); // Ajouter l'image à la destination
     }
   });
 
-  // Réinitialiser les sélections après le déplacement
-  selectedImages.value = [];
+  // Après le déplacement, supprimer les images déplacées des sélections
+  selectedImages.value = selectedImages.value.filter(selectedImage => !imagesToMove.includes(selectedImage));
 }
 //Fonction pour renvoyer si l'image est sélectionnée ou non
 function isImageSelected(imageIndex, workspace) {
@@ -96,42 +95,43 @@ function isImageSelected(imageIndex, workspace) {
     (selection) => selection.index === imageIndex && selection.workspace === workspace
   );
 }
+
 // Fonction pour mettre à jour les indices des images sélectionnées après un déplacement
-function updateSelectedImagesIndices(oldIndex, newIndex, newlist) {
-  if (newlist) {
-    // Si l'élément a été déplacé vers une nouvelle liste, ajustez les indices des éléments restants dans l'ancienne liste
-    const updatedSelectedIndices = selectedImages.value.map(selectedIndex => {
-      // Réduire les indices des éléments qui étaient après l'élément déplacé
-      if (selectedIndex > oldIndex) {
-        return selectedIndex - 1;
-      }
-      else if (selectedIndex === oldIndex) {
-        return false;
-      }
-      return selectedIndex;
-    });
+function updateSelectedImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
+    if (movedToNewList) {
+        // Pour le déplacement vers une nouvelle liste
+        selectedImages.value = selectedImages.value.filter(selection =>
+            !(selection.index === oldIndex && selection.workspace === fromWorkspace)
+        );
+    } else {
+        // Réarrangement au sein de la même liste
+        selectedImages.value.forEach(selection => {
+            if (selection.workspace !== fromWorkspace) {
+                // Pas d'ajustement nécessaire si l'image n'est pas dans la liste affectée
+                return;
+            }
 
-    // Mettre à jour le tableau des indices sélectionnés
-    selectedImages.value = updatedSelectedIndices;
-  } else {
-    // Gérer le réarrangement au sein de la même liste
-    const updatedSelectedIndices = selectedImages.value.map(selectedIndex => {
-      if (selectedIndex === oldIndex) {
-        return newIndex;
-      } else if (oldIndex < newIndex && selectedIndex > oldIndex && selectedIndex <= newIndex) {
-        return selectedIndex - 1;
-      } else if (oldIndex > newIndex && selectedIndex < oldIndex && selectedIndex >= newIndex) {
-        return selectedIndex + 1;
-      }
-      return selectedIndex;
-    });
+            if (selection.index === oldIndex) {
+                // Mise à jour de l'indice pour l'image déplacée
+                selection.index = newIndex;
+            } else if (oldIndex < newIndex) {
+                // L'image a été déplacée vers le bas, ajustement des indices nécessaire pour les images entre les deux positions
+                if (selection.index > oldIndex && selection.index <= newIndex) {
+                    selection.index -= 1;
+                }
+            } else if (oldIndex > newIndex) {
+                // L'image a été déplacée vers le haut, ajustement des indices nécessaire pour les images entre les deux positions
+                if (selection.index < oldIndex && selection.index >= newIndex) {
+                    selection.index += 1;
+                }
+            }
+        });
+    }
 
-    // Mettre à jour le tableau des indices sélectionnés
-    selectedImages.value = updatedSelectedIndices;
-  }
-
-  console.log(selectedImages.value);
+    // Filtre pour supprimer toute sélection invalide après mise à jour
+    selectedImages.value = selectedImages.value.filter(selection => selection.index !== false);
 }
+
 </script>
 
 <template>
