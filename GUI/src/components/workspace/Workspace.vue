@@ -2,7 +2,7 @@
 import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
-import { GoodImages, BadImages, tags } from './ImageData';
+import { GoodImages, BadImages, tags } from './ImageData.vue';
 import { ref, watch, computed } from 'vue';
 
     const searchTerms = ref([]);
