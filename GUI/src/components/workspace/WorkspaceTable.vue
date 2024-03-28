@@ -6,62 +6,57 @@ import '@/assets/css/scrollbar-hide.css';
 
 const props = defineProps({
   workspaceName: String,
-  images: Array
+  images: Array,
+  toggleImageSelection: Function,
+  moveImages: Function,
+  isImageSelected: Function,
+  updateSelectedImagesIndices: Function,
 });
 
 // Référence réactive pour les images 
 const draggableImages = ref(props.images);
 
-// Référence réactive pour les images sélectionnées
-const selectedImages = ref([]);
 
-// Fonction pour basculer la sélection d'une image
-function toggleImageSelection(index) {
-  const selectedIndex = selectedImages.value.indexOf(index);
-  if (selectedIndex >= 0) {
-    selectedImages.value.splice(selectedIndex, 1); // Désélectionner
-  } else {
-    selectedImages.value.push(index); // Sélectionner
-  }
-  console.log(index);
-  console.log(selectedImages.value);
-}
-
-//Fonction pour renvoyer si l'image est sélectionnée ou non
-function isImageSelected(index) {
-  return selectedImages.value.includes(index);
-}
-
+// Fonction appelée lorsque le déplacement des images est terminé
 function onEnd(event) {
+  var newlist = false;
   // Vérifie si l'élément a été déplacé vers une liste différente
-  if (event.from !== event.to) {
-    // TO DO modifier les information de l'image 
-    console.log('L\'élément a été déplacé vers une autre liste.');
-
-    // Affiche les indices de départ et d'arrivée
-    console.log('Indice de départ:', event.oldIndex);
-    console.log('Nouvel indice:', event.newIndex);
-
-    console.log(draggableImages.value)
-
-    } else {
-    console.log('L\'élément a été réorganisé dans la même liste.');
+    if (event.from !== event.to) {
+    newlist = true;
+  } else {
+    newlist = false;
   }
+
+  // Affiche les indices de départ et d'arrivée
+  console.log('Nouvelle liste:', newlist)
+  console.log('Indice de départ:', event.oldIndex);
+  console.log('Nouvel indice:', event.newIndex);
+
+  // Mettre à jour les indices dans selectedImages en fonction du déplacement
+  props.updateSelectedImagesIndices(event.oldIndex, event.newIndex, newlist);
 }
+
+
 </script>
 
 <template>
   <div class="flex flex-col text-center h-full">
     <!-- Title -->
-    <div class="p-2">
-      <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
+    <div class="flex justify-between p-2">
+      <div>
+        <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
+      </div>
+      <div>
+        <button @click="moveImages" class=" px-1 py-1 bg-gray-700 hover:bg-gray-800 focus:outline-none
+          focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">Déplacer la sélection</button>
+      </div>
     </div>
     <!-- Workspace where images are managed -->
     <div class="flex-1 p-2 pt-0 pb-12 overflow-y-auto scrollbar-hide">
       <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
-          <div class="flex flex-col items-center" @click="toggleImageSelection(index)">
-            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags" :selected=isImageSelected(index) />
+          <div class="flex flex-col items-center" @click="toggleImageSelection(index, props.workspaceName)">
+            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags" :selected="isImageSelected(index, props.workspaceName)" />
           </div>
         </template>
       </draggable>
