@@ -4,12 +4,13 @@ import VEllipsis from '@/components/icons/VEllipsis.vue';
 
 import '@/assets/css/scrollbar-hide.css'; 
 
-const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'imageSelection']);
+const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'selected']);
 </script>
 
 <template>
   <!-- Image Container -->
-  <div class="relative rounded bg-gray-200 overflow-hidden w-full p-1">
+  <div class="relative rounded  overflow-hidden w-full p-1"
+    :class="[props.selected ? 'bg-blue-200' : 'bg-gray-200']">
 
     <!-- Image header -->
     <div class="flex justify-between py-1 ps-2">

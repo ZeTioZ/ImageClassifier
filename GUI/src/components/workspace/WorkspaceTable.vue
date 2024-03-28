@@ -23,7 +23,13 @@ function toggleImageSelection(index) {
   } else {
     selectedImages.value.push(index); // Sélectionner
   }
+  console.log(index);
   console.log(selectedImages.value);
+}
+
+//Fonction pour renvoyer si l'image est sélectionnée ou non
+function isImageSelected(index) {
+  return selectedImages.value.includes(index);
 }
 
 function onEnd(event) {
@@ -55,7 +61,7 @@ function onEnd(event) {
       <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center" @click="toggleImageSelection(index)">
-            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags" :imageSelection="selectedImages.value"/>
+            <ImageCard :imgSrc="element.imgSrc" :index="index" fileName="filename.png" :tags="element.tags" :selected=isImageSelected(index) />
           </div>
         </template>
       </draggable>
