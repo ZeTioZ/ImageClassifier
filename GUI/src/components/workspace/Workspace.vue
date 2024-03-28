@@ -96,7 +96,7 @@ function isImageSelected(imageIndex, workspace) {
   );
 }
 
-// Fonction pour mettre à jour les indices des images sélectionnées après un déplacement
+// Fonction pour mettre à jour les indices des images après un déplacement drag-and-drop
 function updateSelectedImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
     if (movedToNewList) {
         // Pour le déplacement vers une nouvelle liste
