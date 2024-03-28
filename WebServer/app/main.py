@@ -76,7 +76,7 @@ async def get_configs():
 
 
 @app.post("/uploads")
-async def uploads(batch_name: str = Form(None), default_tags: list[str] = Form(None), files: List[UploadFile] = File(...)):
+async def uploads(batch_name: str = Form(None), default_tags: List[str] = Form(None), files: List[UploadFile] = File(...)):
 	if not os.path.exists(uploads_path):
 		os.mkdir(uploads_path)
 	for file in files:
@@ -87,14 +87,15 @@ async def uploads(batch_name: str = Form(None), default_tags: list[str] = Form(N
 			return JSONResponse(content={"message": f"There was an error uploading the file(s)!\n{error}"}, status_code=500)
 		finally:
 			file.file.close()
-	batch_name = f"-n {batch_name} " if batch_name else ""
+	batch_name = f"-n \"{batch_name}\" " if batch_name else ""
+	default_tags = default_tags[0].split(",") if default_tags else ""
+	default_tags = [f"\"{default_tag}\"" for default_tag in default_tags]
 	default_tags = "-t " + " -t ".join(default_tags) if default_tags else ""
-	zips = "-z " + (" -z ".join(list(filter(lambda x: x.endswith(".zip"), [os.path.abspath(f"{file}") for file in pathlib.Path(uploads_path).iterdir()])))) + " "
+	zips = "-z " + (" -z ".join(list(filter(lambda x: x.endswith(".zip\""), [f"\"{os.path.abspath(file)}\"" for file in pathlib.Path(uploads_path).iterdir()])))) + " "
 	process = os.system(f"cd {get_parent_path(__file__, 3)} && python -m AI.src.main {batch_name}{zips}{default_tags}")
 	if process != 0:
 		return JSONResponse(content={"message": "There was an error processing the file(s)!", "error": process}, status_code=500)
-	generated_tags = json.loads((await get_tags()).body.decode("utf8"))
-	print(generated_tags)
+	[os.remove(f"{uploads_path}{join_char}{file.filename}") for file in files]
 	return JSONResponse(content={"message": f"Successfuly uploaded {', '.join([file.filename for file in files])}!", "generated_tags": json.loads((await get_tags()).body.decode("utf8"))}, status_code=200)
 
 
