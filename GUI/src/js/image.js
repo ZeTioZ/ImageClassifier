@@ -28,7 +28,7 @@ export class Image {
     this._filename = entry.filename;
     this._size = entry.uncompressedSize;
     this._tags = [];
-    this._toBeDeleted = false;
+    this._toBeDeleted = true;
   }
 
   /**
@@ -141,11 +141,11 @@ export class Image {
     if (blobURLToUse == null) {
       // const newBlobURL = await FileManager.getURL(this._archiveEntry, thumbnail);
 
-      if (thumbnail) {
-        this._thumbnailBlobURL = newBlobURL;
-      } else {
-        this._blobURL = newBlobURL;
-      }
+      // if (thumbnail) {
+      //   this._thumbnailBlobURL = newBlobURL;
+      // } else {
+      //   this._blobURL = newBlobURL;
+      // }
     }
 
     return thumbnail ? this._thumbnailBlobURL : this._blobURL;

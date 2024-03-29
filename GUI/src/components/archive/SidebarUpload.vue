@@ -79,7 +79,7 @@ async function submit(newTags) {
 
   const response = await API.uploads.post(files, newTags, null);
 
-  const images = archiveList.value[0].images;
+  const images = archiveList.value.map(archive => archive.images).flat();
   emits('onNewImages', images);
 } 
 </script>

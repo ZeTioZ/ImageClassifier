@@ -34,13 +34,15 @@ function onEnd(event) {
     </div>
     <!-- Workspace where images are managed -->
     <div class="flex-1 p-2 pt-0 pb-12 overflow-y-auto scrollbar-hide">
-      <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
-        <template #item="{ element, index }">
-          <div class="flex flex-col items-center">
-            <ImageCard v-if="element.getBlobURL()" :imgSrc="element.getBlobURL()" :index="index" :fileName="element.filename" :tags="element.tags"/>
+      <!-- <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd"> -->
+      <div class="min-h-[400px] grid grid-cols-3 gap-4">
+        <!-- <template #item="{ element, index }"> -->
+          <div class="flex flex-col items-center" v-for="element, index in draggableImages">
+            <ImageCard :imgSrc="element.getBlobURL()" :index="index" :fileName="element.filename" :tags="element.tags"/>
           </div>
-        </template>
-      </draggable>
+        <!-- </template> -->
+      </div>
+      <!-- </draggable> -->
     </div>
   </div>
 </template>

@@ -7,7 +7,7 @@ import SidebarUpload from '@/components/archive/SidebarUpload.vue';
 const images = ref([]);
 
 function newImages(newImages) {
-  console.log(newImages)
+  // console.log(JSON.parse(JSON.stringify(newImages)))
   images.value = newImages;
 }
 </script>
