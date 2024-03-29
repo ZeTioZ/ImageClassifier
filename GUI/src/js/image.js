@@ -120,20 +120,26 @@ export class Image {
     return this._reasonForDeletion;
   }
 
+  async load() {
+    // load blob url for thumbnail
+    this._thumbnailBlobURL = await FileManager.getURL(this._archiveEntry, true);
+
+    // TODO: hash image
+  }
+
   /**
   * Get the url pointing to the image (i.e. src in img tag).
-  * Create the blob url if the blob URL is undefined, return it otherwise.
   *
   * @param {boolean} [thumbnail=true] - If a thumbnail or the full image should be sourced.
   * @returns {string} - The url of the image.
   */
-  async getBlobURL(thumbnail = true) {
+  getBlobURL(thumbnail = true) {
     // which blob url to use
     const blobURLToUse = thumbnail ? this._thumbnailBlobURL : this._blobURL;
 
-    // if blob url is null (undefined), create it 
+    // if blob url is null (undefined), ~~create it~~ do nothing
     if (blobURLToUse == null) {
-      const newBlobURL = await FileManager.getURL(this._archiveEntry, thumbnail);
+      // const newBlobURL = await FileManager.getURL(this._archiveEntry, thumbnail);
 
       if (thumbnail) {
         this._thumbnailBlobURL = newBlobURL;

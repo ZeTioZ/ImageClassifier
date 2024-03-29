@@ -92,7 +92,12 @@ export class Archive {
       const entries = await FileManager.getImageEntries(this._file);
 
       entries.forEach(entry => {
-        this._images.push(new Image(entry));
+        // create image object
+        const newImage = new Image(entry);
+        this._images.push(newImage);
+
+        // load image (thumbnail image)
+        newImage.load();
       });
 
       this._loaded = true;
