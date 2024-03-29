@@ -53,9 +53,8 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 			for banned_tag in quality_tags["banned_tags"]:
 				if banned_tag in found_tags:
 					found_tags.remove(banned_tag)
-			tags[file.name] = {"hash": md5_hash_file(file.absolute().__str__()),
-			                   "detection_tags": list(dict.fromkeys([box.cls for box in boxes])) +
-			                                     default_tags,
+			tags[md5_hash_file(file.absolute().__str__())] = {"file_name": file.name,
+			                   "detection_tags": found_tags + default_tags,
 			                   "is_qualitative": bool(is_qualitative),
 			                   "quality_tags": list(
 				                   filter(lambda x: not isinstance(quality_tags[x], list) and quality_tags[x],
