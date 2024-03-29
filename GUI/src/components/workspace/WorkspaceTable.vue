@@ -10,7 +10,7 @@ const props = defineProps({
   toggleImageSelection: Function,
   moveImages: Function,
   isImageSelected: Function,
-  updateSelectedImagesIndices: Function,
+  updateImagesIndices: Function,
 });
 
 // Référence réactive pour les images 
@@ -33,7 +33,7 @@ function onEnd(event) {
   console.log('Nouvel indice:', event.newIndex);
 
   // Mettre à jour les indices dans selectedImages en fonction du déplacement
-  props.updateSelectedImagesIndices(event.oldIndex, event.newIndex, newlist, props.workspaceName);
+  props.updateImagesIndices(event.oldIndex, event.newIndex, newlist, props.workspaceName);
 }
 
 

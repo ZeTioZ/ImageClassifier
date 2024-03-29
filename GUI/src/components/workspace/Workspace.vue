@@ -105,40 +105,30 @@ function isImageSelected(imageIndex, workspace) {
 }
 
 // Fonction pour mettre à jour les indices des images après un déplacement drag-and-drop
-function updateSelectedImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
-    if (movedToNewList) {
-        // Pour le déplacement vers une nouvelle liste
-        selectedImages.value = selectedImages.value.filter(selection =>
-            !(selection.index === oldIndex && selection.workspace === fromWorkspace)
-        );
-    } else {
-        // Réarrangement au sein de la même liste
-        selectedImages.value.forEach(selection => {
-            if (selection.workspace !== fromWorkspace) {
-                // Pas d'ajustement nécessaire si l'image n'est pas dans la liste affectée
-                return;
-            }
+function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
+  if (movedToNewList) {
+    // Identifier l'espace de travail cible en fonction de l'espace de travail d'origine
+    const targetWorkspace = fromWorkspace === 'Triées' ? 'À supprimer' : 'Triées';
+    const source = fromWorkspace === 'Triées' ? GoodImages : BadImages;
+    const target = fromWorkspace === 'Triées' ? BadImages : GoodImages;
 
-            if (selection.index === oldIndex) {
-                // Mise à jour de l'indice pour l'image déplacée
-                selection.index = newIndex;
-            } else if (oldIndex < newIndex) {
-                // L'image a été déplacée vers le bas, ajustement des indices nécessaire pour les images entre les deux positions
-                if (selection.index > oldIndex && selection.index <= newIndex) {
-                    selection.index -= 1;
-                }
-            } else if (oldIndex > newIndex) {
-                // L'image a été déplacée vers le haut, ajustement des indices nécessaire pour les images entre les deux positions
-                if (selection.index < oldIndex && selection.index >= newIndex) {
-                    selection.index += 1;
-                }
-            }
-        });
-    }
+    // Extraire l'image de la source
+    const [movedImage] = source.splice(oldIndex, 1);
 
-    // Filtre pour supprimer toute sélection invalide après mise à jour
-    selectedImages.value = selectedImages.value.filter(selection => selection.index !== false);
+    // Ajouter l'image à la destination à la position `newIndex`
+    target.splice(newIndex, 0, movedImage);
+  } else {
+    // Si l'image reste dans le même espace de travail, réorganiser simplement les images
+    const imagesList = fromWorkspace === 'Triées' ? GoodImages : BadImages;
+
+    // Extraire l'image déplacée
+    const [reorderedImage] = imagesList.splice(oldIndex, 1);
+
+    // Réinsérer l'image à sa nouvelle position
+    imagesList.splice(newIndex, 0, reorderedImage);
+  }
 }
+
 
 </script>
 
@@ -152,12 +142,12 @@ function updateSelectedImagesIndices(oldIndex, newIndex, movedToNewList, fromWor
       <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" 
       :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
       :moveImages="moveImages"  :isImageSelected="isImageSelected" 
-      :updateSelectedImagesIndices="updateSelectedImagesIndices"/>
+      :updateImagesIndices="updateImagesIndices"/>
 
       <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" 
       :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
       :moveImages="moveImages"  :isImageSelected="isImageSelected" 
-      :updateSelectedImagesIndices="updateSelectedImagesIndices"/>
+      :updateImagesIndices="updateImagesIndices"/>
     </div>
   </div>
 
