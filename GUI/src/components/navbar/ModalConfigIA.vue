@@ -13,7 +13,7 @@ function closeModal() {
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
           <!-- Modal header -->
-          <div class="flex items-start justify-between p-5 border-b rounded-t">
+          <div class="items-start justify-between p-5 border-b rounded-t">
             <h3 class="text-xl text-center font-semibold text-gray-900 lg:text-2xl">
               Configuration
             </h3>

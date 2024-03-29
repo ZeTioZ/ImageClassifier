@@ -32,14 +32,14 @@ function handleDel(term){
       <!-- Image name -->
       <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce">{{ fileName }}</span>
       <!-- Three dots/menu icon -->
-      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1" >
+      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1" @click="toggleModalImage">
         <VEllipsis class="w-4 h-4"/>
       </a>
     </div>
 
     <!-- Image in the container -->
     <div class="h-40 w-full p-1">
-      <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded" @click="toggleModalImage">
+      <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded">
     </div>
     
 
