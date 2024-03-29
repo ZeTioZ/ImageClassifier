@@ -68,27 +68,35 @@ function toggleImageSelection(imageIndex, workspace) {
   console.log(imageIndex);
   console.log("selected images:",selectedImages.value);
 }
+
 // Fonction pour déplacer les images sélectionnées d'un workspace spécifique
 function moveImages(workspace) {
-  // Filtrer pour obtenir uniquement les images sélectionnées du workspace spécifié
-  const imagesToMove = selectedImages.value.filter(selectedImage => selectedImage.workspace === workspace);
-
-  imagesToMove.forEach(selectedImage => {
-    // Déterminer la source et la destination basées sur le workspace spécifié
+  // Collecter les images à déplacer sans les retirer immédiatement
+  const imagesToMove = selectedImages.value
+    .filter(selectedImage => selectedImage.workspace === workspace)
+    .map(selectedImage => ({
+      ...selectedImage,
+      image: workspace === 'Triées' ? GoodImages[selectedImage.index] : BadImages[selectedImage.index]
+    }));
+  console.log(imagesToMove);
+  // Déplacer les images collectées
+  imagesToMove.forEach(({ image, index }) => {
     const source = workspace === 'Triées' ? GoodImages : BadImages;
     const target = workspace === 'Triées' ? BadImages : GoodImages;
 
-    // Trouver l'image dans la source en utilisant l'index et la déplacer vers la cible
-    const imageIndex = source.findIndex((img, index) => index === selectedImage.index);
-    if (imageIndex !== -1) {
-      const [image] = source.splice(imageIndex, 1); // Supprimer l'image de la source
-      target.push(image); // Ajouter l'image à la destination
-    }
+    // Suppression de l'image de la source
+    source.splice(source.findIndex(img => img === image), 1);
+
+    // Ajout de l'image à la destination
+    target.push(image);
   });
 
-  // Après le déplacement, supprimer les images déplacées des sélections
-  selectedImages.value = selectedImages.value.filter(selectedImage => !imagesToMove.includes(selectedImage));
+  // Réinitialiser les sélections après le déplacement
+  selectedImages.value = selectedImages.value.filter(selectedImage => selectedImage.workspace !== workspace);
+  // Mettre à jour la clé de rafraîchissement pour forcer le re-rendu des tables
+  refreshKey.value++;
 }
+
 //Fonction pour renvoyer si l'image est sélectionnée ou non
 function isImageSelected(imageIndex, workspace) {
   return selectedImages.value.some(
