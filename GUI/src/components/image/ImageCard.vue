@@ -4,7 +4,7 @@ import VEllipsis from '@/components/icons/VEllipsis.vue';
 import ModalImage from './ModalImage.vue';
 import {ref} from 'vue';
 
-const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
+const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'size']);
 const showModalI = ref(false);
 
 function toggleModalImage(){
@@ -56,7 +56,7 @@ function handleDel(term){
     </div>
   </div>
 <!-- MODALS -->
-<ModalImage v-if="showModalI" @close="toggleModalImage" @add="handleAdd" @del="handleDel"/>
+<ModalImage v-if="showModalI" @close="toggleModalImage" @add="handleAdd" @del="handleDel" :imgSrc="imgSrc" :imgName="fileName" :imgTags="tags" :imgSize="size"/>
 </template>
 
 <style scoped>
