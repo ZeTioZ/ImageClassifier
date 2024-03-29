@@ -57,7 +57,7 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 			tags[file.name] = {"hash": md5_hash_file(file.absolute().__str__()),
 			                   "detection_tags": list(dict.fromkeys([box.cls for box in boxes])) +
 			                                     default_tags,
-			                   "is_qualitative": is_qualitative,
+			                   "is_qualitative": bool(is_qualitative),
 			                   "quality_tags": list(
 				                   filter(lambda x: not isinstance(quality_tags[x], list) and quality_tags[x],
 				                          quality_tags.keys())) + quality_tags["banned_tags"]}
