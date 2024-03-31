@@ -3,14 +3,14 @@ import { FileManager } from './file-manager';
 
 /**
 *
-* Class represention an image in an archive. Can be used to access data about it, get
+* Class representing an image in an archive. Can be used to access data about it, get
 * the URL to a representation or access its data.
 *
 */
 export class Image {
 
   // All fields are private and should not be accessed outside of the class.
-  // The getters bellow should be used instead.
+  //The getters bellow should be used instead.
   // ES6 introduced private variable (#myVar), but are currently incompatible with Vue.js.
   _hash
   _filename
@@ -111,7 +111,9 @@ export class Image {
     return this._toBeDeleted;
   }
 
-
+  /**
+  * Change the state of the 'toBeDeleted' var.
+  */
   set toBeDeleted(value) {
     this._toBeDeleted = value;
   }
