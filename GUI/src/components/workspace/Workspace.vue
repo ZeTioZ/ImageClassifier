@@ -36,7 +36,7 @@ const tags = {
 // import IMG7 from '@/assets/IMG/5.jfif';
 
 // Définir les bonnes images avec leurs tags correspondants
-// const GoodImages = [
+// const goodImages = [
 //   { imgSrc: IMG1, tags: [tags['enfant'], tags['arbre'], tags['chapeau']] },
 //   { imgSrc: IMG2, tags: [tags['rassemblement'], tags['arbre']] },
 //   { imgSrc: IMG3, tags: [tags['feu'], tags['groupe']] },
@@ -53,7 +53,7 @@ const tags = {
 // import IMG16 from '@/assets/IMG/6.jpeg';
 
 // Définir les mauvaises images avec leurs tags correspondants
-// const BadImages = [
+// const badImages = [
 //   { imgSrc: IMG11, tags: [tags['groupe'], tags['assis']] },
 //   { imgSrc: IMG12, tags: [tags['course'], tags['arbre']] },
 //   { imgSrc: IMG13, tags: [tags['roche']] },
@@ -66,14 +66,41 @@ const searchTerm = ref('');
 const showModal = ref(false);
 const refreshKey = ref(0);
 
-const goodImages = computed(() => props['images'].filter(img => !img.toBeDeleted));
-const badImages = computed(() => props['images'].filter(img => img.toBeDeleted));
+// base images lists from props, the computed ref is writable (i.e.: its value can be manually chage)
 
+// good images, i.e. images having that we keep
+const goodImages = computed({
+  get() {
+    return props.images.filter(img => !img.toBeDeleted)
+  },
+  set(imgs) {
+    imgs.forEach(img => img.toBeDeleted = false);
+  }
+});
+// bad images, i.e. images to be deleted
+const badImages = computed({
+  get() {
+    return props.images.filter(img => img.toBeDeleted)
+  },
+  set(imgs) {
+    imgs.forEach(img => img.toBeDeleted = true);
+  }
+});
+
+// computed ref, filtering constantly the images when a change is applied
+const filteredGoodImages = computed(() => filterImages(goodImages));
+const filteredBadImages = computed(() => filterImages(badImages));
+
+/**
+* Function to display or hide the filter modal
+*/
 function toggleModal() {
   showModal.value = !showModal.value;
 }
 
-// Fonction de filtrage 
+/**
+* Filter function
+*/
 function filterImages(imagesList) {
   if (!searchTerm.value) {
     return imagesList;
@@ -91,9 +118,9 @@ function filterImages(imagesList) {
   // return [...matchedImages, ...unmatchedImages];
 }
 
-const filteredGoodImages = computed(() => filterImages(goodImages));
-const filteredBadImages = computed(() => filterImages(badImages));
-
+/*
+* Function to handle search
+*/
 function handleSearch(term) {
   searchTerm.value = term;
   refreshKey.value++;

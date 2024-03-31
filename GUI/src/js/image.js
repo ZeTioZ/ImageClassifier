@@ -111,6 +111,11 @@ export class Image {
     return this._toBeDeleted;
   }
 
+
+  set toBeDeleted(value) {
+    this._toBeDeleted = value;
+  }
+
   /**
   * Get the reason why the image should be deleted (i.e. the unmatched requirements).
   *
