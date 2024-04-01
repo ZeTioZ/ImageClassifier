@@ -86,9 +86,15 @@ async function submit(newTags) {
     const tags = Objects.keys(response.generated_tags.classes).map(key => response.generated_tags.classes[key]);
 
     // create tag objects
-    const tagList = tags.map(tag => new Tag(tag, tag)); // TODO: test 
+    const tagList = tags.map(tag => new Tag(tag, tag));
     
     const images = archiveList.value.map(archive => archive.images).flat();
+
+    Objects.keys(response.generated_tags)
+      .filter(key => key != "classes")
+      .forEach(key => {
+        response.generated_tags[key]
+      });
 
     emits('onNewImages', images);
   }

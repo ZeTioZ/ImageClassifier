@@ -15,6 +15,9 @@ export class Image {
   _hash
   _filename
   _size
+  _width
+  _height
+
   _tags
   _toBeDeleted
   _reasonForDeletion
@@ -27,7 +30,6 @@ export class Image {
     this._archiveEntry = entry;
     this._filename = entry.filename;
     this._size = entry.uncompressedSize;
-    this._tags = [];
     this._toBeDeleted = true;
   }
 
@@ -77,6 +79,24 @@ export class Image {
   }
 
   /**
+  * Get the width of the image in pixels
+  *
+  * @return {number} - The width of the image in pixels.
+  */
+  get width() {
+    return this._width;
+  }
+
+  /**
+  * Get the height of the image in pixels.
+  *
+  * @return {number} - the height of the image in pixels.
+  */
+  get height() {
+    return this._height;
+  }
+
+  /**
   * Get a human readable size of the file (in 'Octets'/bytes).
   * 
   * @return {string} - The size of the file in a human readable format.
@@ -105,7 +125,7 @@ export class Image {
   /**
   * Tell if the image has the 'toBeDeleted' flag.
   *
-  * @return {boolean} - True if the image is to be deleted, false otherwise.
+  * @return {boolean} - true if the image is to be deleted, false otherwise.
   */
   get toBeDeleted() {
     return this._toBeDeleted;
@@ -113,6 +133,8 @@ export class Image {
 
   /**
   * Change the state of the 'toBeDeleted' var.
+  *
+  * @param {boolean} value - a boolean.
   */
   set toBeDeleted(value) {
     this._toBeDeleted = value;
@@ -121,10 +143,21 @@ export class Image {
   /**
   * Get the reason why the image should be deleted (i.e. the unmatched requirements).
   *
-  * @return ? 
+  * @return {Array.<string>} - an array containing quality criterions not beeing respected by the image.
   */
   get reasonForDeletion() {
     return this._reasonForDeletion;
+  }
+
+  /**
+  * Set properties of the images from response of the REST API.
+  *
+  * @param {object} apiResponse - the response from the REST API.
+  */
+  setPropertiesFromAPI(apiResponse) {
+    this._tags = apiResponse.detection_tags;
+    this._toBeDeleted = !apiResponse.is_qualitative;
+    this._reasonForDeletion = apiResponse.quality_tags;
   }
 
   async load() {
