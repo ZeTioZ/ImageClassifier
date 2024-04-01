@@ -22,11 +22,7 @@ const draggableImages = ref(props.images);
 function onEnd(event) {
   var newlist = false;
   // Vérifie si l'élément a été déplacé vers une liste différente
-    if (event.from !== event.to) {
-    newlist = true;
-  } else {
-    newlist = false;
-  }
+  newlist = event.from !== event.to;
 
   // Affiche les indices de départ et d'arrivée
   console.log('Nouvelle liste:', newlist)

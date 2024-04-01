@@ -128,9 +128,10 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
     imagesList.splice(newIndex, 0, reorderedImage);
   }
 
-  // Vider selected images
-  selectedImages.value = [];
-  
+  // Vider selected images après le déplacement si l'image a changé de place
+  if (movedToNewList || oldIndex !== newIndex){
+    selectedImages.value = [];
+  }  
 }
 
 
