@@ -147,12 +147,14 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
       <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" 
       :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
       :moveImages="moveImages"  :isImageSelected="isImageSelected" 
-      :updateImagesIndices="updateImagesIndices"/>
+      :updateImagesIndices="updateImagesIndices"
+      :selectedImages="selectedImages"/>
 
       <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" 
       :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
       :moveImages="moveImages"  :isImageSelected="isImageSelected" 
-      :updateImagesIndices="updateImagesIndices"/>
+      :updateImagesIndices="updateImagesIndices"
+      :selectedImages="selectedImages"/>
     </div>
   </div>
 

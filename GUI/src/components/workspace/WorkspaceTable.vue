@@ -12,6 +12,7 @@ const props = defineProps({
   moveImages: Function,
   isImageSelected: Function,
   updateImagesIndices: Function,
+  selectedImages: Array,
 });
 
 // Référence réactive pour les images 
@@ -44,7 +45,11 @@ function onEnd(event) {
         <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
       </div>
       <div>
-        <button @click="moveImages(props.workspaceName)" class=" px-1 py-1 bg-gray-700 hover:bg-gray-800 focus:outline-none
+        <!--si aucune image n'est séléctioné alors gris claire sans over et si une ou plusieurs image séléctionée gris foncé avec over-->
+        <button v-if="props.selectedImages.length === 0" class=" px-1 py-1 bg-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">
+          <arow class="w-6 h-6" />
+        </button>
+        <button v-else @click="moveImages(props.workspaceName)" class=" px-1 py-1 bg-gray-700 hover:bg-gray-800 focus:outline-none
           focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">
           <arow class="w-6 h-6" />
         </button>
