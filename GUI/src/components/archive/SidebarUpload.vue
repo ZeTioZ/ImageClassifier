@@ -6,6 +6,7 @@ import ArchiveCard from '@/components/archive/ArchiveCard.vue';
 import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
+import { Tag } from '@/js/tag';
 import { API } from '@/api/';
 
 const emits = defineEmits(['onNewImages']);
@@ -77,10 +78,23 @@ function removeArchive(index) {
 async function submit(newTags) {
   const files = archiveList.value.map(archive => archive.file);
 
-  const response = await API.uploads.post(files, newTags, null);
+  try {
+    // get API response
+    const response = await API.uploads.post(files, newTags, null);
 
-  const images = archiveList.value.map(archive => archive.images).flat();
-  emits('onNewImages', images);
+    // get tags
+    const tags = Objects.keys(response.generated_tags.classes).map(key => response.generated_tags.classes[key]);
+
+    // create tag objects
+    const tagList = tags.map(tag => new Tag(tag, tag)); // TODO: test 
+    
+    const images = archiveList.value.map(archive => archive.images).flat();
+
+    emits('onNewImages', images);
+  }
+  catch (err) {
+
+  }
 } 
 </script>
 
