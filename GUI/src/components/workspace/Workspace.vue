@@ -128,26 +128,9 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
     imagesList.splice(newIndex, 0, reorderedImage);
   }
 
-  // Mise à jour de la sélection pour suivre l'image déplacée
-  if (movedToNewList) {
-    const newWorkspace = fromWorkspace === 'Triées' ? 'À supprimer' : 'Triées';
-    // Supposer que chaque image a un identifiant unique. Ici, nous utilisons l'index comme proxy pour cet ID.
-    const movedImageId = fromWorkspace === 'Triées' ? GoodImages[oldIndex].id : BadImages[oldIndex].id;
-    // Retirer l'image de la sélection dans son ancien espace de travail
-    const selectedIndex = selectedImages.value.findIndex(selected => selected.id === movedImageId && selected.workspace === fromWorkspace);
-    if (selectedIndex >= 0) {
-      selectedImages.value.splice(selectedIndex, 1);
-    }
-    // Ajouter l'image à la sélection dans son nouvel espace de travail
-    selectedImages.value.push({ id: movedImageId, workspace: newWorkspace, index: newIndex });
-  } else {
-    // Mise à jour de l'indice dans la liste des sélections
-    const updatedImageId = fromWorkspace === 'Triées' ? GoodImages[newIndex].id : BadImages[newIndex].id;
-    const selectedIndex = selectedImages.value.findIndex(selected => selected.id === updatedImageId);
-    if (selectedIndex >= 0) {
-      selectedImages.value[selectedIndex].index = newIndex; // Mise à jour de l'indice
-    }
-  }
+  // Vider selected images
+  selectedImages.value = [];
+  
 }
 
 
