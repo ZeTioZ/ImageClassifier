@@ -3,6 +3,8 @@ import os
 import shutil
 import sys
 
+import requests
+
 from AI.src.modules.args_parser import parse_arguments
 from AI.src.modules.model_loader import generate_tags
 from AI.src.modules.zip import extract_zip
@@ -19,6 +21,12 @@ def classify():
 	if os.path.exists(extracted_path):
 		shutil.rmtree(extracted_path)
 	os.makedirs(extracted_path)
+
+	if not os.path.exists(model_path):
+		response = requests.get("https://www.dropbox.com/scl/fi/mqrriarmw5wvj0pr3mktw/scout-model-v3.pt?rlkey=1zz8376bdcay10zkffsjsguo0&dl=1", stream=True)
+		with open(model_path, 'wb') as model_file:
+			for chunk in response.iter_content(chunk_size=10 * 1024):
+				model_file.write(chunk)
 
 	zips_path = [arg.strip() for arg in args["zips"]]
 	tags = [arg.strip() for arg in args["tags"]] if args["tags"] is not None else None

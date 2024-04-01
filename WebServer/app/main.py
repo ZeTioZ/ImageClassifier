@@ -97,12 +97,3 @@ async def uploads(batch_name: str = Form(None), default_tags: List[str] = Form(N
 		return JSONResponse(content={"message": "There was an error processing the file(s)!", "error": process}, status_code=500)
 	[os.remove(f"{uploads_path}{join_char}{file.filename}") for file in files]
 	return JSONResponse(content={"message": f"Successfuly uploaded {', '.join([file.filename for file in files])}!", "generated_tags": json.loads((await get_tags()).body.decode("utf8"))}, status_code=200)
-
-
-if __name__ == "__main__":
-	import requests
-	url = 'http://127.0.0.1:8000/uploads'
-	files_to_send = [('files', open('D:\Immagini\kokkoro-emote-96x96.png', 'rb'))]
-	data = {"batch_name": "test", "default_tags": ["1tags", "2tags", "3tags"]}
-	resp = requests.post(url=url, data=data, files=files_to_send)
-	print(resp)
