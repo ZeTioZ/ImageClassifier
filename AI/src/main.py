@@ -23,10 +23,11 @@ def classify():
 	os.makedirs(extracted_path)
 
 	if not os.path.exists(model_path):
-		response = requests.get("https://www.dropbox.com/scl/fi/mqrriarmw5wvj0pr3mktw/scout-model-v3.pt?rlkey=1zz8376bdcay10zkffsjsguo0&dl=1", stream=True)
-		with open(model_path, 'wb') as model_file:
-			for chunk in response.iter_content(chunk_size=10 * 1024):
-				model_file.write(chunk)
+		with requests.get("https://www.dropbox.com/scl/fi/mqrriarmw5wvj0pr3mktw/scout-model-v3.pt?rlkey=1zz8376bdcay10zkffsjsguo0&dl=1", stream=True) as response:
+			response.raise_for_status()
+			with open(model_path, 'wb') as model_file:
+				for chunk in response.iter_content(chunk_size=10 * 1024):
+					model_file.write(chunk)
 
 	zips_path = [arg.strip() for arg in args["zips"]]
 	tags = [arg.strip() for arg in args["tags"]] if args["tags"] is not None else None
