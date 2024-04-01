@@ -7,9 +7,6 @@ const emit = defineEmits(['submit']);
 const newTag = ref('');   // text in the input
 const newTags = ref([]);  // array containing the new tags
 
-const newName = ref('');   // text in the input
-const NewName = ref('');   // valid new name
-
 // function to add a new tag in the newTags array
 const addNewTag = () => {
   if (newTag.value) {
@@ -17,6 +14,10 @@ const addNewTag = () => {
     newTag.value = '';
   }
 };
+
+const newName = ref('');   // text in the input
+const NewName = ref('');   // valid new name
+
 // function to replace the NewName with the newName
 const addNewName = () => {
   if (newName.value) {
