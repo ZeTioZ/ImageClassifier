@@ -3,6 +3,7 @@ import ImageCard from '@/components/image/ImageCard.vue';
 import draggable from 'vuedraggable';
 import { ref } from 'vue';
 import '@/assets/css/scrollbar-hide.css'; 
+import arow from '@/components/icons/Arow.vue';
 
 const props = defineProps({
   workspaceName: String,
@@ -48,7 +49,9 @@ function onEnd(event) {
       </div>
       <div>
         <button @click="moveImages(props.workspaceName)" class=" px-1 py-1 bg-gray-700 hover:bg-gray-800 focus:outline-none
-          focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">Déplacer la sélection</button>
+          focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">
+          <arow class="w-6 h-6" />
+        </button>
       </div>
     </div>
     <!-- Workspace where images are managed -->
