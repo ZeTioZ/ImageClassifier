@@ -42,7 +42,7 @@ function addTag(){
                   <div class="mt-0.5 overflow-y-auto scrollbar-hide">
                     <div class="flex m-3">
                       <Tag v-for="tag in imgTags" @delete="tagToDel()" :key="tag.name" :tagName="tag.name" :class="tag.color" :inModal="'pomelo'"/>
-                      <Add class="w-6 h-5"@click=addTag/> 
+                      <Add class="w-6 h-5" @click="addTag"/> 
                       <input v-if="add"id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="tagToAdd" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />                   
                     </div>
                   </div>
