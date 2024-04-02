@@ -1,4 +1,9 @@
 <script setup>
+import { ref } from "vue";
+const sliderValue1 = ref(0);
+const sliderValue2 = ref(0);
+const sliderValue3 = ref(0);
+const sliderValue4 = ref(0);
 const emit = defineEmits(['close']);
 
 function closeModal() {
@@ -21,20 +26,28 @@ function closeModal() {
           <!-- Modal body -->
           <div class="p-6 space-y-6">
             <p class="text-base leading-relaxed text-gray-500">
-              Blur precision :
-              <input id="steps-range" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              Netteté de l'image :
+              <input v-model="sliderValue1" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              <br />
+              <input v-model="sliderValue1" type="number" />
             </p>
             <p class="text-base leading-relaxed text-gray-500">
-              Image minimum width :   
-              <input id="steps-range" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              Largeur minimum de l'image :   
+              <input v-model="sliderValue2" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              <br />
+              <input v-model="sliderValue2" type="number" />
             </p>
             <p class="text-base leading-relaxed text-gray-500">
-              Image minimum height :
-              <input id="steps-range" type="range" min="0" max="200" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              Hauteur minimum de l'image :
+              <input v-model="sliderValue3" type="range" min="0" max="8000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              <br />
+              <input v-model="sliderValue3" type="number" />
             </p>
             <p class="text-base leading-relaxed text-gray-500">
-              Image minimum luminance :
-              <input id="steps-range" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              Luminosité minimale de l'image :
+              <input v-model="sliderValue4" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+              <br />
+              <input v-model="sliderValue4" type="number" />
             </p>
             <p class="text-base leading-relaxed text-gray-500">
               Mot-clé à blacklister :
@@ -44,8 +57,8 @@ function closeModal() {
           </div>
           <!-- Modal footer -->
           <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Validate</button>
-            <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10" @click="closeModal">Cancel</button>
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Valider</button>
+            <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10" @click="closeModal">Annuler</button>
           </div>
         </div>
       </div>
