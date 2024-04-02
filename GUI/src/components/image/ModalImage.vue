@@ -1,6 +1,6 @@
 <script setup>
 import Tag from '@/components/image/Tag.vue'
-import {ref} from 'vue';
+import Add from '@/components/icons/Add.vue';
 const props = defineProps(['imgSrc', 'imgName', 'imgTags', 'imgSize', 'imgSup']);
 const emit = defineEmits(['close', 'add', 'del']);
 
@@ -10,8 +10,8 @@ function closeModal() {
 function tagToAdd() {
   emit('add', addTag.value);
 }
-function tagToDel() {
-  emit('del', delTag.value);
+function tagToDel(term) {
+  emit('del', term.value);
 }
 
 </script>
@@ -36,8 +36,9 @@ function tagToDel() {
                 <p class="text-base leading-relaxed text-gray-500" style="margin-bottom: 10px;">
                   <div class="mt-0.5 overflow-y-auto scrollbar-hide">
                     <div class="flex m-3">
-                      <Tag v-for="tag in imgTags" :key="tag.name" :tagName="tag.name" :class="tag.color" />
-                    </div>
+                      <Tag v-for="tag in imgTags" @delete="tagToDel()" :key="tag.name" :tagName="tag.name" :class="tag.color" :inModal="'pomelo'"/>
+                      <Add class="w-6 h-5"/>                    
+                  </div>
                   </div>
                 </p>
                 <p v-if="imgSup != null" class="text-base leading-relaxed text-gray-500" style="margin-bottom: 10px;">
