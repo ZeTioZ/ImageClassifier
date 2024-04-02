@@ -86,6 +86,7 @@ export class Archive {
 
   /**
   * Load the archive and get image entries.
+  * By default, image thumbnails are loaded asynchronously.
   */
   async load() {
     if(!this._loaded) {
@@ -96,11 +97,12 @@ export class Archive {
         const newImage = new Image(entry);
         this._images.push(newImage);
 
-        // load image (thumbnail image)
+        // load image (thumbnail image + hash) asynchronously.
         newImage.load();
       });
 
       this._loaded = true;
+      // nb: the archive (its properties) are now loaded, but its images may not be.
     }
   }
 

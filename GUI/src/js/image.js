@@ -152,17 +152,22 @@ export class Image {
   /**
   * Set properties of the images from response of the REST API.
   *
-  * @param {object} apiResponse - the response from the REST API.
+  * @param {Array.<Tag>} tags - list of tags linked to the image.
+  * @param {boolean} toBeDeleted - boolean telling if an image is to be kept or not.
+  * @param {Array.<string>} reasonForDeletion - array containing quality criterions not beeing respected by the image.
   */
-  setPropertiesFromAPI(apiResponse) {
-    this._tags = apiResponse.detection_tags;
-    this._toBeDeleted = !apiResponse.is_qualitative;
-    this._reasonForDeletion = apiResponse.quality_tags;
+  setProperties(tags, toBeDeleted, reasonForDeletion) {
+    this._tags = tags;
+    this._toBeDeleted = toBeDeleted;
+    this._reasonForDeletion = reasonForDeletion;
   }
 
   async load() {
     // load blob url for thumbnail
-    this._thumbnailBlobURL = await FileManager.getURL(this._archiveEntry, true);
+    await FileManager.getURL(this._archiveEntry, true)
+      .then((blobURL) => {
+        this._thumbnailBlobURL = blobURL;
+      });
 
     // TODO: hash image
   }

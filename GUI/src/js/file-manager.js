@@ -105,7 +105,12 @@ export class FileManager {
     const options = {
       maxSizeMB: FileManager.MAX_SIZE_MB,
       maxWidthOrHeight: FileManager.MAX_SIZE_PX,
-      fileType: FileManager.NEW_FORMAT
+      fileType: FileManager.NEW_FORMAT,
+      
+      // Turn this option to false to avoid creating too much web workers,
+      // causing lag/crash or even skiping some compression.
+      // A consequence is that all the jobs run on the main thread.
+      useWebWorker: false
     }
 
     const file = new File([data], `compressed_${filename}`, {
@@ -114,7 +119,6 @@ export class FileManager {
 
     return await imageCompression(file, options);    
   }
-
 
   /**
   * Get the extension of a file given it filename.
@@ -177,7 +181,7 @@ export class FileManager {
     // `controller.abort()`
 
     try {
-      const blobURL = await FileManager.#createURL(entry, compressed, {
+      return await FileManager.#createURL(entry, compressed, {
         // password: passwordInput.value,
         onprogress: (index, max) => {
           unzipProgress.index = index;
@@ -186,16 +190,13 @@ export class FileManager {
         signal
       });
 
-      return blobURL;
-
     } catch (error) {
       if (!signal.reason || signal.reason.code != error.code) {
         throw error;
       }
 
     } finally {
-      // unzipProgress.remove();
-      // abortButton.remove();
+
     }
   }
 
