@@ -1,12 +1,5 @@
 <script setup>
 import Download from '@/components/icons/Download.vue'; 
-import ModalConfigIA from './ModalConfigIA.vue';
-import {ref} from 'vue';
-
-const showModalC = ref(false);
-function toggleModalConfigIA(){
-  showModalC.value = !showModalC.value;
-}
 </script>
 
 <template>
@@ -29,11 +22,6 @@ function toggleModalConfigIA(){
           <!-- </li> -->
           <li>
             <a href="#" class="block py-2 px-3 p-0 text-ls-bleu-fonce font-semibold rounded-full bg-white flex flex-row items-center transition duration-300 hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base">
-              <span class="ms-1" @click="toggleModalConfigIA">Configurer l'IA</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 p-0 text-ls-bleu-fonce font-semibold rounded-full bg-white flex flex-row items-center transition duration-300 hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base">
               <Download class="w-6 h-6" />
               <span class="ms-1">Sauvegarder</span>
             </a>
@@ -42,6 +30,4 @@ function toggleModalConfigIA(){
       </div>
     </div>
   </nav>
-<!-- MODALS -->
-<ModalConfigIA v-if="showModalC" @close="toggleModalConfigIA"/>
 </template>
