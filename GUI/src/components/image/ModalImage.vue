@@ -2,7 +2,7 @@
 import Tag from '@/components/image/Tag.vue';
 import Add from '@/components/icons/Add.vue';
 import {ref} from "vue";
-let add = ref(false)
+const add = ref(false)
 const props = defineProps(['imgSrc', 'imgName', 'imgTags', 'imgSize', 'imgSup']);
 const emit = defineEmits(['close', 'add', 'del']);
 
