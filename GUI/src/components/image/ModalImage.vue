@@ -2,7 +2,7 @@
 import Tag from '@/components/image/Tag.vue';
 import Add from '@/components/icons/Add.vue';
 import {ref} from "vue";
-const add = ref(false)
+let add = ref(false)
 const props = defineProps(['imgSrc', 'imgName', 'imgTags', 'imgSize', 'imgSup']);
 const emit = defineEmits(['close', 'add', 'del']);
 
@@ -16,7 +16,7 @@ function tagToDel(term) {
   emit('del', term.value);
 }
 function addTag(){
-  add = !add;
+  add.value = !add.value;
 }
 
 </script>
@@ -42,9 +42,11 @@ function addTag(){
                   <div class="mt-0.5 overflow-y-auto scrollbar-hide">
                     <div class="flex m-3">
                       <Tag v-for="tag in imgTags" @delete="tagToDel()" :key="tag.name" :tagName="tag.name" :class="tag.color" :inModal="'pomelo'"/>
-                      <Add class="w-6 h-5" @click="addTag"/> 
-                      <input v-if="add"id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="tagToAdd" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />                   
+                      <button @click="addTag" class="text-ls-bleu-fonce hover:bg-ls-bleu-fonce hover:text-white rounded text-sm p-1 transition duration-300">
+                        <Add class="w-6 h-6" />
+                      </button>                      
                     </div>
+                    <input v-if="add" id="tag" placeholder="Mot-clé à rajouter" @keyup.enter="tagToAdd" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-2 mx-2" />                   
                   </div>
                 </p>
                 <p v-if="imgSup != null" class="text-base leading-relaxed text-gray-500" style="margin-bottom: 10px;">
