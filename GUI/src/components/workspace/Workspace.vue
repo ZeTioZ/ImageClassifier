@@ -2,15 +2,13 @@
 import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
-import { GoodImages, BadImages } from './ImageData.vue';
-import { ref, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 
-    const searchTerms = ref([]);
-    const showModal = ref(false);
-    const refreshKey = ref(0);
-    const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
-
-    const props = defineProps(['images']);
+const props = defineProps(['images']);
+const searchTerms = ref([]);
+const showModal = ref(false);
+const refreshKey = ref(0);
+const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 
 // tags
 const tags = {
@@ -32,6 +30,35 @@ const tags = {
   brouillard:     {name: 'Brouillard',    color: 'bg-red-800'},
   livre:          {name: 'Livre',         color: 'bg-black'}
 };
+
+// base images lists from props, the computed ref is writable (i.e.: its value can be manually chage)
+
+// good images, i.e. images having that we keep
+const goodImages = computed({
+  get() {
+    return props.images.filter(img => !img.toBeDeleted)
+  },
+  set(imgs) {
+    imgs.forEach(img => img.toBeDeleted = false);
+  }
+});
+// bad images, i.e. images to be deleted
+const badImages = computed({
+  get() {
+    return props.images.filter(img => img.toBeDeleted)
+  },
+  set(imgs) {
+    imgs.forEach(img => img.toBeDeleted = true);
+  }
+});
+
+// computed ref, filtering constantly the images when a change is applied
+const filteredGoodImages = computed(() => filterImages(goodImages));
+const filteredBadImages = computed(() => filterImages(badImages));
+
+/**
+* Function to display or hide the filter modal
+*/
 
 
 function toggleModal() {
@@ -62,29 +89,6 @@ function filterImages(imagesList) {
   );
   }
 }
-// base images lists from props, the computed ref is writable (i.e.: its value can be manually chage)
-
-// good images, i.e. images having that we keep
-const goodImages = computed({
-  get() {
-    return props.images.filter(img => !img.toBeDeleted)
-  },
-  set(imgs) {
-    imgs.forEach(img => img.toBeDeleted = false);
-  }
-});
-// bad images, i.e. images to be deleted
-const badImages = computed({
-  get() {
-    return props.images.filter(img => img.toBeDeleted)
-  },
-  set(imgs) {
-    imgs.forEach(img => img.toBeDeleted = true);
-  }
-});
-
-const filteredGoodImages = computed(() => filterImages(GoodImages));
-const filteredBadImages = computed(() => filterImages(BadImages));
 
 function handleSearch(terms) {
   invertShearch.value = terms[1];
