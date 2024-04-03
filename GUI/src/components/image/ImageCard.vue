@@ -2,8 +2,6 @@
 import Tag from '@/components/image/Tag.vue';
 import VEllipsis from '@/components/icons/VEllipsis.vue';
 
-import '@/assets/css/scrollbar-hide.css'; 
-
 const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'selected']);
 </script>
 

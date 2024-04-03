@@ -2,7 +2,6 @@
 import ImageCard from '@/components/image/ImageCard.vue';
 import draggable from 'vuedraggable';
 import { ref } from 'vue';
-import '@/assets/css/scrollbar-hide.css'; 
 import arow from '@/components/icons/Arow.vue';
 
 const props = defineProps({

@@ -7,8 +7,6 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
 
-import '@/assets/css/scrollbar-hide.css'; 
-
 // buffer used to store changeable file references before submitting them to the backend,
 // allowing user to select file more than once without a reset
 const fileBuffer = new DataTransfer();
