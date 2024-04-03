@@ -7,17 +7,22 @@ import {ref} from 'vue';
 const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'size']);
 const showModalI = ref(false);
 
-function toggleModalImage(){
+function toggleModalImage()
+{
   showModalI.value = !showModalI.value;
 }
-function handleAdd(term){
-  tags.push(term)
+function handleAdd(term)
+{
+  props.tags.push(term)
 }
 
-function handleDel(term){
-  for (tag in tags){
-    if (tag == term){
-      tags.splice(tag.indexOf())
+function handleDel(term)
+{
+  for(let tag in props.tags)
+  {
+    if (tag === term)
+    {
+      props.tags.splice(tag.indexOf(term))
     }
   }
 }
@@ -49,8 +54,6 @@ function handleDel(term){
       <div class="mt-0.5 overflow-y-auto scrollbar-hide">
         <div class="flex">
           <Tag v-for="tag in tags" :key="tag.name" :tagName="tag.name" :class="tag.color"/>
-          <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" :class="tag.color" /> -->
-          <!-- <Tag v-for="tag in tags" :key="tag" :tagName="tag" :class="tag.color" /> -->
         </div>
       </div>
     </div>

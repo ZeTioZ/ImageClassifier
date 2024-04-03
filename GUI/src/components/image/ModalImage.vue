@@ -23,26 +23,26 @@
 
 <template>
 <!-- Extra Large Modal -->
-<div id="extralarge-modal" tabindex="-1" data-draggable="false" class="fixed inset-0 top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto bg-gray-600 bg-opacity-50 md:inset-0 h-screen" @click.self="closeModal">
+<div id="extralarge-modal" tabindex="-1" data-draggable="false" class="fixed z-10 pt-[calc(12.8vh)] pl-[calc(43.25vh)] bg-gray-600 bg-opacity-50 inset-0" @click.self="closeModal">
     <div class="relative">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow">
-          <div class="modal-header">
-            <h2 class="text-xl font-bold pt-2">{{ imgName }}</h2>
-          </div>
-          <button @click="closeModal" class="absolute top-0 right-0 m-3 text-gray-500 hover:text-gray-700">
-            <XMark class="w-6 h-6"/>
-          </button>
+        <div class="fixed bg-white rounded-lg shadow items-center justify-center w-[calc(100%-50rem)] h-[calc(100vh-15rem)]">
+          <nav class="w-full bg-ls-vert-base">
+            <h2 class="text-xl font-bold pt-2 pb-2">{{ imgName }}</h2>
+            <button @click="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+              <XMark class="w-6 h-6"/>
+            </button>
+          </nav>
             <!-- Modal body -->
             <div class="flex">
-              <div class="w-2/3">
-                <img :src="imgSrc" alt="full" class="h-full w-full object-cover p-2">
+              <div class="flex w-2/3 border-e-2 border-gray-500">
+                <img :src="imgSrc" alt="full" class="h-[calc(100vh-17.7rem)] w-full object-cover p-2 rounded-lg">
               </div>
               <div class="w-1/3">
                 <p class="text-base leading-relaxed text-gray-500 pb-[1px]">
                   <b>Mots-clés :</b>
                 </p>
-                <p class="text-base leading-relaxed text-gray-500 pb-[10px]">
+                <p class="flex text-base leading-relaxed text-gray-500 pb-[10px] justify-center items-center">
                   <div class="mt-0.5 overflow-y-auto scrollbar-hide">
                     <div class="flex m-3">
                       <button @click="addTag" class="text-ls-bleu-fonce hover:bg-ls-bleu-fonce hover:text-white rounded text-sm p-1 transition duration-300">
