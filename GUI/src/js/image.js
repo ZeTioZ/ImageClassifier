@@ -31,6 +31,7 @@ export class Image {
     this._filename = entry.filename;
     this._size = entry.uncompressedSize;
     this._toBeDeleted = true;
+    this._tags = []
   }
 
   /**

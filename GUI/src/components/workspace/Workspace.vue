@@ -59,8 +59,6 @@ const filteredBadImages = computed(() => filterImages(badImages));
 /**
 * Function to display or hide the filter modal
 */
-
-
 function toggleModal() {
   showModal.value = !showModal.value;
 }
@@ -124,13 +122,13 @@ function moveImages(workspace) {
     .filter(selectedImage => selectedImage.workspace === workspace)
     .map(selectedImage => ({
       ...selectedImage,
-      image: workspace === 'Triées' ? GoodImages[selectedImage.index] : BadImages[selectedImage.index]
+      image: workspace === 'Triées' ? goodImages.value[selectedImage.index] : badImages.value[selectedImage.index]
     }));
   console.log(imagesToMove);
   // Déplacer les images collectées
   imagesToMove.forEach(({ image, index }) => {
-    const source = workspace === 'Triées' ? GoodImages : BadImages;
-    const target = workspace === 'Triées' ? BadImages : GoodImages;
+    const source = workspace === 'Triées' ? goodImages.value : badImages.value;
+    const target = workspace === 'Triées' ? badImages.value : goodImages.value;
 
     // Suppression de l'image de la source
     source.splice(source.findIndex(img => img === image), 1);
@@ -147,6 +145,7 @@ function moveImages(workspace) {
 
 //Fonction pour renvoyer si l'image est sélectionnée ou non
 function isImageSelected(imageIndex, workspace) {
+  // console.log(imageIndex, workspaceName);
   return selectedImages.value.some(
     (selection) => selection.index === imageIndex && selection.workspace === workspace
   );
@@ -154,11 +153,13 @@ function isImageSelected(imageIndex, workspace) {
 
 // Fonction pour mettre à jour les indices des images après un déplacement drag-and-drop
 function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
+    console.log("moving image...")
+
   if (movedToNewList) {
     // Identifier l'espace de travail cible en fonction de l'espace de travail d'origine
     const targetWorkspace = fromWorkspace === 'Triées' ? 'À supprimer' : 'Triées';
-    const source = fromWorkspace === 'Triées' ? GoodImages : BadImages;
-    const target = fromWorkspace === 'Triées' ? BadImages : GoodImages;
+    const source = fromWorkspace === 'Triées' ? goodImages.value : badImages.value;
+    const target = fromWorkspace === 'Triées' ? badImages.value : goodImages.value;
 
     // Extraire l'image de la source
     const [movedImage] = source.splice(oldIndex, 1);
@@ -167,7 +168,7 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
     target.splice(newIndex, 0, movedImage);
   } else {
     // Si l'image reste dans le même espace de travail, réorganiser simplement les images
-    const imagesList = fromWorkspace === 'Triées' ? GoodImages : BadImages;
+    const imagesList = fromWorkspace === 'Triées' ? goodImages.value : badImages.value;
 
     // Extraire l'image déplacée
     const [reorderedImage] = imagesList.splice(oldIndex, 1);

@@ -13,7 +13,7 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'selected']);
     <!-- Image header -->
     <div class="flex justify-between py-1 ps-2">
       <!-- Image name -->
-      <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce">{{ fileName }}</span>
+      <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce truncate">{{ fileName }}</span>
       <!-- Three dots/menu icon -->
       <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1">
         <VEllipsis class="w-4 h-4" />

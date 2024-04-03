@@ -6,12 +6,12 @@ import arow from '@/components/icons/Arow.vue';
 
 const props = defineProps({
   workspaceName: String,
-  images: Array,
+  images: Object,
   toggleImageSelection: Function,
   moveImages: Function,
   isImageSelected: Function,
   updateImagesIndices: Function,
-  selectedImages: Array,
+  selectedImages: Object,
 });
 
 // Référence réactive pour les images 
@@ -59,7 +59,7 @@ function onEnd(event) {
       <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center" @click="toggleImageSelection(index, props.workspaceName)">
-            <ImageCard :imgSrc="element.getBlobURL()" :index="index" fileName="element.filename" :tags="element.tags" :selected="isImageSelected(index, props.workspaceName)" />
+            <ImageCard :imgSrc="element.getBlobURL()" :index="index" :fileName="element.filename" :tags="element.tags" :selected="isImageSelected(index, props.workspaceName)" />
           </div>
         </template>
       </draggable>
