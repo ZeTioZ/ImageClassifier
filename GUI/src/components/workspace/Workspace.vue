@@ -2,67 +2,13 @@
 import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
-import { ref, watch, computed } from 'vue';
+import { GoodImages, BadImages } from './ImageData.vue';
+import { ref, computed } from 'vue';
 
-// tags
-const tags = {
-  enfant:         {name: 'Enfant',        color: 'bg-ls-vert-base'},
-  arbre:          {name: 'Arbre',         color: 'bg-ls-vert-fonce'},
-  chapeau:        {name: 'Chapeau',       color: 'bg-ls-bleu-fonce'},
-  rassemblement:  {name: 'Rassemblement', color: 'bg-ls-louveteaux'},
-  feu:            {name: 'Feu',           color: 'bg-ls-eclaireurs'},
-  groupe:         {name: 'Groupe',        color: 'bg-ls-pionniers'},
-  tobogan:        {name: 'Tobogan',       color: 'bg-ls-mondial'},
-  danse:          {name: 'Danse',         color: 'bg-ls-prune'},
-  drapeau:        {name: 'Drapeau',       color: 'bg-ls-orange'},
-  main:           {name: 'Main',          color: 'bg-ls-bleu-clair'},
-  assis:          {name: 'Assis',         color: 'bg-ls-rouge'},
-  course:         {name: 'Course',        color: 'bg-ls-rose'},
-  roche:          {name: 'Roche',         color: 'bg-gray-800'},
-  ville:          {name: 'Ville',         color: 'bg-teal-800'},
-  flou:           {name: 'Flou',          color: 'bg-indigo-800'},
-  brouillard:     {name: 'Brouillard',    color: 'bg-red-800'},
-  livre:          {name: 'Livre',         color: 'bg-black'}
-};
-
-import IMG1 from '@/assets/IMG/7.jfif';
-import IMG2 from '@/assets/IMG/4.jfif';
-import IMG3 from '@/assets/IMG/9.jfif';
-import IMG4 from '@/assets/IMG/10.jfif';
-import IMG5 from '@/assets/IMG/3.jpg';
-import IMG7 from '@/assets/IMG/5.jfif';
-
-// Définir les bonnes images avec leurs tags correspondants
-const GoodImages = [
-  { imgSrc: IMG1, tags: [tags['enfant'], tags['arbre'], tags['chapeau']] },
-  { imgSrc: IMG2, tags: [tags['rassemblement'], tags['arbre']] },
-  { imgSrc: IMG3, tags: [tags['feu'], tags['groupe']] },
-  { imgSrc: IMG4, tags: [tags['tobogan'], tags['groupe']] },
-  { imgSrc: IMG5, tags: [tags['groupe'], tags['danse'], tags['drapeau']] },
-  { imgSrc: IMG7, tags: [tags['main'], tags['groupe']] },
-];
-
-import IMG11 from '@/assets/IMG/1.webp';
-import IMG12 from '@/assets/IMG/2.jpg';
-import IMG13 from '@/assets/IMG/11.jfif';
-import IMG14 from '@/assets/IMG/8.jfif';
-import IMG15 from '@/assets/IMG/13.jfif';
-import IMG16 from '@/assets/IMG/6.jpeg';
-
-// Définir les mauvaises images avec leurs tags correspondants
-const BadImages = [
-  { imgSrc: IMG11, tags: [tags['groupe'], tags['assis']] },
-  { imgSrc: IMG12, tags: [tags['course'], tags['arbre']] },
-  { imgSrc: IMG13, tags: [tags['roche']] },
-  { imgSrc: IMG14, tags: [tags['ville']] },
-  { imgSrc: IMG15, tags: [tags['livre'], tags['flou']] },
-  { imgSrc: IMG16, tags: [tags['brouillard'], tags['arbre']] },
-];
-
-const searchTerms = ref([]);
-const showModal = ref(false);
-const refreshKey = ref(0);
-const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
+    const searchTerms = ref([]);
+    const showModal = ref(false);
+    const refreshKey = ref(0);
+    const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 
 function toggleModal() {
   showModal.value = !showModal.value;
@@ -102,6 +48,93 @@ function handleSearch(terms) {
   refreshKey.value++;
 }
 
+
+// Référence réactive pour les images sélectionnées
+const selectedImages = ref([]);
+
+// Fonction pour basculer la sélection d'une image
+function toggleImageSelection(imageIndex, workspace) {
+  const imageID = {index: imageIndex, workspace: workspace};
+  console.log(imageID);
+  const selectedIndex = selectedImages.value.findIndex(
+    (image) => image.index === imageIndex && image.workspace === workspace
+  );
+  console.log(selectedIndex);
+  if (selectedIndex >= 0) {
+    selectedImages.value.splice(selectedIndex, 1); // Désélectionner
+  } else {
+    selectedImages.value.push(imageID); // Sélectionner
+  }
+  console.log(imageIndex);
+  console.log("selected images:",selectedImages.value);
+}
+
+// Fonction pour déplacer les images sélectionnées d'un workspace spécifique
+function moveImages(workspace) {
+  // Collecter les images à déplacer sans les retirer immédiatement
+  const imagesToMove = selectedImages.value
+    .filter(selectedImage => selectedImage.workspace === workspace)
+    .map(selectedImage => ({
+      ...selectedImage,
+      image: workspace === 'Triées' ? GoodImages[selectedImage.index] : BadImages[selectedImage.index]
+    }));
+  console.log(imagesToMove);
+  // Déplacer les images collectées
+  imagesToMove.forEach(({ image, index }) => {
+    const source = workspace === 'Triées' ? GoodImages : BadImages;
+    const target = workspace === 'Triées' ? BadImages : GoodImages;
+
+    // Suppression de l'image de la source
+    source.splice(source.findIndex(img => img === image), 1);
+
+    // Ajout de l'image à la destination
+    target.push(image);
+  });
+
+  // Réinitialiser les sélections après le déplacement
+  selectedImages.value = selectedImages.value.filter(selectedImage => selectedImage.workspace !== workspace);
+  // Mettre à jour la clé de rafraîchissement pour forcer le re-rendu des tables
+  refreshKey.value++;
+}
+
+//Fonction pour renvoyer si l'image est sélectionnée ou non
+function isImageSelected(imageIndex, workspace) {
+  return selectedImages.value.some(
+    (selection) => selection.index === imageIndex && selection.workspace === workspace
+  );
+}
+
+// Fonction pour mettre à jour les indices des images après un déplacement drag-and-drop
+function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
+  if (movedToNewList) {
+    // Identifier l'espace de travail cible en fonction de l'espace de travail d'origine
+    const targetWorkspace = fromWorkspace === 'Triées' ? 'À supprimer' : 'Triées';
+    const source = fromWorkspace === 'Triées' ? GoodImages : BadImages;
+    const target = fromWorkspace === 'Triées' ? BadImages : GoodImages;
+
+    // Extraire l'image de la source
+    const [movedImage] = source.splice(oldIndex, 1);
+
+    // Ajouter l'image à la destination à la position `newIndex`
+    target.splice(newIndex, 0, movedImage);
+  } else {
+    // Si l'image reste dans le même espace de travail, réorganiser simplement les images
+    const imagesList = fromWorkspace === 'Triées' ? GoodImages : BadImages;
+
+    // Extraire l'image déplacée
+    const [reorderedImage] = imagesList.splice(oldIndex, 1);
+
+    // Réinsérer l'image à sa nouvelle position
+    imagesList.splice(newIndex, 0, reorderedImage);
+  }
+
+  // Vider selected images après le déplacement si l'image a changé de place
+  if (movedToNewList || oldIndex !== newIndex){
+    selectedImages.value = [];
+  }  
+}
+
+
 </script>
 
 <template>
@@ -111,8 +144,17 @@ function handleSearch(terms) {
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
-      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
-      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
+      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" 
+      :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
+      :moveImages="moveImages"  :isImageSelected="isImageSelected" 
+      :updateImagesIndices="updateImagesIndices"
+      :selectedImages="selectedImages"/>
+
+      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" 
+      :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
+      :moveImages="moveImages"  :isImageSelected="isImageSelected" 
+      :updateImagesIndices="updateImagesIndices"
+      :selectedImages="selectedImages"/>
     </div>
   </div>
 

@@ -2,12 +2,13 @@
 import Tag from '@/components/image/Tag.vue';
 import VEllipsis from '@/components/icons/VEllipsis.vue';
 
-const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
+const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'selected']);
 </script>
 
 <template>
   <!-- Image Container -->
-  <div class="relative rounded bg-gray-200 overflow-hidden w-full p-1">
+  <div class="relative rounded  overflow-hidden w-full p-1"
+    :class="[props.selected ? 'bg-blue-200' : 'bg-gray-200']">
 
     <!-- Image header -->
     <div class="flex justify-between py-1 ps-2">
@@ -38,14 +39,3 @@ const props = defineProps(['imgSrc', 'index', 'fileName', 'tags']);
   </div>
 </template>
 
-<style scoped>
-/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Pour les navigateurs Webkit */
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* Pour IE et Edge */
-  scrollbar-width: none;  /* Pour Firefox */
-}
-</style>
