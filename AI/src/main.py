@@ -23,7 +23,7 @@ def classify():
 	os.makedirs(extracted_path)
 
 	if not os.path.exists(model_path):
-		with requests.get("https://www.dropbox.com/scl/fi/mqrriarmw5wvj0pr3mktw/scout-model-v3.pt?rlkey=1zz8376bdcay10zkffsjsguo0&dl=1", stream=True) as response:
+		with requests.get("https://www.dropbox.com/scl/fi/17jwwukt9e3ofk0b9jnv5/best.pt?rlkey=rle6wa4k0oy6gqhu2y1xx8g1v&dl=1", stream=True) as response:
 			response.raise_for_status()
 			with open(model_path, 'wb') as model_file:
 				for chunk in response.iter_content(chunk_size=10 * 1024):
