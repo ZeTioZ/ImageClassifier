@@ -161,3 +161,4 @@ cython_debug/
 .idea/
 AI/extracted/
 AI/test/
+WebServer/uploads/
