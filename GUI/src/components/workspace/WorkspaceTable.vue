@@ -1,7 +1,7 @@
 <script setup>
 import ImageCard from '@/components/image/ImageCard.vue';
 import draggable from 'vuedraggable';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import arow from '@/components/icons/Arow.vue';
 
 const props = defineProps({
@@ -15,7 +15,11 @@ const props = defineProps({
 });
 
 // Référence réactive pour les images 
-const draggableImages = ref(props.images);
+const draggableImages = ref([]);
+
+watchEffect(() => {
+  draggableImages.value = props.images.value;
+});
 
 
 // Fonction appelée lorsque le déplacement des images est terminé
@@ -28,6 +32,8 @@ function onEnd(event) {
   console.log('Nouvelle liste:', newlist)
   console.log('Indice de départ:', event.oldIndex);
   console.log('Nouvel indice:', event.newIndex);
+
+  console.log('Images:', draggableImages.value)
 
   // Mettre à jour les indices dans selectedImages en fonction du déplacement
   props.updateImagesIndices(event.oldIndex, event.newIndex, newlist, props.workspaceName);
