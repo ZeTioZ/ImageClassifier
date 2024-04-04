@@ -122,14 +122,3 @@ async function submit(newTags) {
   </aside>
 </template>
 
-<style scoped>
-/* Masquer la barre de défilement pour tous les éléments ayant la classe .scrollbar-hide */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Pour les navigateurs Webkit */
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* Pour IE et Edge */
-  scrollbar-width: none;  /* Pour Firefox */
-}
-</style>

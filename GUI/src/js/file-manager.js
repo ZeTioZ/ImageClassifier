@@ -196,7 +196,6 @@ export class FileManager {
       }
 
     } finally {
-
     }
   }
 

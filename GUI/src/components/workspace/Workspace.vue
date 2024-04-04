@@ -5,7 +5,10 @@ import SortModal from '@/components/workspace/SortModal.vue';
 import { ref, watch, computed } from 'vue';
 
 const props = defineProps(['images']);
-
+const searchTerms = ref([]);
+const showModal = ref(false);
+const refreshKey = ref(0);
+const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 
 // tags
 const tags = {
@@ -27,44 +30,6 @@ const tags = {
   brouillard:     {name: 'Brouillard',    color: 'bg-red-800'},
   livre:          {name: 'Livre',         color: 'bg-black'}
 };
-
-// import IMG1 from '@/assets/IMG/7.jfif';
-// import IMG2 from '@/assets/IMG/4.jfif';
-// import IMG3 from '@/assets/IMG/9.jfif';
-// import IMG4 from '@/assets/IMG/10.jfif';
-// import IMG5 from '@/assets/IMG/3.jpg';
-// import IMG7 from '@/assets/IMG/5.jfif';
-
-// Définir les bonnes images avec leurs tags correspondants
-// const goodImages = [
-//   { imgSrc: IMG1, tags: [tags['enfant'], tags['arbre'], tags['chapeau']] },
-//   { imgSrc: IMG2, tags: [tags['rassemblement'], tags['arbre']] },
-//   { imgSrc: IMG3, tags: [tags['feu'], tags['groupe']] },
-//   { imgSrc: IMG4, tags: [tags['tobogan'], tags['groupe']] },
-//   { imgSrc: IMG5, tags: [tags['groupe'], tags['danse'], tags['drapeau']] },
-//   { imgSrc: IMG7, tags: [tags['main'], tags['groupe']] },
-// ];
-
-// import IMG11 from '@/assets/IMG/1.webp';
-// import IMG12 from '@/assets/IMG/2.jpg';
-// import IMG13 from '@/assets/IMG/11.jfif';
-// import IMG14 from '@/assets/IMG/8.jfif';
-// import IMG15 from '@/assets/IMG/13.jfif';
-// import IMG16 from '@/assets/IMG/6.jpeg';
-
-// Définir les mauvaises images avec leurs tags correspondants
-// const badImages = [
-//   { imgSrc: IMG11, tags: [tags['groupe'], tags['assis']] },
-//   { imgSrc: IMG12, tags: [tags['course'], tags['arbre']] },
-//   { imgSrc: IMG13, tags: [tags['roche']] },
-//   { imgSrc: IMG14, tags: [tags['ville']] },
-//   { imgSrc: IMG15, tags: [tags['livre'], tags['flou']] },
-//   { imgSrc: IMG16, tags: [tags['brouillard'], tags['arbre']] },
-// ];
-
-const searchTerm = ref('');
-const showModal = ref(false);
-const refreshKey = ref(0);
 
 // base images lists from props, the computed ref is writable (i.e.: its value can be manually chage)
 
@@ -98,33 +63,126 @@ function toggleModal() {
   showModal.value = !showModal.value;
 }
 
-/**
-* Filter function
-*/
+// Fonction de filtrage 
 function filterImages(imagesList) {
-  if (!searchTerm.value) {
+  if (!searchTerms.value || searchTerms.value.length === 0) {
     return imagesList;
   }
-  const matchedImages = imagesList.filter(image => 
-    image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  if (!invertShearch.value){
+  return imagesList.value.filter(image => 
+    image.tags.some(imageTag =>
+      searchTerms.value.some(searchTag =>
+        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+      )
+    )
   );
-  const unmatchedImages = imagesList.filter(image => 
-    !image.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  }
+  else{
+  return imagesList.value.filter(image =>
+    !image.tags.some(imageTag =>
+      searchTerms.value.some(searchTag =>
+        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+      )
+    )
   );
-
-  //alternative ne retourner que les images correspondantes
-  return matchedImages;
-  // Retourner d'abord les images correspondantes, puis les autres
-  // return [...matchedImages, ...unmatchedImages];
+  }
 }
 
-/*
-* Function to handle search
-*/
-function handleSearch(term) {
-  searchTerm.value = term;
+function handleSearch(terms) {
+  invertShearch.value = terms[1];
+  searchTerms.value = terms[0];
   refreshKey.value++;
 }
+
+
+// Référence réactive pour les images sélectionnées
+const selectedImages = ref([]);
+
+// Fonction pour basculer la sélection d'une image
+function toggleImageSelection(imageIndex, workspace) {
+  const imageID = {index: imageIndex, workspace: workspace};
+  console.log(imageID);
+  const selectedIndex = selectedImages.value.findIndex(
+    (image) => image.index === imageIndex && image.workspace === workspace
+  );
+  console.log(selectedIndex);
+  if (selectedIndex >= 0) {
+    selectedImages.value.splice(selectedIndex, 1); // Désélectionner
+  } else {
+    selectedImages.value.push(imageID); // Sélectionner
+  }
+  console.log(imageIndex);
+  console.log("selected images:",selectedImages.value);
+}
+
+// Fonction pour déplacer les images sélectionnées d'un workspace spécifique
+function moveImages(workspace) {
+  // Collecter les images à déplacer sans les retirer immédiatement
+  const imagesToMove = selectedImages.value
+    .filter(selectedImage => selectedImage.workspace === workspace)
+    .map(selectedImage => ({
+      ...selectedImage,
+      image: workspace === 'Triées' ? goodImages.value[selectedImage.index] : badImages.value[selectedImage.index]
+    }));
+  console.log(imagesToMove);
+  // Déplacer les images collectées
+  imagesToMove.forEach(({ image, index }) => {
+    const source = workspace === 'Triées' ? goodImages.value : badImages.value;
+    const target = workspace === 'Triées' ? badImages.value : goodImages.value;
+
+    // Suppression de l'image de la source
+    source.splice(source.findIndex(img => img === image), 1);
+
+    // Ajout de l'image à la destination
+    target.push(image);
+  });
+
+  // Réinitialiser les sélections après le déplacement
+  selectedImages.value = selectedImages.value.filter(selectedImage => selectedImage.workspace !== workspace);
+  // Mettre à jour la clé de rafraîchissement pour forcer le re-rendu des tables
+  refreshKey.value++;
+}
+
+//Fonction pour renvoyer si l'image est sélectionnée ou non
+function isImageSelected(imageIndex, workspace) {
+  // console.log(imageIndex, workspaceName);
+  return selectedImages.value.some(
+    (selection) => selection.index === imageIndex && selection.workspace === workspace
+  );
+}
+
+// Fonction pour mettre à jour les indices des images après un déplacement drag-and-drop
+function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
+    console.log("moving image...")
+
+  if (movedToNewList) {
+    // Identifier l'espace de travail cible en fonction de l'espace de travail d'origine
+    const targetWorkspace = fromWorkspace === 'Triées' ? 'À supprimer' : 'Triées';
+    const source = fromWorkspace === 'Triées' ? goodImages.value : badImages.value;
+    const target = fromWorkspace === 'Triées' ? badImages.value : goodImages.value;
+
+    // Extraire l'image de la source
+    const [movedImage] = source.splice(oldIndex, 1);
+
+    // Ajouter l'image à la destination à la position `newIndex`
+    target.splice(newIndex, 0, movedImage);
+  } else {
+    // Si l'image reste dans le même espace de travail, réorganiser simplement les images
+    const imagesList = fromWorkspace === 'Triées' ? goodImages.value : badImages.value;
+
+    // Extraire l'image déplacée
+    const [reorderedImage] = imagesList.splice(oldIndex, 1);
+
+    // Réinsérer l'image à sa nouvelle position
+    imagesList.splice(newIndex, 0, reorderedImage);
+  }
+
+  // Vider selected images après le déplacement si l'image a changé de place
+  if (movedToNewList || oldIndex !== newIndex){
+    selectedImages.value = [];
+  }  
+}
+
 
 </script>
 
@@ -135,8 +193,17 @@ function handleSearch(term) {
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
-      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" :images="filteredBadImages" />
-      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" :images="filteredGoodImages" />
+      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" 
+      :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
+      :moveImages="moveImages"  :isImageSelected="isImageSelected" 
+      :updateImagesIndices="updateImagesIndices"
+      :selectedImages="selectedImages"/>
+
+      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" 
+      :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
+      :moveImages="moveImages"  :isImageSelected="isImageSelected" 
+      :updateImagesIndices="updateImagesIndices"
+      :selectedImages="selectedImages"/>
     </div>
   </div>
 

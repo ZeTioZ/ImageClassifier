@@ -10,7 +10,7 @@ import { FileManager } from './file-manager';
 export class Image {
 
   // All fields are private and should not be accessed outside of the class.
-  //The getters bellow should be used instead.
+  // The getters bellow should be used instead.
   // ES6 introduced private variable (#myVar), but are currently incompatible with Vue.js.
   _hash
   _filename
@@ -31,6 +31,7 @@ export class Image {
     this._filename = entry.filename;
     this._size = entry.uncompressedSize;
     this._toBeDeleted = true;
+    this._tags = []
   }
 
   /**
