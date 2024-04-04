@@ -69,7 +69,7 @@ function filterImages(imagesList) {
     return imagesList;
   }
   if (!invertShearch.value){
-  return imagesList.filter(image => 
+  return imagesList.value.filter(image => 
     image.tags.some(imageTag =>
       searchTerms.value.some(searchTag =>
         imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
@@ -78,7 +78,7 @@ function filterImages(imagesList) {
   );
   }
   else{
-  return imagesList.filter(image =>
+  return imagesList.value.filter(image =>
     !image.tags.some(imageTag =>
       searchTerms.value.some(searchTag =>
         imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
