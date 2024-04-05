@@ -23,10 +23,10 @@
 
 <template>
 <!-- Extra Large Modal -->
-<div id="extralarge-modal" tabindex="-1" data-draggable="false" class="fixed z-10 pt-[calc(12.8vh)] pl-[calc(43.25vh)] bg-gray-600 bg-opacity-50 inset-0" @click.self="closeModal">
+<div id="extralarge-modal" tabindex="-1" data-draggable="false" class="fixed z-10 bg-gray-600 bg-opacity-50 inset-0" @click.self="closeModal">
     <div class="relative">
         <!-- Modal content -->
-        <div class="fixed bg-white rounded-lg shadow items-center justify-center w-[calc(100%-50rem)] h-[calc(100vh-15rem)]">
+        <div class="fixed bg-white rounded-lg shadow items-center justify-center inset-20 min-h-[250px]">
           <nav class="w-full bg-ls-vert-base">
             <h2 class="text-xl font-bold pt-2 pb-2">{{ imgName }}</h2>
             <button @click="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
@@ -35,10 +35,10 @@
           </nav>
             <!-- Modal body -->
             <div class="flex">
-              <div class="flex w-2/3 border-e-2 border-gray-500">
-                <img :src="imgSrc" alt="full" class="h-[calc(100vh-17.7rem)] w-full object-cover p-2 rounded-lg">
+              <div class="flex w-2/3 border-e-2 border-gray-500 min-h-[206px]">
+                <img :src="imgSrc" alt="full" class="h-[calc(100vh-12.77rem)] w-full object-cover p-2 rounded-lg min-h-[206px]">
               </div>
-              <div class="w-1/3">
+              <div class="w-1/3 min-h-[206px]">
                 <p class="text-base leading-relaxed text-gray-500 pb-[1px]">
                   <b>Mots-clés :</b>
                 </p>
