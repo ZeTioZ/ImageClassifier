@@ -164,13 +164,15 @@ export class Image {
   }
 
   async load() {
-    // load blob url for thumbnail
+    // load blob url for thumbnail and image hash
     await FileManager.getURL(this._archiveEntry, true)
-      .then((blobURL) => {
-        this._thumbnailBlobURL = blobURL;
-      });
+      .then((res) => {
+        // set blob url
+        this._thumbnailBlobURL = res.url;
 
-    // TODO: hash image
+        // set image hash
+        this._hash = res.hash;
+      });
   }
 
   /**

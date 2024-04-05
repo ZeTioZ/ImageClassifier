@@ -1,5 +1,6 @@
 import { ZipReader, BlobReader, BlobWriter, getMimeType } from '@zip.js/zip.js';
 import imageCompression from 'browser-image-compression';
+import { getMD5 } from './hash';
 
 
 /**
@@ -55,10 +56,14 @@ export class FileManager {
   *
   * @param {Entry} entry - The entry.
   * @param {object} options - Options to get data from the entry.
-  * @return {string} - The URL pointing to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c).
+  * @return {object} - The URL pointing to the content of the blob (e.g.: blob:http://localhost/b97103f1-8aaa-4a82-9358-5f1e7e55087c)
+  *                    and the hash of the file (uncompressed).
   */
   static async #createURL(entry, compressed, options) {
     let entryData = await entry.getData(new BlobWriter(), options);
+
+    // generate hash of the image to avoid loading file content twice
+    const hashMD5 = await getMD5(entryData);
 
     // compress the image if compressed is true
     if (compressed) {
@@ -66,7 +71,10 @@ export class FileManager {
       entryData = await FileManager.#compressImage(entryData, entry.filename, mimeType);
     }
 
-    return URL.createObjectURL(entryData);
+    return {
+      url: URL.createObjectURL(entryData),
+      hash: hashMD5
+    };
   }
 
   /**
@@ -164,7 +172,7 @@ export class FileManager {
   *
   * @param {import('@zip.js/zip.js').Entry} entry - The entry .
   * @param {boolean} compressed - If the URL created should be of a compressed image or not.
-  * @return {string} - The URL for an image, in a blob URL format 
+  * @return {string} - The URL for an image, in a blob URL format, and its hash in an object
   *                    (i.e. https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static).
   */
   static async getURL(entry, compressed = true) {
