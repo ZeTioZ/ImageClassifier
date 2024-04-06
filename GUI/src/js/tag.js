@@ -9,6 +9,8 @@ export class Tag {
   _displayName
   _cssColorClass
 
+  static _TAGS = [];
+
   constructor(tagname, displayName) {
     this._tagname = tagname;
     this._displayName = displayName;
@@ -21,7 +23,7 @@ export class Tag {
   * @return {string} - the normally unique name of the tag.
   */
   get tagname() {
-    return this.tagname;
+    return this._tagname;
   }
 
   /**
@@ -41,5 +43,13 @@ export class Tag {
   */
   get cssColorClass() {
     return this._cssColorClass;
+  }
+
+  static set TAGS(tags) {
+    Tag._TAGS = tags;
+  }
+
+  static get TAGS() {
+    return Tag._TAGS;
   }
 }

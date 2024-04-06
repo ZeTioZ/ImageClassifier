@@ -25,6 +25,8 @@ export class Image {
   _archiveEntry
   _thumbnailBlobURL
   _blobURL
+  
+  _loading
 
   constructor(entry) {
     this._archiveEntry = entry;
@@ -32,6 +34,8 @@ export class Image {
     this._size = entry.uncompressedSize;
     this._toBeDeleted = true;
     this._tags = []
+
+    this._loading = false;
   }
 
   /**
@@ -151,6 +155,15 @@ export class Image {
   }
 
   /**
+  * Tell if the image is loading, ie. the load() function has been called and is currently running.
+  *
+  * @return {boolean}
+  */
+  get loading() {
+    return this._loading;
+  }
+
+  /**
   * Set properties of the images from response of the REST API.
   *
   * @param {Array.<Tag>} tags - list of tags linked to the image.
@@ -163,7 +176,12 @@ export class Image {
     this._reasonForDeletion = reasonForDeletion;
   }
 
+  /**
+  * Load the url thumbnail for the image and get its hash.
+  */
   async load() {
+    this._loading = true;
+
     // load blob url for thumbnail and image hash
     await FileManager.getURL(this._archiveEntry, true)
       .then((res) => {
@@ -173,6 +191,8 @@ export class Image {
         // set image hash
         this._hash = res.hash;
       });
+
+    this._loading = false;
   }
 
   /**

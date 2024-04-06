@@ -7,7 +7,9 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
 import { Tag } from '@/js/tag';
+import { until } from '@/js/utils';
 import { API } from '@/api/';
+
 
 const emits = defineEmits(['onNewImages']);
 
@@ -83,32 +85,38 @@ async function submit(newTags) {
     const response = await API.uploads.post(files, newTags, null);
 
     // get tags
-    const tags = Object.keys(response.generated_tags.classes).map(key => response.generated_tags.classes[key]);
+    const tags = Object.keys(response.generated_tags.classes)
+      .map(key => response.generated_tags.classes[key]);
 
     // create tag objects
-    const tagList = tags.map(tag => new Tag(tag, tag));
+    Tag.TAGS = tags
+      .map(tag => new Tag(tag, tag));
     
-    const images = archiveList.value.map(archive => archive.images).flat();
-  console.log(images)
+    const images = archiveList.value
+      .map(archive => archive.images)
+      .flat();
 
     // set image properties
-    images.forEach(img => {
-      console.log(img.hash, response[img.hash])
-      const imgData = response[img.hash];
+    for (let img of images) {
+      // wait until image is loaded
+      await until(() => !img.loading);
+
+
+      const imgData = response.generated_tags[img.hash];
 
       // get tags in image
-      imageTags = tagList
-        .filter(tag => tag in imgData.detection_tags);
+      const imageTags = Tag.TAGS
+        .filter(tag => imgData.detection_tags.includes(tag.tagname));
 
       // should the image be deleted...
-      toBeDeleted = imgData.is_qualitative;
+      const toBeDeleted = imgData.is_qualitative;
 
       // ...and why
-      reasonForDeletion = imgData.quality_tags;
+      const reasonForDeletion = imgData.quality_tags;
       
 
       img.setProperties(imageTags, toBeDeleted, reasonForDeletion);
-    });
+    }
 
     emits('onNewImages', images);
   // }
