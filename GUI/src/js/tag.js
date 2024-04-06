@@ -11,10 +11,30 @@ export class Tag {
 
   static _TAGS = [];
 
+  static _colorIndex = 0;
+  static _CSS_COLOR_CLASSES = [
+    "bg-ls-vert-base",
+    "bg-ls-vert-fonce",
+    "bg-ls-bleu-fonce",
+    "bg-ls-prune",
+    "bg-ls-orange",
+    "bg-ls-gris",
+    "bg-ls-turquoise",
+    "bg-ls-bleu-clair",
+    "bg-ls-rouge",
+    "bg-ls-rose",
+    "bg-ls-baladins",
+    "bg-ls-louveteaux",
+    "bg-ls-eclaireurs",
+    "bg-ls-pionniers",
+    "bg-ls-mondial",
+  ];
+
   constructor(tagname, displayName) {
     this._tagname = tagname;
     this._displayName = displayName;
-    this._cssColorClass = "bg-ls-vert-base";
+    this._cssColorClass = Tag._CSS_COLOR_CLASSES[Tag._colorIndex];
+    Tag._colorIndex++;
   }
 
   /**
