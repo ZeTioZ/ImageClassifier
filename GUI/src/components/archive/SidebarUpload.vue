@@ -7,7 +7,7 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
 import { Tag } from '@/js/tag';
-import { until } from '@/js/utils';
+import { handleApiResponseForArchiveUploads } from '@/js/utils';
 import { API } from '@/api/';
 
 
@@ -80,49 +80,19 @@ function removeArchive(index) {
 async function submit(newTags) {
   const files = archiveList.value.map(archive => archive.file);
 
-  // try {
+  try {
     // get API response
     const response = await API.uploads.post(files, newTags, null);
 
-    // get tags
-    const tags = Object.keys(response.generated_tags.classes)
-      .map(key => response.generated_tags.classes[key]);
-
-    // create tag objects
-    Tag.TAGS = tags
-      .map(tag => new Tag(tag, tag));
+    // load image objects from response and archives
+    const images = await handleApiResponseForArchiveUploads(response, archiveList.value);
     
-    const images = archiveList.value
-      .map(archive => archive.images)
-      .flat();
-
-    // set image properties
-    for (let img of images) {
-      // wait until image is loaded
-      await until(() => !img.loading);
-
-
-      const imgData = response.generated_tags[img.hash];
-
-      // get tags in image
-      const imageTags = Tag.TAGS
-        .filter(tag => imgData.detection_tags.includes(tag.tagname));
-
-      // should the image be deleted...
-      const toBeDeleted = imgData.is_qualitative;
-
-      // ...and why
-      const reasonForDeletion = imgData.quality_tags;
-      
-
-      img.setProperties(imageTags, toBeDeleted, reasonForDeletion);
-    }
-
     emits('onNewImages', images);
-  // }
-  // catch (err) {
-  //   console.log(err)
-  // }
+  }
+  catch (err) {
+    // TODO: display the error visualy
+    console.log(err)
+  }
 } 
 </script>
 
