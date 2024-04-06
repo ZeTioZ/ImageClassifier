@@ -19,7 +19,7 @@ function newImages(newImages) {
     <!-- Page content -->
     <div class="overflow-hidden flex-1 flex flex-row">
       <SidebarUpload @onNewImages="newImages" />
-      <Workspace @onImageUpdated="" :images="images" />
+      <Workspace :images="images" />
     </div>
   </main>
 </template>

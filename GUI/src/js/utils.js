@@ -25,6 +25,7 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
     .map(key => response.generated_tags.classes[key]);
 
   // create tag objects
+  Tag._colorIndex = 0;
   Tag.TAGS = tags
     .map(tag => new Tag(tag, tag));
 
