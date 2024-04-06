@@ -47,22 +47,22 @@ function filterImages(imagesList) {
   }
 
   if (!invertShearch.value) {
-    return imagesList.value.filter(image => 
-      image.tags.some(imageTag =>
-        searchTerms.value.some(searchTag =>
+    return imagesList.value.filter(image => { 
+      image.tags.some(imageTag => {
+        searchTerms.value.some(searchTag => {
           imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
-        );
-      );
-    );
+        });
+      });
+    });
   }
   else {
-    return imagesList.value.filter(image =>
-      !image.tags.some(imageTag =>
-        searchTerms.value.some(searchTag =>
+    return imagesList.value.filter(image => {
+      !image.tags.some(imageTag => {
+        searchTerms.value.some(searchTag => {
           imageTag.name.toLowerCase().includes(searchTag.toLowerCase());
-        );
-      );
-    );
+        });
+      });
+    });
   }
 }
 
