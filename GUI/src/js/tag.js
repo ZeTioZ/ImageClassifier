@@ -28,6 +28,9 @@ export class Tag {
     "bg-ls-eclaireurs",
     "bg-ls-pionniers",
     "bg-ls-mondial",
+
+    // point of failure: if there are more tags than elements in this list,
+    // an unexpected error will occur.
   ];
 
   constructor(tagname, displayName) {
