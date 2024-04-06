@@ -189,7 +189,7 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
 <template>
   <div class="flex-1 flex flex-col w-full">
     <!-- navbar -->
-    <WorkspaceNavbar @toggleSortModal="toggleModal" />
+    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertShearch" @toggleSortModal="toggleModal" />
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
