@@ -78,29 +78,43 @@ function removeArchive(index) {
 async function submit(newTags) {
   const files = archiveList.value.map(archive => archive.file);
 
-  try {
+  // try {
     // get API response
     const response = await API.uploads.post(files, newTags, null);
 
     // get tags
-    // const tags = Objects.keys(response.generated_tags.classes).map(key => response.generated_tags.classes[key]);
+    const tags = Object.keys(response.generated_tags.classes).map(key => response.generated_tags.classes[key]);
 
     // create tag objects
-    // const tagList = tags.map(tag => new Tag(tag, tag));
+    const tagList = tags.map(tag => new Tag(tag, tag));
     
     const images = archiveList.value.map(archive => archive.images).flat();
+  console.log(images)
 
-    // Objects.keys(response.generated_tags)
-    //   .filter(key => key != "classes")
-    //   .forEach(key => {
-    //     response.generated_tags[key]
-    //   });
+    // set image properties
+    images.forEach(img => {
+      console.log(img.hash, response[img.hash])
+      const imgData = response[img.hash];
+
+      // get tags in image
+      imageTags = tagList
+        .filter(tag => tag in imgData.detection_tags);
+
+      // should the image be deleted...
+      toBeDeleted = imgData.is_qualitative;
+
+      // ...and why
+      reasonForDeletion = imgData.quality_tags;
+      
+
+      img.setProperties(imageTags, toBeDeleted, reasonForDeletion);
+    });
 
     emits('onNewImages', images);
-  }
-  catch (err) {
-
-  }
+  // }
+  // catch (err) {
+  //   console.log(err)
+  // }
 } 
 </script>
 
