@@ -10,31 +10,9 @@ const showModal = ref(false);
 const refreshKey = ref(0);
 const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 
-// tags
-const tags = {
-  enfant:         {name: 'Enfant',        color: 'bg-ls-vert-base'},
-  arbre:          {name: 'Arbre',         color: 'bg-ls-vert-fonce'},
-  chapeau:        {name: 'Chapeau',       color: 'bg-ls-bleu-fonce'},
-  rassemblement:  {name: 'Rassemblement', color: 'bg-ls-louveteaux'},
-  feu:            {name: 'Feu',           color: 'bg-ls-eclaireurs'},
-  groupe:         {name: 'Groupe',        color: 'bg-ls-pionniers'},
-  tobogan:        {name: 'Tobogan',       color: 'bg-ls-mondial'},
-  danse:          {name: 'Danse',         color: 'bg-ls-prune'},
-  drapeau:        {name: 'Drapeau',       color: 'bg-ls-orange'},
-  main:           {name: 'Main',          color: 'bg-ls-bleu-clair'},
-  assis:          {name: 'Assis',         color: 'bg-ls-rouge'},
-  course:         {name: 'Course',        color: 'bg-ls-rose'},
-  roche:          {name: 'Roche',         color: 'bg-gray-800'},
-  ville:          {name: 'Ville',         color: 'bg-teal-800'},
-  flou:           {name: 'Flou',          color: 'bg-indigo-800'},
-  brouillard:     {name: 'Brouillard',    color: 'bg-red-800'},
-  livre:          {name: 'Livre',         color: 'bg-black'}
-};
 
 // base images lists from props, the computed ref is writable (i.e.: its value can be manually chage)
-
-// good images, i.e. images having that we keep
-const goodImages = computed({
+const goodImages = computed({     // good images, i.e. images having that we keep
   get() {
     return props.images.filter(img => !img.toBeDeleted)
   },
@@ -42,8 +20,7 @@ const goodImages = computed({
     imgs.forEach(img => img.toBeDeleted = false);
   }
 });
-// bad images, i.e. images to be deleted
-const badImages = computed({
+const badImages = computed({      // bad images, i.e. images to be deleted
   get() {
     return props.images.filter(img => img.toBeDeleted)
   },
@@ -68,23 +45,24 @@ function filterImages(imagesList) {
   if (!searchTerms.value || searchTerms.value.length === 0) {
     return imagesList;
   }
-  if (!invertShearch.value){
-  return imagesList.value.filter(image => 
-    image.tags.some(imageTag =>
-      searchTerms.value.some(searchTag =>
-        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
-      )
-    )
-  );
+
+  if (!invertShearch.value) {
+    return imagesList.value.filter(image => 
+      image.tags.some(imageTag =>
+        searchTerms.value.some(searchTag =>
+          imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+        );
+      );
+    );
   }
-  else{
-  return imagesList.value.filter(image =>
-    !image.tags.some(imageTag =>
-      searchTerms.value.some(searchTag =>
-        imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
-      )
-    )
-  );
+  else {
+    return imagesList.value.filter(image =>
+      !image.tags.some(imageTag =>
+        searchTerms.value.some(searchTag =>
+          imageTag.name.toLowerCase().includes(searchTag.toLowerCase());
+        );
+      );
+    );
   }
 }
 
@@ -93,7 +71,6 @@ function handleSearch(terms) {
   searchTerms.value = terms[0];
   refreshKey.value++;
 }
-
 
 // Référence réactive pour les images sélectionnées
 const selectedImages = ref([]);
@@ -143,7 +120,7 @@ function moveImages(workspace) {
   refreshKey.value++;
 }
 
-//Fonction pour renvoyer si l'image est sélectionnée ou non
+// Fonction pour renvoyer si l'image est sélectionnée ou non
 function isImageSelected(imageIndex, workspace) {
   // console.log(imageIndex, workspaceName);
   return selectedImages.value.some(
@@ -153,7 +130,7 @@ function isImageSelected(imageIndex, workspace) {
 
 // Fonction pour mettre à jour les indices des images après un déplacement drag-and-drop
 function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
-    console.log("moving image...")
+  console.log("moving image...")
 
   if (movedToNewList) {
     // Identifier l'espace de travail cible en fonction de l'espace de travail d'origine
@@ -194,16 +171,16 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
       <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" 
-      :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
-      :moveImages="moveImages"  :isImageSelected="isImageSelected" 
-      :updateImagesIndices="updateImagesIndices"
-      :selectedImages="selectedImages"/>
+        :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
+        :moveImages="moveImages"  :isImageSelected="isImageSelected" 
+        :updateImagesIndices="updateImagesIndices"
+        :selectedImages="selectedImages"/>
 
       <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" 
-      :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
-      :moveImages="moveImages"  :isImageSelected="isImageSelected" 
-      :updateImagesIndices="updateImagesIndices"
-      :selectedImages="selectedImages"/>
+        :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
+        :moveImages="moveImages"  :isImageSelected="isImageSelected" 
+        :updateImagesIndices="updateImagesIndices"
+        :selectedImages="selectedImages"/>
     </div>
   </div>
 

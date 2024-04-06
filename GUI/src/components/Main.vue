@@ -7,7 +7,6 @@ import SidebarUpload from '@/components/archive/SidebarUpload.vue';
 const images = ref([]);
 
 function newImages(newImages) {
-  // console.log(JSON.parse(JSON.stringify(newImages)))
   images.value = newImages;
 }
 </script>
@@ -20,7 +19,7 @@ function newImages(newImages) {
     <!-- Page content -->
     <div class="overflow-hidden flex-1 flex flex-row">
       <SidebarUpload @onNewImages="newImages" />
-      <Workspace :images="images" />
+      <Workspace @onImageUpdated="" :images="images" />
     </div>
   </main>
 </template>
