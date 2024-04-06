@@ -47,7 +47,7 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
       .filter(tag => imgData.detection_tags.includes(tag.tagname));
 
     // should the image be deleted...
-    const toBeDeleted = imgData.is_qualitative;
+    const toBeDeleted = !imgData.is_qualitative;
 
     // ...and why
     const reasonForDeletion = imgData.quality_tags;

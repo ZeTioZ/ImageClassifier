@@ -85,13 +85,13 @@ async function submit(newTags) {
     const response = await API.uploads.post(files, newTags, null);
 
     // load image objects from response and archives
-    const images = await handleApiResponseForArchiveUploads(response, archiveList.value);
+    const images = await handleApiResponseForArchiveUploads(response.data, archiveList.value);
     
     emits('onNewImages', images);
   }
   catch (err) {
     // TODO: display the error visualy
-    console.log(err)
+    throw err;
   }
 } 
 </script>
