@@ -41,7 +41,7 @@ def generate_tags(model_path: str, default_tags: list[str] = None) -> dict[str, 
 	"""
 	default_tags = default_tags if default_tags is not None else []
 	model = ModelLoader(model_path)
-	tags = {"classes": model.model.names + default_tags}
+	tags = {"classes": list(model.model.names.values()) + default_tags}
 	for file in pathlib.Path(extracted_path).iterdir():
 		if file.is_file() and file.suffix in supported_formats:
 			image_path = file.absolute().__str__()
