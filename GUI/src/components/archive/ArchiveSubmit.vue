@@ -68,7 +68,7 @@ const removeTag = (tagIndex) => {
     </div>
     <!-- submit button-->
     <div class="mt-2">
-      <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300" @click="$emit('submit')">Trier les images</button>
+      <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300" @click="$emit('submit', newTags)">Trier les images</button>
     </div>
   </div>
 </template>
