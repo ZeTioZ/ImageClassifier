@@ -78,12 +78,12 @@ function removeArchive(index) {
 /**
  * Submit archive(s), tags and batch name and call endpoint
  */
-async function submit(newTags) {
+async function submit(newTags, newName) {
   const files = archiveList.value.map(archive => archive.file);
 
   try {
     // get API response
-    const response = await API.uploads.post(files, newTags, null);
+    const response = await API.uploads.post(files, newTags, newName);
 
     // load image objects from response and archives
     const images = await handleApiResponseForArchiveUploads(response.data, archiveList.value);

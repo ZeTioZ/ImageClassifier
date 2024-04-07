@@ -172,11 +172,13 @@ export class Image {
   /**
   * Set properties of the images from response of the REST API.
   *
+  * @param {string} newName - the new name of the image.
   * @param {Array.<Tag>} tags - list of tags linked to the image.
   * @param {boolean} toBeDeleted - boolean telling if an image is to be kept or not.
   * @param {Array.<string>} reasonForDeletion - array containing quality criterions not beeing respected by the image.
   */
-  setProperties(tags, toBeDeleted, reasonForDeletion) {
+  setProperties(newName, tags, toBeDeleted, reasonForDeletion) {
+    this._filename = newName;
     this._tags = tags;
     this._toBeDeleted = toBeDeleted;
     this._reasonForDeletion = reasonForDeletion;

@@ -43,6 +43,9 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
     // retreive data in the response for the image
     const imgData = response.generated_tags[img.hash];
 
+    // change image name if needed
+    const newName = imgData.file_name;
+
     // get tag objects for the image
     const imageTags = Tag.TAGS
       .filter(tag => imgData.detection_tags.includes(tag.tagname));
@@ -54,7 +57,7 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
     const reasonForDeletion = imgData.quality_tags;
 
 
-    img.setProperties(imageTags, toBeDeleted, reasonForDeletion);
+    img.setProperties(newName, imageTags, toBeDeleted, reasonForDeletion);
   }
 
 

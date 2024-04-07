@@ -15,14 +15,14 @@ const addNewTag = () => {
   }
 };
 
-const newName = ref('');   // text in the input
-const NewName = ref('');   // valid new name
+const newNameInput = ref('');   // text in the input
+const newName = ref('');   // valid new name
 
-// function to replace the NewName with the newName
+// function to replace the newName with the newNameInput
 const addNewName = () => {
-  if (newName.value) {
-    NewName.value = newName.value;
-    newName.value = '';
+  if (newNameInput.value) {
+    newName.value = newNameInput.value;
+    newNameInput.value = '';
   }
 };
 
@@ -58,17 +58,17 @@ const removeTag = (tagIndex) => {
       <!-- form -->
       <form v-on:submit.prevent="addNewName">
         <div class="mb-2">
-          <label for="new-name" class="italic text-sm text-white">Nom des images par défaut: <span class="text-ls-vert-base">{{ NewName }}</span></label>
+          <label for="new-name" class="italic text-sm text-white">Nom des images par défaut: <span class="text-ls-vert-base">{{ newName }}</span></label>
         </div>
         <div class="flex flex-row w-full">
-          <input v-model="newName" id="new-name" placeholder="Ex.: Camp-53e-2018" autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s focus:outline-none" />
+          <input v-model="newNameInput" id="new-name" placeholder="Ex.: Camp-53e-2018" autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s focus:outline-none" />
           <button class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>✓</strong></button>
         </div>
       </form>
     </div>
     <!-- submit button-->
     <div class="mt-2">
-      <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300" @click="$emit('submit', newTags)">Trier les images</button>
+      <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300" @click="$emit('submit', newTags, newName)">Trier les images</button>
     </div>
   </div>
 </template>
