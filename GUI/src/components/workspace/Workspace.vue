@@ -36,7 +36,7 @@ function filterImages(imagesList) {
     return imagesList.value.filter(image => { 
       image.tags.some(imageTag => {
         searchTerms.value.some(searchTag => {
-          imageTag.name.toLowerCase().includes(searchTag.toLowerCase())
+          imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase())
         });
       });
     });
@@ -45,7 +45,7 @@ function filterImages(imagesList) {
     return imagesList.value.filter(image => {
       !image.tags.some(imageTag => {
         searchTerms.value.some(searchTag => {
-          imageTag.name.toLowerCase().includes(searchTag.toLowerCase());
+          imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase());
         });
       });
     });
@@ -64,18 +64,14 @@ const selectedImages = ref([]);
 // Fonction pour basculer la sélection d'une image
 function toggleImageSelection(imageIndex, workspace) {
   const imageID = {index: imageIndex, workspace: workspace};
-  console.log(imageID);
   const selectedIndex = selectedImages.value.findIndex(
     (image) => image.index === imageIndex && image.workspace === workspace
   );
-  console.log(selectedIndex);
   if (selectedIndex >= 0) {
     selectedImages.value.splice(selectedIndex, 1); // Désélectionner
   } else {
     selectedImages.value.push(imageID); // Sélectionner
   }
-  console.log(imageIndex);
-  console.log("selected images:",selectedImages.value);
 }
 
 // Fonction pour déplacer les images sélectionnées d'un workspace spécifique
@@ -87,7 +83,7 @@ function moveImages(workspace) {
       ...selectedImage,
       image: workspace === 'Triées' ? goodImages.value[selectedImage.index] : badImages.value[selectedImage.index]
     }));
-  console.log(imagesToMove);
+
   // Déplacer les images collectées
   imagesToMove.forEach(({ image, index }) => {
     const source = workspace === 'Triées' ? goodImages.value : badImages.value;
@@ -98,6 +94,9 @@ function moveImages(workspace) {
 
     // Ajout de l'image à la destination
     target.push(image);
+
+    // modification du flag toBeDeleted de l'image
+    image.toBeDeleted = !image.toBeDeleted;
   });
 
   // Réinitialiser les sélections après le déplacement
@@ -116,8 +115,6 @@ function isImageSelected(imageIndex, workspace) {
 
 // Fonction pour mettre à jour les indices des images après un déplacement drag-and-drop
 function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) {
-  console.log("moving image...")
-
   if (movedToNewList) {
     // Identifier l'espace de travail cible en fonction de l'espace de travail d'origine
     const targetWorkspace = fromWorkspace === 'Triées' ? 'À supprimer' : 'Triées';
@@ -125,19 +122,22 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
     const target = fromWorkspace === 'Triées' ? badImages.value : goodImages.value;
 
     // Extraire l'image de la source
-    const [movedImage] = source.splice(oldIndex, 1);
+    const [imageToMove] = source.splice(oldIndex, 1);
 
     // Ajouter l'image à la destination à la position `newIndex`
-    target.splice(newIndex, 0, movedImage);
+    target.splice(newIndex, 0, imageToMove);
+
+    // update image toBeDeleted flag
+    imageToMove.toBeDeleted = !imageToMove.toBeDeleted;
   } else {
     // Si l'image reste dans le même espace de travail, réorganiser simplement les images
     const imagesList = fromWorkspace === 'Triées' ? goodImages.value : badImages.value;
 
     // Extraire l'image déplacée
-    const [reorderedImage] = imagesList.splice(oldIndex, 1);
+    const [imageToReorder] = imagesList.splice(oldIndex, 1);
 
     // Réinsérer l'image à sa nouvelle position
-    imagesList.splice(newIndex, 0, reorderedImage);
+    imagesList.splice(newIndex, 0, imageToReorder);
   }
 
   // Vider selected images après le déplacement si l'image a changé de place
@@ -145,8 +145,6 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
     selectedImages.value = [];
   }  
 }
-
-
 </script>
 
 <template>
