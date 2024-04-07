@@ -32,24 +32,16 @@ function filterImages(imagesList) {
     return imagesList;
   }
 
-  if (!invertShearch.value) {
-    return imagesList.value.filter(image => { 
-      image.tags.some(imageTag => {
-        searchTerms.value.some(searchTag => {
-          imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase())
-        });
+  return imagesList.value.filter(image => {
+    const tagMatched = image.tags.some(imageTag => {
+      return searchTerms.value.some(searchTag => {
+        return imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase())
       });
     });
-  }
-  else {
-    return imagesList.value.filter(image => {
-      !image.tags.some(imageTag => {
-        searchTerms.value.some(searchTag => {
-          imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase());
-        });
-      });
-    });
-  }
+    
+    // if invert search, invert tag matched
+    return !invertShearch.value ? tagMatched : !tagMatched;
+  });
 }
 
 function handleSearch(terms) {
