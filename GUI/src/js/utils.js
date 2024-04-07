@@ -60,3 +60,16 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
 
   return images;
 }
+
+/**
+* This function gives the dimensions of an image from its url.
+*
+* @param {string} url - the url of the image.
+* @param {Function} callback - the callback function that manages the width and the height.
+*/
+export function sizeOf(url, callback) {
+  const img = new Image();
+  img.src = url;
+  img.onload = () => { callback(img.width, img.height); }
+}
+

@@ -177,7 +177,7 @@ export class Image {
   }
 
   /**
-  * Load the url thumbnail for the image and get its hash.
+  * Load the url thumbnail for the image, get its hash and its dimensions.
   */
   async load() {
     this._loading = true;
@@ -190,6 +190,10 @@ export class Image {
 
         // set image hash
         this._hash = res.hash;
+
+        // set dimensions
+        this._width = res.dimensions.width;
+        this._height = res.dimensions.height;
       });
 
     this._loading = false;
