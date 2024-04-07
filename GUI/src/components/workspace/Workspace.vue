@@ -3,8 +3,8 @@ import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
 import { ref, watch, computed } from 'vue';
+import { Image } from '@/js/image';
 
-const props = defineProps(['images']);
 const searchTerms = ref([]);
 const showModal = ref(false);
 const refreshKey = ref(0);
@@ -14,7 +14,7 @@ const invertShearch = ref(false);  // boolean to invert the search(ie: search wi
 // base images lists from props, the computed ref is writable (i.e.: its value can be manually chage)
 const goodImages = computed({     // good images, i.e. images having that we keep
   get() {
-    return props.images.filter(img => !img.toBeDeleted)
+    return Image.IMAGES.filter(img => !img.toBeDeleted)
   },
   set(imgs) {
     imgs.forEach(img => img.toBeDeleted = false);
@@ -22,7 +22,7 @@ const goodImages = computed({     // good images, i.e. images having that we kee
 });
 const badImages = computed({      // bad images, i.e. images to be deleted
   get() {
-    return props.images.filter(img => img.toBeDeleted)
+    return Image.IMAGES.filter(img => img.toBeDeleted)
   },
   set(imgs) {
     imgs.forEach(img => img.toBeDeleted = true);

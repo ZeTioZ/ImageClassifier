@@ -7,6 +7,7 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
 import { Tag } from '@/js/tag';
+import { Image } from '@/js/image';
 import { handleApiResponseForArchiveUploads } from '@/js/utils';
 import { API } from '@/api/';
 
@@ -87,7 +88,9 @@ async function submit(newTags) {
     // load image objects from response and archives
     const images = await handleApiResponseForArchiveUploads(response.data, archiveList.value);
     
-    emits('onNewImages', images);
+
+    // update image list
+    Image.IMAGES = images;
   }
   catch (err) {
     // TODO: display the error visualy

@@ -1,4 +1,5 @@
 import { FileManager } from './file-manager';
+import { ref } from 'vue';
 
 
 /**
@@ -27,6 +28,11 @@ export class Image {
   _blobURL
   
   _loading
+
+  // Create a Vue reactive variable. This is a bypass to make the image list 
+  // accessible everywhere. A proper solution would have been to create and use 
+  // a store. (see https://pinia.vuejs.org/)
+  static _IMAGES = ref([]);
 
   constructor(entry) {
     this._archiveEntry = entry;
@@ -230,5 +236,19 @@ export class Image {
   destroyBlobURLs() {
     FileManager.destroyURL(this._thumbnailBlobURL);
     FileManager.destroyURL(this._blobURL);
+  }
+
+  /**
+  * @return {Array.<Image>} - a list of image instance statically stored in this class.
+  */
+  static get IMAGES() {
+    return Image._IMAGES.value;
+  }
+
+  /**
+  * @param {Array.<Image>} images - the list of image instance to statically store in this class.
+  */
+  static set IMAGES(images) {
+    Image._IMAGES.value = images;
   }
 }
