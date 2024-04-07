@@ -11,23 +11,9 @@ const refreshKey = ref(0);
 const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 
 
-// base images lists from props, the computed ref is writable (i.e.: its value can be manually chage)
-const goodImages = computed({     // good images, i.e. images having that we keep
-  get() {
-    return Image.IMAGES.filter(img => !img.toBeDeleted)
-  },
-  set(imgs) {
-    imgs.forEach(img => img.toBeDeleted = false);
-  }
-});
-const badImages = computed({      // bad images, i.e. images to be deleted
-  get() {
-    return Image.IMAGES.filter(img => img.toBeDeleted)
-  },
-  set(imgs) {
-    imgs.forEach(img => img.toBeDeleted = true);
-  }
-});
+// base images lists from props
+const goodImages = computed(() => Image.IMAGES.filter(img => !img.toBeDeleted));
+const badImages = computed(() => Image.IMAGES.filter(img => img.toBeDeleted));
 
 // computed ref, filtering constantly the images when a change is applied
 const filteredGoodImages = computed(() => filterImages(goodImages));
