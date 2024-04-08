@@ -213,19 +213,19 @@ export class Image {
   * @param {boolean} [thumbnail=true] - If a thumbnail or the full image should be sourced.
   * @returns {string} - The url of the image.
   */
-  getBlobURL(thumbnail = true) {
+  async getBlobURL(thumbnail = true) {
     // which blob url to use
     const blobURLToUse = thumbnail ? this._thumbnailBlobURL : this._blobURL;
 
-    // if blob url is null (undefined), ~~create it~~ do nothing
+    // if blob url is null (undefined), create it 
     if (blobURLToUse == null) {
-      // const newBlobURL = await FileManager.getURL(this._archiveEntry, thumbnail);
+      const newBlobURL = (await FileManager.getURL(this._archiveEntry, thumbnail)).url;
 
-      // if (thumbnail) {
-      //   this._thumbnailBlobURL = newBlobURL;
-      // } else {
-      //   this._blobURL = newBlobURL;
-      // }
+      if (thumbnail) {
+        this._thumbnailBlobURL = newBlobURL;
+      } else {
+        this._blobURL = newBlobURL;
+      }
     }
 
     return thumbnail ? this._thumbnailBlobURL : this._blobURL;

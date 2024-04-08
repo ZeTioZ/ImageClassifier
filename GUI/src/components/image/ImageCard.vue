@@ -2,9 +2,10 @@
 import Tag from '@/components/image/Tag.vue'
 import VEllipsis from '@/components/icons/VEllipsis.vue';
 import ModalImage from './ModalImage.vue';
-import {ref} from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps(['index', 'selected', 'image']);
+
 const showModalI = ref(false);
 
 function toggleModalImage() {
@@ -41,7 +42,7 @@ function handleDel(term) {
 
     <!-- Image in the container -->
     <div class="h-40 w-full p-1">
-      <img :src="image.getBlobURL()" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded">
+      <img :src="image._thumbnailBlobURL" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded">
     </div>
 
     <!-- Tags -->

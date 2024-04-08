@@ -27,9 +27,7 @@ function addTag(){
 }
 
 async function getImageURL() {
-  const url = await props.image.getBlobURL(false);
-  imageURL.value = url;
-  console.log(imageURL.value, url)
+  imageURL.value = await props.image.getBlobURL(false);
 }
 
 getImageURL();
