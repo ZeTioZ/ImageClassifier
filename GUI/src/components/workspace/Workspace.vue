@@ -16,8 +16,8 @@ const goodImages = computed(() => Image.IMAGES.filter(img => !img.toBeDeleted));
 const badImages = computed(() => Image.IMAGES.filter(img => img.toBeDeleted));
 
 // computed ref, filtering constantly the images when a change is applied
-const filteredGoodImages = computed(() => filterImages(goodImages));
-const filteredBadImages = computed(() => filterImages(badImages));
+const filteredGoodImages = computed(() => ref(filterImages(goodImages)));
+const filteredBadImages = computed(() => ref(filterImages(badImages)));
 
 /**
 * Function to display or hide the filter modal
@@ -29,7 +29,7 @@ function toggleModal() {
 // Fonction de filtrage 
 function filterImages(imagesList) {
   if (!searchTerms.value || searchTerms.value.length === 0) {
-    return imagesList;
+    return imagesList.value;
   }
 
   return imagesList.value.filter(image => {
