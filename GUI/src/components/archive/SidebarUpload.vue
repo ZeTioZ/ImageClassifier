@@ -116,4 +116,3 @@ async function submit(newTags, newName) {
     </div>
   </aside>
 </template>
-

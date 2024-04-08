@@ -39,7 +39,6 @@ function onEnd(event) {
   props.updateImagesIndices(event.oldIndex, event.newIndex, newlist, props.workspaceName);
 }
 
-
 </script>
 
 <template>
