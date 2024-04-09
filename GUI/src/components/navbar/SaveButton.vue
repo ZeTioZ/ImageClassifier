@@ -1,8 +1,17 @@
 <script setup>
 import Download from '@/components/icons/Download.vue';
+import { Tag } from '@/js/tag.js';
+import { Image } from '@/js/image.js';
+import { API } from '@/api'; 
 
-function save() {
-  
+async function save() {
+  const JSON = {};
+
+  JSON["classes"] = Tag.TAGS.map(t => t.tagname);
+
+  Image.IMAGES.forEach(image => JSON[image.hash] = image.toJSON());
+
+  await API.tags.post(JSON);
 }
 </script>
 

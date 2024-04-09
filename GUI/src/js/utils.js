@@ -27,6 +27,7 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
   // create tag objects
   Tag._colorIndex = 0;
   Tag.TAGS = tags
+    .filter(tag => tag !== "nasty")  // remove nasty tag from normal tag
     .map(tag => new Tag(tag, tag));
 
   // extract images from all archives in a single list
@@ -58,7 +59,6 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
     // get quality tag objects for the image
     const imageQualityTags = Tag.TAGS
       .filter(tag => imgData.quality_tags.includes(tag.tagname));
-    console.log(imageQualityTags)
 
     // should the image be deleted
     const toBeDeleted = !imgData.is_qualitative;

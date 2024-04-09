@@ -176,13 +176,14 @@ export class Image {
   * @param {string} newName - the new name of the image.
   * @param {Array.<Tag>} tags - list of tags linked to the image.
   * @param {boolean} toBeDeleted - boolean telling if an image is to be kept or not.
-  * @param {Array.<string>} qualityTags - list of tags containing quality criterions not beeing respected by the image.
+  * @param {Array.<Tag>} qualityTags - list of tags containing quality criterions not beeing respected by the image.
   */
   setProperties(newName, tags, toBeDeleted, qualityTags) {
     this._filename = newName;
     this._tags = tags;
     this._toBeDeleted = toBeDeleted;
     this._qualityTags = qualityTags;
+    console.log(qualityTags)
   }
 
   /**
@@ -256,15 +257,11 @@ export class Image {
   }
 
   toJSON() {
-    const json = {};
-
-    json[this._hash] = {
+    return {
       "file_name": this._filename,
       "detection_tags": this._tags.map(t => t.tagname),
       "is_qualitative": !this._toBeDeleted,
       "quality_tags": this._qualityTags.map(t => t.tagname),
     };
-
-    return json;
   }
 }

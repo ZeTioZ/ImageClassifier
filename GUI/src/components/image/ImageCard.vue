@@ -23,9 +23,6 @@ function handleDel(term) {
     }
   }
 }
-
-
-console.log(props.image.toJSON());
 </script>
 
 <template>
