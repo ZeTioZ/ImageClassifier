@@ -6,7 +6,10 @@ const emit = defineEmits(['close', 'search']);
 
 const newTag = ref('');   // text in the input
 const Tags = ref([]);  // array containing the new tags
-const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
+const invertSearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
+const strictSearch = ref(false);  // boolean to search only the images with all the tags
+const showTooltip = ref(false);
+const showTooltipStrict = ref(false);
 
 // function to add a new tag in the Tags array
 const addNewTag = () => {
@@ -26,7 +29,7 @@ function closeModal() {
 
 function searchTags() {
   addNewTag();
-  emit('search', [Tags.value, invertShearch.value]);
+  emit('search', [Tags.value, invertSearch.value, strictSearch.value]);
   closeModal();
 }
 </script>
@@ -49,20 +52,43 @@ function searchTags() {
           <button @click="addNewTag" class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
         </div>
         <!-- Toggle pour inverser la recherche -->
-        <div class="mt-4">
-          <label for="toggle" class="flex items-center cursor-pointer">
-            <!-- Toggle -->
-            <div class="relative">
-              <input type="checkbox" id="toggle" class="sr-only" v-model="invertShearch">
-              <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-              <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-            </div>
-            <!-- Label -->
-            <div class="ml-3 text-gray-700 font-medium">
-              Rechercher sans les mots-clés indiqués
-            </div>
-          </label>
-        </div>
+          <div class="mt-4 relative">
+            <label for="toggleInvertSearch" class="flex items-center cursor-pointer">
+              <!-- Toggle -->
+              <div class="relative">
+                <input type="checkbox" id="toggleInvertSearch" class="sr-only" v-model="invertSearch">
+                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+              </div>
+              <!-- Label -->
+              <span @mouseenter="showTooltip = true" @mouseleave="showTooltip = false" class="ml-3 text-gray-700 font-medium">
+                Recherche inversée
+              </span>
+              <div v-if="showTooltip" class="absolute left-32 ml-3 w-64 bg-black text-white p-2 rounded-md shadow-lg text-xs">
+                Exclut les éléments contenant les mots-clés spécifiés.
+              </div>
+            </label>
+          </div>
+
+          <!-- Toggle pour la recherche stricte -->
+          <div class="mt-4 relative">
+            <label for="toggleStrictSearch" class="flex items-center cursor-pointer">
+              <!-- Toggle -->
+              <div class="relative">
+                <input type="checkbox" id="toggleStrictSearch" class="sr-only" v-model="strictSearch">
+                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+              </div>
+              <!-- Label -->
+              <span @mouseenter="showTooltipStrict = true" @mouseleave="showTooltipStrict = false" class="ml-3 text-gray-700 font-medium">
+                Recherche stricte
+              </span>
+              <div v-if="showTooltipStrict" class="absolute left-32 ml-3 w-64 bg-black text-white p-2 rounded-md shadow-lg text-xs">
+                N'affiche/n'exclus que les éléments contenant tous les mots-clés spécifiés.
+              </div>
+            </label>
+          </div>
+
         <!-- Search button -->
         <div class="items-center px-4 py-3">
           <button id="ok-btn" @click="searchTags" 
