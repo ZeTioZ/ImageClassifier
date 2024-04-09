@@ -21,7 +21,7 @@ export class Image {
 
   _tags
   _toBeDeleted
-  _reasonForDeletion
+  _qualityTags
 
   _archiveEntry
   _thumbnailBlobURL
@@ -39,7 +39,8 @@ export class Image {
     this._filename = entry.filename;
     this._size = entry.uncompressedSize;
     this._toBeDeleted = true;
-    this._tags = []
+    this._tags = [];
+    this._qualityTags = [];
 
     this._loading = false;
   }
@@ -152,12 +153,12 @@ export class Image {
   }
 
   /**
-  * Get the reason why the image should be deleted (i.e. the unmatched requirements).
+  * Get the reasons why the image should be deleted (i.e. the unmatched requirements).
   *
-  * @return {Array.<string>} - an array containing quality criterions not beeing respected by the image.
+  * @return {Array.<Tag>} - an array of tag instances containing quality criterions not beeing respected by the image. 
   */
-  get reasonForDeletion() {
-    return this._reasonForDeletion;
+  get qualityTags() {
+    return this._qualityTags;
   }
 
   /**
@@ -175,13 +176,13 @@ export class Image {
   * @param {string} newName - the new name of the image.
   * @param {Array.<Tag>} tags - list of tags linked to the image.
   * @param {boolean} toBeDeleted - boolean telling if an image is to be kept or not.
-  * @param {Array.<string>} reasonForDeletion - array containing quality criterions not beeing respected by the image.
+  * @param {Array.<string>} qualityTags - list of tags containing quality criterions not beeing respected by the image.
   */
-  setProperties(newName, tags, toBeDeleted, reasonForDeletion) {
+  setProperties(newName, tags, toBeDeleted, qualityTags) {
     this._filename = newName;
     this._tags = tags;
     this._toBeDeleted = toBeDeleted;
-    this._reasonForDeletion = reasonForDeletion;
+    this._qualityTags = qualityTags;
   }
 
   /**
@@ -252,5 +253,18 @@ export class Image {
   */
   static set IMAGES(images) {
     Image._IMAGES.value = images;
+  }
+
+  toJSON() {
+    const json = {};
+
+    json[this._hash] = {
+      "file_name": this._filename,
+      "detection_tags": this._tags.map(t => t.tagname),
+      "is_qualitative": !this._toBeDeleted,
+      "quality_tags": this._qualityTags.map(t => t.tagname),
+    };
+
+    return json;
   }
 }

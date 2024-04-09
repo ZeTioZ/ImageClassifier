@@ -23,6 +23,9 @@ function handleDel(term) {
     }
   }
 }
+
+
+console.log(props.image.toJSON());
 </script>
 
 <template>
@@ -51,6 +54,7 @@ function handleDel(term) {
       <div class="mt-0.5 overflow-y-auto scrollbar-hide">
         <div class="flex">
           <Tag v-for="tag in image.tags" :key="tag.tagname" :tagName="tag.displayName" :class="tag.cssColorClass" />
+          <Tag v-for="tag in image.qualityTags" :key="tag.tagname" :tagName="tag.displayName" :class="tag.cssColorClass" />
         </div>
       </div>
     </div>
