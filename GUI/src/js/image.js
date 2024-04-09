@@ -1,4 +1,5 @@
 import { FileManager } from './file-manager';
+import { ref } from 'vue';
 
 
 /**
@@ -25,6 +26,13 @@ export class Image {
   _archiveEntry
   _thumbnailBlobURL
   _blobURL
+  
+  _loading
+
+  // Create a Vue reactive variable. This is a bypass to make the image list 
+  // accessible everywhere. A proper solution would have been to create and use 
+  // a store. (see https://pinia.vuejs.org/)
+  static _IMAGES = ref([]);
 
   constructor(entry) {
     this._archiveEntry = entry;
@@ -32,6 +40,8 @@ export class Image {
     this._size = entry.uncompressedSize;
     this._toBeDeleted = true;
     this._tags = []
+
+    this._loading = false;
   }
 
   /**
@@ -151,26 +161,50 @@ export class Image {
   }
 
   /**
+  * Tell if the image is loading, ie. the load() function has been called and is currently running.
+  *
+  * @return {boolean}
+  */
+  get loading() {
+    return this._loading;
+  }
+
+  /**
   * Set properties of the images from response of the REST API.
   *
+  * @param {string} newName - the new name of the image.
   * @param {Array.<Tag>} tags - list of tags linked to the image.
   * @param {boolean} toBeDeleted - boolean telling if an image is to be kept or not.
   * @param {Array.<string>} reasonForDeletion - array containing quality criterions not beeing respected by the image.
   */
-  setProperties(tags, toBeDeleted, reasonForDeletion) {
+  setProperties(newName, tags, toBeDeleted, reasonForDeletion) {
+    this._filename = newName;
     this._tags = tags;
     this._toBeDeleted = toBeDeleted;
     this._reasonForDeletion = reasonForDeletion;
   }
 
+  /**
+  * Load the url thumbnail for the image, get its hash and its dimensions.
+  */
   async load() {
-    // load blob url for thumbnail
+    this._loading = true;
+
+    // load blob url for thumbnail and image hash
     await FileManager.getURL(this._archiveEntry, true)
-      .then((blobURL) => {
-        this._thumbnailBlobURL = blobURL;
+      .then((res) => {
+        // set blob url
+        this._thumbnailBlobURL = res.url;
+
+        // set image hash
+        this._hash = res.hash;
+
+        // set dimensions
+        this._width = res.dimensions.width;
+        this._height = res.dimensions.height;
       });
 
-    // TODO: hash image
+    this._loading = false;
   }
 
   /**
@@ -179,19 +213,19 @@ export class Image {
   * @param {boolean} [thumbnail=true] - If a thumbnail or the full image should be sourced.
   * @returns {string} - The url of the image.
   */
-  getBlobURL(thumbnail = true) {
+  async getBlobURL(thumbnail = true) {
     // which blob url to use
     const blobURLToUse = thumbnail ? this._thumbnailBlobURL : this._blobURL;
 
-    // if blob url is null (undefined), ~~create it~~ do nothing
+    // if blob url is null (undefined), create it 
     if (blobURLToUse == null) {
-      // const newBlobURL = await FileManager.getURL(this._archiveEntry, thumbnail);
+      const newBlobURL = (await FileManager.getURL(this._archiveEntry, thumbnail)).url;
 
-      // if (thumbnail) {
-      //   this._thumbnailBlobURL = newBlobURL;
-      // } else {
-      //   this._blobURL = newBlobURL;
-      // }
+      if (thumbnail) {
+        this._thumbnailBlobURL = newBlobURL;
+      } else {
+        this._blobURL = newBlobURL;
+      }
     }
 
     return thumbnail ? this._thumbnailBlobURL : this._blobURL;
@@ -204,5 +238,19 @@ export class Image {
   destroyBlobURLs() {
     FileManager.destroyURL(this._thumbnailBlobURL);
     FileManager.destroyURL(this._blobURL);
+  }
+
+  /**
+  * @return {Array.<Image>} - a list of image instance statically stored in this class.
+  */
+  static get IMAGES() {
+    return Image._IMAGES.value;
+  }
+
+  /**
+  * @param {Array.<Image>} images - the list of image instance to statically store in this class.
+  */
+  static set IMAGES(images) {
+    Image._IMAGES.value = images;
   }
 }

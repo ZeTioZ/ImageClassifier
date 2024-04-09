@@ -7,7 +7,10 @@ import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
 
 import { Archive } from '@/js/archive';
 import { Tag } from '@/js/tag';
+import { Image } from '@/js/image';
+import { handleApiResponseForArchiveUploads } from '@/js/utils';
 import { API } from '@/api/';
+
 
 const emits = defineEmits(['onNewImages']);
 
@@ -75,31 +78,23 @@ function removeArchive(index) {
 /**
  * Submit archive(s), tags and batch name and call endpoint
  */
-async function submit(newTags) {
+async function submit(newTags, newName) {
   const files = archiveList.value.map(archive => archive.file);
 
   try {
     // get API response
-    const response = await API.uploads.post(files, newTags, null);
+    const response = await API.uploads.post(files, newTags, newName);
 
-    // get tags
-    // const tags = Objects.keys(response.generated_tags.classes).map(key => response.generated_tags.classes[key]);
-
-    // create tag objects
-    // const tagList = tags.map(tag => new Tag(tag, tag));
+    // load image objects from response and archives
+    const images = await handleApiResponseForArchiveUploads(response.data, archiveList.value);
     
-    const images = archiveList.value.map(archive => archive.images).flat();
 
-    // Objects.keys(response.generated_tags)
-    //   .filter(key => key != "classes")
-    //   .forEach(key => {
-    //     response.generated_tags[key]
-    //   });
-
-    emits('onNewImages', images);
+    // update image list
+    Image.IMAGES = images;
   }
   catch (err) {
-
+    // TODO: display the error visualy
+    throw err;
   }
 } 
 </script>

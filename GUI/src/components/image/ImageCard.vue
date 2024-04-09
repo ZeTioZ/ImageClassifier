@@ -2,27 +2,24 @@
 import Tag from '@/components/image/Tag.vue'
 import VEllipsis from '@/components/icons/VEllipsis.vue';
 import ModalImage from './ModalImage.vue';
-import {ref} from 'vue';
+import { ref } from 'vue';
 
-const props = defineProps(['imgSrc', 'index', 'fileName', 'tags', 'size','selected']);
+const props = defineProps(['index', 'selected', 'image']);
+
 const showModalI = ref(false);
 
-function toggleModalImage()
-{
+function toggleModalImage() {
   showModalI.value = !showModalI.value;
 }
-function handleAdd(term)
-{
+
+function handleAdd(term) {
   props.tags.push(term)
 }
 
-function handleDel(term)
-{
-  for(let tag in props.tags)
-  {
-    if (tag === term)
-    {
-      props.tags.splice(tag.indexOf(term))
+function handleDel(term) {
+  for (let tag in props.tags) {
+    if (tag === term) {
+      props.tags.splice(tag.indexOf(term));
     }
   }
 }
@@ -36,7 +33,7 @@ function handleDel(term)
     <!-- Image header -->
     <div class="flex justify-between py-1 ps-2">
       <!-- Image name -->
-      <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce truncate">{{ fileName }}</span>
+      <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce truncate">{{ image.filename }}</span>
       <!-- Three dots/menu icon -->
       <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1" @click="toggleModalImage">
         <VEllipsis class="w-4 h-4"/>
@@ -45,7 +42,7 @@ function handleDel(term)
 
     <!-- Image in the container -->
     <div class="h-40 w-full p-1">
-      <img :src="imgSrc" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded">
+      <img :src="image._thumbnailBlobURL" :alt="`Workspace Image ${index + 1}`" class="h-full w-full object-cover rounded">
     </div>
 
     <!-- Tags -->
@@ -53,12 +50,14 @@ function handleDel(term)
       <!-- Container pour les tags avec défilement horizontal -->
       <div class="mt-0.5 overflow-y-auto scrollbar-hide">
         <div class="flex">
-          <Tag v-for="tag in tags" :key="tag.name" :tagName="tag.name" :class="tag.color"/>
+          <Tag v-for="tag in image.tags" :key="tag.tagname" :tagName="tag.displayName" :class="tag.cssColorClass" />
         </div>
       </div>
     </div>
   </div>
-<!-- MODALS -->
-<ModalImage v-if="showModalI" @close="toggleModalImage" @add="handleAdd" @del="handleDel" :imgSrc="imgSrc" :imgName="fileName" :imgTags="tags" :imgSize="size"/>
+
+  <!-- MODALS -->
+  <ModalImage v-if="showModalI"
+    @close="toggleModalImage" @add="handleAdd" @del="handleDel" :image="image" />
 </template>
 
