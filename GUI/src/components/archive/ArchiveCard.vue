@@ -1,5 +1,5 @@
 <script setup>
-import HEllipsis from '@/components/icons/HEllipsis.vue';
+import XMark from '@/components/icons/XMark.vue';
 
 const emit = defineEmits(['deleteItself']);
 
@@ -8,9 +8,9 @@ const props = defineProps(['index', 'fileName', 'fileSize', 'nbImages']);
 
 <template>
   <div class="relative">
-    <a href="#" class="absolute top-0 right-0" @click="$emit('deleteItself', index)"> <!-- TODO: put remove card on other DOM -->
+    <a href="#" class="absolute top-0 right-0" @click="$emit('deleteItself', index)"> 
       <div class="p-1 m-1 rounded-full text-ls-bleu-fonce hover:bg-gray-100">
-        <HEllipsis class="w-6 h-6"/>
+        <XMark class="w-4 h-4"/>
       </div>
     </a>
 

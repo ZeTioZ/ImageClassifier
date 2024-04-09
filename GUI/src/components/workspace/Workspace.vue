@@ -46,6 +46,7 @@ function filterImages(imagesList) {
         )
       );
 
+    // if invert search, invert tag matched
     return !invertShearch.value ? tagMatched : !tagMatched;
   });
 }
