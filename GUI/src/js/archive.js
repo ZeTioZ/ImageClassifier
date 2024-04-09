@@ -115,8 +115,15 @@ export class Archive {
   * Why ? To remove the blob URL created for images (this process can't be automated).
   */
   unload() {
-    // destroy blob URLs for each images (free unused RAM in the browser)
+    // destroy blob URLs for each images (free unused RAM in the browser) and remove from image list
     this._images.forEach(image => {
+      // remove image from list
+      const index = Image.IMAGES.indexOf(image);
+      if (index > -1) {
+        Image.IMAGES.splice(index, 1);
+      }
+
+      // free resources
       image.destroyBlobURLs();
     });
 
