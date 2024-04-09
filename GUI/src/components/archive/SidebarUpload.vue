@@ -68,9 +68,6 @@ function removeArchive(index) {
   
   archiveList.value = newArchiveList;
 
-  // remove associated images
-  // TODO
-
   // remove file from file buffer
   fileBuffer.items.remove(index);
 }
