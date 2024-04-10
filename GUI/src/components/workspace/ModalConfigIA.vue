@@ -44,32 +44,33 @@ function BlacklistTags() {
           </div>
           <!-- Modal body -->
           <div class="p-6 space-y-6">
+            <!--netteté-->
+            <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
+              <span>Netteté de l'image :</span>
+              <input v-model="netteté" type="number" min="0" max="100" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
+            </div>
+            <input v-model="netteté" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <!--length-->
+            <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
+              <span>Largeur minimale de l'image : </span> 
+              <input v-model="length" type="number" min="0" max="15000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/> 
+            </div>
+            <input v-model="length" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <!--heigth-->
+            <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
+              <span>Hauteur minimale de l'image :</span>
+              <input v-model="hight" type="number" min="0" max="15000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
+            </div>
+            <input v-model="hight" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <!--brigtness-->
+            <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
+              <span>Luminosité minimale de l'image :</span>
+              <input v-model="brigthness" type="number" min="0" max="3000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
+            </div>
+            <input v-model="brigthness" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <!---->
             <p class="text-base leading-relaxed text-gray-500">
-              Netteté de l'image :
-              <input v-model="netteté" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-              <br />
-              <input v-model="netteté" type="number" min="0" max="100"/>
-            </p>
-            <p class="text-base leading-relaxed text-gray-500">
-              Largeur minimum de l'image :   
-              <input v-model="length" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-              <br />
-              <input v-model="length" type="number" min="0" max="15000"/>
-            </p>
-            <p class="text-base leading-relaxed text-gray-500">
-              Hauteur minimum de l'image :
-              <input v-model="hight" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-              <br />
-              <input v-model="hight" type="number" min="0" max="15000"/>
-            </p>
-            <p class="text-base leading-relaxed text-gray-500">
-              Luminosité minimale de l'image :
-              <input v-model="brigthness" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-              <br />
-              <input v-model="brigthness" type="number" min="0" max="3000"/>
-            </p>
-            <p class="text-base leading-relaxed text-gray-500">
-              Mot-clé à blacklister :{{ BlacklistedTags.join(', ')}}
+              Mot-clé à blacklister : {{ BlacklistedTags.join(', ')}}
               <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
               autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
             </p>
