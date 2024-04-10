@@ -39,32 +39,33 @@ function BlacklistTags() {
           <!-- Modal header -->
           <div class="items-start justify-between p-5 border-b rounded-t">
             <h3 class="text-xl text-center font-semibold text-gray-900 lg:text-2xl">
-              Configuration
+              Configuration de l'IA
             </h3>
+            <h4 class="text-sm text-gray-500"> Modifiez les paramètres de l'IA pour le tri des images.</h4>
           </div>
           <!-- Modal body -->
           <div class="p-6 space-y-6">
             <!--netteté-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
-              <span>Netteté de l'image :</span>
+              <span>Netteté :</span>
               <input v-model="netteté" type="number" min="0" max="100" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
             </div>
-            <input v-model="netteté" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="netteté" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ">
             <!--length-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
-              <span>Largeur minimale de l'image : </span> 
+              <span>Largeur minimale : </span> 
               <input v-model="length" type="number" min="0" max="15000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/> 
             </div>
             <input v-model="length" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--heigth-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
-              <span>Hauteur minimale de l'image :</span>
+              <span>Hauteur minimale :</span>
               <input v-model="hight" type="number" min="0" max="15000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
             </div>
             <input v-model="hight" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--brigtness-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
-              <span>Luminosité minimale de l'image :</span>
+              <span>Luminosité :</span>
               <input v-model="brigthness" type="number" min="0" max="3000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
             </div>
             <input v-model="brigthness" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
