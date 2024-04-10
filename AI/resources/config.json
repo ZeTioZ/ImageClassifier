@@ -3,7 +3,5 @@
     "image_min_width": 2180,
     "image_min_height": 650,
     "image_min_luminance": 940.0,
-    "banned_tags": [
-        "test"
-    ]
+    "banned_tags": []
 }
