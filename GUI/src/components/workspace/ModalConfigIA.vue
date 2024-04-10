@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from "vue";
-const sliderValue1 = ref(0);
-const sliderValue2 = ref(0);
-const sliderValue3 = ref(0);
-const sliderValue4 = ref(0);
+const netteté = ref(0);
+const length = ref(0);
+const hight = ref(0);
+const brigthness = ref(0);
 const emit = defineEmits(['close']);
 
 function closeModal() {
@@ -27,27 +27,27 @@ function closeModal() {
           <div class="p-6 space-y-6">
             <p class="text-base leading-relaxed text-gray-500">
               Netteté de l'image :
-              <input v-model="sliderValue1" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <input v-model="netteté" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
               <br />
-              <input v-model="sliderValue1" type="number" min="0" max="100"/>
+              <input v-model="netteté" type="number" min="0" max="100"/>
             </p>
             <p class="text-base leading-relaxed text-gray-500">
               Largeur minimum de l'image :   
-              <input v-model="sliderValue2" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <input v-model="length" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
               <br />
-              <input v-model="sliderValue2" type="number" min="0" max="15000"/>
+              <input v-model="length" type="number" min="0" max="15000"/>
             </p>
             <p class="text-base leading-relaxed text-gray-500">
               Hauteur minimum de l'image :
-              <input v-model="sliderValue3" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <input v-model="hight" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
               <br />
-              <input v-model="sliderValue3" type="number" min="0" max="15000"/>
+              <input v-model="hight" type="number" min="0" max="15000"/>
             </p>
             <p class="text-base leading-relaxed text-gray-500">
               Luminosité minimale de l'image :
-              <input v-model="sliderValue4" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <input v-model="brigthness" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
               <br />
-              <input v-model="sliderValue4" type="number" min="0" max="3000"/>
+              <input v-model="brigthness" type="number" min="0" max="3000"/>
             </p>
             <p class="text-base leading-relaxed text-gray-500">
               Mot-clé à blacklister :
