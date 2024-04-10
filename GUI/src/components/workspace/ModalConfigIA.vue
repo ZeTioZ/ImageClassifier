@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref } from "vue";
 import AI_config from "@/api/AI-config.js";
-
+import XMark from '@/components/icons/XMark.vue';
 
 const netteté = ref(0);
 const length = ref(0);
@@ -62,6 +62,10 @@ function BlacklistTags() {
   }
 }
 
+function remove(index){
+  BlacklistedTags.value.splice(index, 1);
+}
+
 function closeModal() {
   emit('close');
 }
@@ -108,7 +112,13 @@ function closeModal() {
             <input v-model="brigthness" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!---->
             <p class="text-base leading-relaxed text-gray-500">
-              Mot-clé à blacklister : {{ BlacklistedTags.join(', ')}}
+              Mot-clé à blacklister : 
+              <span v-for="(tag, index) in BlacklistedTags" :key="index">
+                {{ tag }}
+                <button @click="remove(index)" class="bg-blue-700 text-white rounded border">
+                  <XMark class="w-3 h-3" />
+                </button>              
+              </span>
               <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
               autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
             </p>

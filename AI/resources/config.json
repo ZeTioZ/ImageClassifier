@@ -4,7 +4,6 @@
     "image_min_height": 650,
     "image_min_luminance": 940.0,
     "banned_tags": [
-        "nasty",
-        "teste"
+        "test"
     ]
 }
