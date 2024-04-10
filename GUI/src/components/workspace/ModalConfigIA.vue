@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import {onMounted, ref } from "vue";
+import AI_config from "@/api/AI-config.js";
+
+
 const netteté = ref(0);
 const length = ref(0);
 const hight = ref(0);
@@ -9,16 +12,46 @@ const BlacklistedTags = ref([]);
 
 const emit = defineEmits(['close']);
 
-function closeModal() {
-  emit('close');
+// Charger les configurations après que le composant soit monté
+onMounted(async () => {
+  try {
+    const { data } = await AI_config.getConfigs(); // Assurez-vous que cette méthode correspond à celle définie dans AI-config pour récupérer la configuration
+    // Supposons que la réponse inclue des champs correspondants à vos paramètres
+    netteté.value = data.blur_precision || 0;
+    length.value = data.image_min_width || 0;
+    hight.value = data.image_min_height || 0;
+    brigthness.value = data.image_min_luminance || 0;
+    if (data.banned_tags) {
+      BlacklistedTags.value = [...data.banned_tags];
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération de la configuration:", error);
+    // Gérer l'erreur comme il convient
+  }
+});
+
+
+async function updateAIConfig(updatedConfig) {
+  try {
+    // Envoie les données mises à jour au serveur
+    await AI_config.updateConfigs(updatedConfig);
+    console.log('Configuration mise à jour avec succès');
+    closeModal(); // Ferme le modal après la mise à jour réussie
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la configuration :", error);
+    // Gérer l'erreur comme il convient
+  }
 }
 
 function validateConfig() {
-  console.log('Netteté:', netteté.value);
-  console.log('Longueur:', length.value);
-  console.log('Hauteur:', hight.value);
-  console.log('Luminosité:', brigthness.value);
-  console.log('Tag blacklisté:', BlacklistedTags.value);
+  const updatedConfig = {
+    blur_precision: netteté.value,
+    image_min_width: length.value,
+    image_min_height: hight.value,
+    image_min_luminance: brigthness.value,
+    banned_tags: BlacklistedTags.value
+  };
+  updateAIConfig(updatedConfig);
   closeModal();
 }
 
@@ -27,6 +60,10 @@ function BlacklistTags() {
     BlacklistedTags.value.push(Tag.value);
     Tag.value = '';
   }
+}
+
+function closeModal() {
+  emit('close');
 }
 </script>
 
@@ -48,21 +85,21 @@ function BlacklistTags() {
             <!--netteté-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Netteté :</span>
-              <input v-model="netteté" type="number" min="0" max="100" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
+              <input v-model="netteté" type="number" min="0" max="300" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
             </div>
-            <input v-model="netteté" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ">
+            <input v-model="netteté" type="range" min="0" max="300" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ">
             <!--length-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Largeur minimale : </span> 
-              <input v-model="length" type="number" min="0" max="15000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/> 
+              <input v-model="length" type="number" min="0" max="5000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/> 
             </div>
-            <input v-model="length" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="length" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--heigth-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Hauteur minimale :</span>
-              <input v-model="hight" type="number" min="0" max="15000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
+              <input v-model="hight" type="number" min="0" max="5000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
             </div>
-            <input v-model="hight" type="range" min="0" max="15000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="hight" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--brigtness-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Luminosité :</span>
