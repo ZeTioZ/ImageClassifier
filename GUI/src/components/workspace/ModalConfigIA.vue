@@ -117,7 +117,8 @@ function closeModal() {
                 {{ tag }}
                 <button @click="remove(index)" class="bg-blue-700 text-white rounded border">
                   <XMark class="w-3 h-3" />
-                </button>              
+                </button>    
+                ,           
               </span>
               <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
               autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-1 w-full" />
