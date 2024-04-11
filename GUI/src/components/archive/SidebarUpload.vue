@@ -4,6 +4,7 @@ import { ref, computed } from 'vue';
 import ArchiveDropzone from '@/components/archive/ArchiveDropzone.vue';
 import ArchiveCard from '@/components/archive/ArchiveCard.vue';
 import ArchiveSubmit from '@/components/archive/ArchiveSubmit.vue';
+import ModalConfigIA from './ModalConfigIA.vue';
 
 import { Archive } from '@/js/archive';
 import { Tag } from '@/js/tag';
@@ -94,6 +95,12 @@ async function submit(newTags, newName) {
     throw err;
   }
 } 
+
+const showModalC = ref(false);
+function toggleModalConfigIA(){
+  showModalC.value = !showModalC.value;
+}
+
 </script>
 
 <template>
@@ -108,8 +115,10 @@ async function submit(newTags, newName) {
         </span>
       </div>
 
-      <ArchiveSubmit @submit="submit" class="mt-3"/>
+      <ArchiveSubmit @submit="submit" @openModalConfigIA="toggleModalConfigIA"  class="mt-3"/>
 
     </div>
   </aside>
+  <!-- MODALS -->
+  <ModalConfigIA v-if="showModalC" @close="toggleModalConfigIA"/>
 </template>
