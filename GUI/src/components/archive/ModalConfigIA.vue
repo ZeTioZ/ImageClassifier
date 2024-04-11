@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted, ref } from "vue";
-import AI_config from "@/api/AI-config.js";
+import { API } from '@/api/';
 import XMark from '@/components/icons/XMark.vue';
 
 const netteté = ref(0);
@@ -15,7 +15,7 @@ const emit = defineEmits(['close']);
 // Charger les configurations après que le composant soit monté
 onMounted(async () => {
   try {
-    const { data } = await AI_config.getConfigs(); // Assurez-vous que cette méthode correspond à celle définie dans AI-config pour récupérer la configuration
+    const { data } = await API.configs.getConfigs(); // Assurez-vous que cette méthode correspond à celle définie dans AI-config pour récupérer la configuration
     // Supposons que la réponse inclue des champs correspondants à vos paramètres
     netteté.value = data.blur_precision || 0;
     length.value = data.image_min_width || 0;
@@ -34,7 +34,7 @@ onMounted(async () => {
 async function updateAIConfig(updatedConfig) {
   try {
     // Envoie les données mises à jour au serveur
-    await AI_config.updateConfigs(updatedConfig);
+    await API.configs.updateConfigs(updatedConfig);
     console.log('Configuration mise à jour avec succès');
     closeModal(); // Ferme le modal après la mise à jour réussie
   } catch (error) {
