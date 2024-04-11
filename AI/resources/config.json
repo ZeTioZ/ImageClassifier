@@ -1,7 +1,9 @@
 {
-    "blur_precision": 151.0,
-    "image_min_width": 2180,
-    "image_min_height": 650,
-    "image_min_luminance": 940.0,
-    "banned_tags": []
+    "blur_precision": 140.0,
+    "image_min_width": 400,
+    "image_min_height": 400,
+    "image_min_brightness": 0.0,
+    "banned_tags": [
+        "activity"
+    ]
 }

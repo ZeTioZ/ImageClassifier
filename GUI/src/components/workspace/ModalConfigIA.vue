@@ -48,7 +48,7 @@ function validateConfig() {
     blur_precision: netteté.value,
     image_min_width: length.value,
     image_min_height: hight.value,
-    image_min_luminance: brigthness.value,
+    image_min_brightness: brigthness.value,
     banned_tags: BlacklistedTags.value
   };
   updateAIConfig(updatedConfig);
