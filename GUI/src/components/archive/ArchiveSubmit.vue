@@ -1,10 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import ArchiveSubmitNewTag from '@/components/archive/ArchiveSubmitNewTag.vue';
-import ModalConfigIA from './ModalConfigIA.vue';
 import Gear from '@/components/icons/Gear.vue';
 
-const emit = defineEmits(['submit']);
+const emit = defineEmits(['submit','openModalConfigIA']);
 
 const newTag = ref('');   // text in the input
 const newTags = ref([]);  // array containing the new tags
@@ -16,11 +15,6 @@ const addNewTag = () => {
     newTag.value = '';
   }
 };
-
-const showModalC = ref(false);
-function toggleModalConfigIA(){
-  showModalC.value = !showModalC.value;
-}
 
 const newNameInput = ref('');   // text in the input
 const newName = ref('');   // valid new name
@@ -49,7 +43,7 @@ const removeTag = (tagIndex) => {
           <label for="new-tag" class="italic text-sm text-white">Mots-clés par défaut:</label>
           <!-- hack to put right part on the right -->
           <span />
-          <button @click="toggleModalConfigIA" class="text-white hover:bg-white hover:text-ls-bleu-fonce rounded text-sm p-1 transition duration-300">
+          <button @click="$emit('openModalConfigIA')" class="text-white hover:bg-white hover:text-ls-bleu-fonce rounded text-sm p-1 transition duration-300">
             <Gear class="w-6 h-6" />
           </button>
         </div>
@@ -84,7 +78,4 @@ const removeTag = (tagIndex) => {
       <button class="text-ls-bleu-fonce bg-white hover:bg-ls-bleu-fonce hover:text-ls-vert-base border hover:border-ls-vert-base font-medium rounded-full text-xl px-5 py-2 focus:outline-none w-full transition duration-300" @click="$emit('submit', newTags, newName)">Trier les images</button>
     </div>
   </div>
-  <!-- MODALS -->
-  <ModalConfigIA v-if="showModalC" @close="toggleModalConfigIA"/>
-
 </template>
