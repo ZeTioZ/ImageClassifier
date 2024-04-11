@@ -37,17 +37,16 @@ const removeTag = (tagIndex) => {
   <div class="p-3 bg-ls-eclaireurs">
     <!-- tags -->
     <div>
+      <div class="flex flex-wrap items-center justify-between mx-auto mb-2">
+        <label for="new-tag" class="italic text-sm text-white">Mots-clés par défaut:</label>
+        <!-- hack to put right part on the right -->
+        <span />
+        <button @click="$emit('openModalConfigIA')" class="text-white hover:bg-white hover:text-ls-bleu-fonce rounded text-sm p-1 transition duration-300">
+          <Gear class="w-6 h-6" />
+        </button>
+      </div>
       <!-- form -->
       <form v-on:submit.prevent="addNewTag">
-        <div class="flex flex-wrap items-center justify-between mx-auto mb-2">
-          <label for="new-tag" class="italic text-sm text-white">Mots-clés par défaut:</label>
-          <!-- hack to put right part on the right -->
-          <span />
-          <button @click="$emit('openModalConfigIA')" class="text-white hover:bg-white hover:text-ls-bleu-fonce rounded text-sm p-1 transition duration-300">
-            <Gear class="w-6 h-6" />
-          </button>
-        </div>
-
         <div class="flex flex-row w-full">
           <input v-model="newTag" id="new-tag" placeholder="Ex.: cérémonie, animateur, etc." autocomplete="off" class="bg-white text-gray-700 text-xs block p-1 w-full rounded-s focus:outline-none" />
           <button class="text-white bg-ls-vert-base p-1 w-10 rounded-e text-xl"><strong>+</strong></button>
