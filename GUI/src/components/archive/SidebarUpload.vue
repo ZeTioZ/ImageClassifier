@@ -21,6 +21,9 @@ const fileBuffer = new DataTransfer();
 // data to display in archive cards, each one representing an archive object
 const archiveList = ref([]);
 
+// loading button status
+const isLoading = ref(false);
+
 /**
  * update the archive list and buffer (new archives)
  *
@@ -79,6 +82,8 @@ async function submit(newTags, newName) {
   const files = archiveList.value.map(archive => archive.file);
 
   try {
+    isLoading.value = true;
+
     // get API response
     const response = await API.uploads.post(files, newTags, newName);
 
@@ -89,9 +94,13 @@ async function submit(newTags, newName) {
     // update image list
     Image.IMAGES = images;
   }
+
   catch (err) {
     // TODO: display the error visualy
     throw err;
+
+  } finally {
+    isLoading.value = false;
   }
 } 
 </script>
@@ -108,7 +117,7 @@ async function submit(newTags, newName) {
         </span>
       </div>
 
-      <ArchiveSubmit @submit="submit" class="mt-3"/>
+      <ArchiveSubmit @submit="submit" :isLoading="isLoading" class="mt-3"/>
 
     </div>
   </aside>
