@@ -52,6 +52,11 @@ async function addArchives(archives) {
  * @param {Number} index - index of the archive to remove
  */
 function removeArchive(index) {
+  // ignore if the files are being uploaded
+  if (isLoading.value) {
+    return;
+  }
+
   // remove archive from card place holder
   let newArchiveList = [];
 
@@ -109,7 +114,7 @@ async function submit(newTags, newName) {
   <aside id="upload-sidebar" class="w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
     <div class="h-full overflow-y-clip bg-gray-200 flex flex-col relative justify-between">
 
-      <ArchiveDropzone @filesUpdated="addArchives" class="p-3" /> 
+      <ArchiveDropzone @filesUpdated="addArchives" class="p-3" :isLoading="isLoading" /> 
 
       <div class="overflow-y-auto space-y-3 flex flex-col px-3 flex-1 scrollbar-hide">
         <span v-for="archive, i in archiveList">
