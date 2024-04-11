@@ -16,7 +16,7 @@ const emits = defineEmits(['toggleSortModal']);
   <nav class="w-full bg-ls-vert-base p-1">
     <div class="flex flex-wrap items-center justify-between mx-auto">
       <div>
-        <h2 v-if="searchTerms.length > 0" class="text-white text-l font-bold">Recherche {{strictSearch? "stricte ":""}} {{invertShearch?"sans ":"avec " }} les mots-clés {{searchTerms.join(", ")}}</h2>
+        <h2 v-if="searchTerms.length > 0" class="text-white text-xl font-bold">Recherche {{strictSearch? "stricte ":""}} {{invertShearch?"sans ":"avec " }} les mots-clés : {{searchTerms.join(", ")}}</h2>
       </div>
       <!-- hack to put right part on the right -->
       <span />
