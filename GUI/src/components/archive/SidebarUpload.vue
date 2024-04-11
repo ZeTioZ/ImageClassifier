@@ -22,6 +22,9 @@ const fileBuffer = new DataTransfer();
 // data to display in archive cards, each one representing an archive object
 const archiveList = ref([]);
 
+// loading button status
+const isLoading = ref(false);
+
 /**
  * update the archive list and buffer (new archives)
  *
@@ -50,6 +53,11 @@ async function addArchives(archives) {
  * @param {Number} index - index of the archive to remove
  */
 function removeArchive(index) {
+  // ignore if the files are being uploaded
+  if (isLoading.value) {
+    return;
+  }
+
   // remove archive from card place holder
   let newArchiveList = [];
 
@@ -80,6 +88,8 @@ async function submit(newTags, newName) {
   const files = archiveList.value.map(archive => archive.file);
 
   try {
+    isLoading.value = true;
+
     // get API response
     const response = await API.uploads.post(files, newTags, newName);
 
@@ -90,9 +100,13 @@ async function submit(newTags, newName) {
     // update image list
     Image.IMAGES = images;
   }
+
   catch (err) {
     // TODO: display the error visualy
     throw err;
+
+  } finally {
+    isLoading.value = false;
   }
 } 
 
@@ -107,7 +121,7 @@ function toggleModalConfigIA(){
   <aside id="upload-sidebar" class="w-64 h-full transition-transform -translate-x-full translate-x-0" aria-label="Sidebar">
     <div class="h-full overflow-y-clip bg-gray-200 flex flex-col relative justify-between">
 
-      <ArchiveDropzone @filesUpdated="addArchives" class="p-3" /> 
+      <ArchiveDropzone @filesUpdated="addArchives" class="p-3" :isLoading="isLoading" /> 
 
       <div class="overflow-y-auto space-y-3 flex flex-col px-3 flex-1 scrollbar-hide">
         <span v-for="archive, i in archiveList">
@@ -115,7 +129,7 @@ function toggleModalConfigIA(){
         </span>
       </div>
 
-      <ArchiveSubmit @submit="submit" @openModalConfigIA="toggleModalConfigIA"  class="mt-3"/>
+      <ArchiveSubmit @submit="submit" @openModalConfigIA="toggleModalConfigIA" :isLoading="isLoading" class="mt-3"/>
 
     </div>
   </aside>

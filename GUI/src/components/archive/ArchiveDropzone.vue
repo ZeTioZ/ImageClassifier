@@ -2,6 +2,7 @@
 import Cloud from '@/components/icons/Cloud.vue';
 
 const emit = defineEmits(['filesUpdated']);
+const props = defineProps(['isLoading']);
 
 function updateFileList(event) {
   // emit event with files as parameter
@@ -20,7 +21,7 @@ function updateFileList(event) {
         <p class="mb-2 text-sm text-ls-bleu-fonce text-center"><strong>Cliquer pour uploader</strong><br>(ou glisser et déposer)</p>
         <p class="text-xs font-bold text-gray-700">.zip</p>
       </div>
-      <input id="dropzone-file" type="file" accept=".zip" class="hidden" @change="updateFileList" multiple />
+      <input id="dropzone-file" type="file" accept=".zip" class="hidden" @change="updateFileList" multiple :disabled="isLoading" />
     </label>
   </div> 
 </template>
