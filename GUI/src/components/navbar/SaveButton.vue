@@ -5,11 +5,13 @@ import { Image } from '@/js/image.js';
 import { API } from '@/api'; 
 
 async function save() {
-  const JSON = {};
+  const JSON = {genereted_tags: {}};
 
-  JSON["classes"] = Tag.TAGS.map(t => t.tagname);
+  JSON.genereted_tags["classes"] = Tag.TAGS.map(t => t.tagname);
 
-  Image.IMAGES.forEach(image => JSON[image.hash] = image.toJSON());
+  Image.IMAGES
+    .filter(image => !image.toBeDeleted)
+    .forEach(image => JSON.genereted_tags[image.hash] = image.toJSON());
 
   await API.tags.post(JSON);
 }
