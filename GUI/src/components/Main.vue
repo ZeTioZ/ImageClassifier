@@ -7,7 +7,7 @@ import AlertsPlaceholder from '@/components/alerts/AlertsPlaceholder.vue';
 </script>
 
 <template>
-  <main class="flex flex-col h-full">
+  <main class="flex flex-col h-full static">
     <!-- Main navbar -->
     <Navbar />
 
@@ -17,7 +17,7 @@ import AlertsPlaceholder from '@/components/alerts/AlertsPlaceholder.vue';
       <Workspace />
     </div>
 
-    <AlertsPlaceholder />
+    <!-- <AlertsPlaceholder /> -->
   </main>
 </template>
 

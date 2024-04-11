@@ -1,7 +1,11 @@
 <script setup>
 import Alert from '@/components/alerts/Alert.vue';
+import {newAlert, ALERTS} from '@/js/alerts.js';
+
 </script>
 
 <template>
-  <Alert v-for="i in 3" type="info" />
+  <div class="absolute bottom-0 end-0 m-3 flex flex-col-reverse">
+    <Alert type="danger" />
+  </div>
 </template>
