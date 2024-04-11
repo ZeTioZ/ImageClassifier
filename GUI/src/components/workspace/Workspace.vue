@@ -32,9 +32,8 @@ function filterImages(imagesList) {
   if (!searchTerms.value || searchTerms.value.length === 0) {
     return imagesList.value;
   }
-
   return imagesList.value.filter(image => {
-    const tagMatched = strictSearch ? 
+    const tagMatched = strictSearch.value ? 
       searchTerms.value.every(searchTerm => 
         image.tags.some(imageTag => 
           imageTag.tagname.toLowerCase().includes(searchTerm.toLowerCase())
