@@ -6,29 +6,36 @@ export default {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
-    colors: {
-      "ls-vert-base": "var(--ls-vert-base)",
-      "ls-vert-fonce": "var(--ls-vert-fonce)",
-      "ls-bleu-fonce": "var(--ls-bleu-fonce)",
+    extend: {
+      colors: {
+        "ls-vert-base": "var(--ls-vert-base)",
+        "ls-vert-fonce": "var(--ls-vert-fonce)",
+        "ls-bleu-fonce": "var(--ls-bleu-fonce)",
 
-      "ls-prune": "var(--ls-prune)",
-      "ls-orange": "var(--ls-orange)",
-      "ls-gris": "var(--ls-gris)",
-      "ls-turquoise": "var(--ls-turquoise)",
-      "ls-bleu-clair": "var(--ls-bleu-clair)",
-      "ls-rouge": "var(--ls-rouge)",
-      "ls-rose": "var(--ls-rose)",
+        "ls-prune": "var(--ls-prune)",
+        "ls-orange": "var(--ls-orange)",
+        "ls-gris": "var(--ls-gris)",
+        "ls-turquoise": "var(--ls-turquoise)",
+        "ls-bleu-clair": "var(--ls-bleu-clair)",
+        "ls-rouge": "var(--ls-rouge)",
+        "ls-rose": "var(--ls-rose)",
 
-      "ls-baladins": "var(--ls-baladins)",
-      "ls-louveteaux": "var(--ls-louveteaux)",
-      "ls-eclaireurs": "var(--ls-eclaireurs)",
-      "ls-pionniers": "var(--ls-pionniers)",
-      "ls-mondial": "var(--ls-mondial)",
+        "ls-baladins": "var(--ls-baladins)",
+        "ls-louveteaux": "var(--ls-louveteaux)",
+        "ls-eclaireurs": "var(--ls-eclaireurs)",
+        "ls-pionniers": "var(--ls-pionniers)",
+        "ls-mondial": "var(--ls-mondial)",
+      },
     },
     fontFamily: {
       sans: ['Muli', 'sans-serif'],
     }
   },
+  safelist: [
+    // for alert comps
+    'text-ls-bleu-fonce', 'text-ls-rouge',
+    'border-ls-bleu-fonce', 'border-ls-rouge'
+  ],
   plugins: [
     require('flowbite/plugin'),
   ],

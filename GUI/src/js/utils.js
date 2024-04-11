@@ -27,6 +27,7 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
   // create tag objects
   Tag._colorIndex = 0;
   Tag.TAGS = tags
+    .filter(tag => tag !== "nasty")  // remove nasty tag from normal tag
     .map(tag => new Tag(tag, tag));
 
   // extract images from all archives in a single list
@@ -46,25 +47,23 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
     // change image name if needed
     const newName = imgData.file_name;
 
-    // -- SUBJECT TO CHANGES --
-    // create new tag to the list if tag not in default classes
-    imgData.detection_tags
+    // create new tag for quality tags to the list if tag not in default classes
+    imgData.quality_tags
       .filter(tag => !Tag.TAGS.map(t => t.tagname).includes(tag))
-      .forEach(tag => Tag.TAGS.push(new Tag(tag, tag)));
-    // ------------------------
+      .forEach(tag => Tag.TAGS.push(new Tag(tag, tag, true)));
 
     // get tag objects for the image
     const imageTags = Tag.TAGS
       .filter(tag => imgData.detection_tags.includes(tag.tagname));
 
-    // should the image be deleted...
+    // get quality tag objects for the image
+    const imageQualityTags = Tag.TAGS
+      .filter(tag => imgData.quality_tags.includes(tag.tagname));
+
+    // should the image be deleted
     const toBeDeleted = !imgData.is_qualitative;
 
-    // ...and why
-    const reasonForDeletion = imgData.quality_tags;
-
-
-    img.setProperties(newName, imageTags, toBeDeleted, reasonForDeletion);
+    img.setProperties(newName, imageTags, toBeDeleted, imageQualityTags);
   }
 
 
