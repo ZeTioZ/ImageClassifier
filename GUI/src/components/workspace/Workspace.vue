@@ -34,7 +34,7 @@ function filterImages(imagesList) {
   }
 
   return imagesList.value.filter(image => {
-    const tagMatched = strictSearch ? 
+    const tagMatched = strictSearch.value ? 
       searchTerms.value.every(searchTerm => 
         image.tags.some(imageTag => 
           imageTag.tagname.toLowerCase().includes(searchTerm.toLowerCase())
