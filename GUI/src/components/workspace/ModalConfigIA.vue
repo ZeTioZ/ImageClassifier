@@ -20,7 +20,7 @@ onMounted(async () => {
     netteté.value = data.blur_precision || 0;
     length.value = data.image_min_width || 0;
     hight.value = data.image_min_height || 0;
-    brigthness.value = data.image_min_luminance || 0;
+    brigthness.value = data.image_min_brightness || 0;
     if (data.banned_tags) {
       BlacklistedTags.value = [...data.banned_tags];
     }
@@ -41,6 +41,14 @@ async function updateAIConfig(updatedConfig) {
     console.error("Erreur lors de la mise à jour de la configuration :", error);
     // Gérer l'erreur comme il convient
   }
+}
+
+function rebotConfig() {
+  netteté.value = 151;
+  length.value = 400;
+  hight.value = 400;
+  brigthness.value = 51;
+  BlacklistedTags.value = ["nasty"];
 }
 
 function validateConfig() {
@@ -95,21 +103,21 @@ function closeModal() {
             <!--length-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Largeur minimale : </span> 
-              <input v-model="length" type="number" min="0" max="5000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/> 
+              <input v-model="length" type="number" min="0" max="3000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/> 
             </div>
-            <input v-model="length" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="length" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--heigth-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Hauteur minimale :</span>
-              <input v-model="hight" type="number" min="0" max="5000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
+              <input v-model="hight" type="number" min="0" max="3000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
             </div>
-            <input v-model="hight" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="hight" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--brigtness-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Luminosité :</span>
-              <input v-model="brigthness" type="number" min="0" max="3000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
+              <input v-model="brigthness" type="number" min="0" max="150" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 border-none shadow-none"/>
             </div>
-            <input v-model="brigthness" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="brigthness" type="range" min="0" max="150" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!---->
             <p class="text-base leading-relaxed text-gray-500">
               Mot-clé à blacklister : 
@@ -126,8 +134,9 @@ function closeModal() {
           </div>
           <!-- Modal footer -->
           <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-            <button type="button" @click="validateConfig" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Valider</button>
-            <button type="button" @click="closeModal" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10" >Annuler</button>
+            <button type="button" @click="validateConfig" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Valider</button>
+            <button type="button" @click="rebotConfig" class="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Défaut</button>
+            <button type="button" @click="closeModal" class="text-white bg-gray-400 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 focus:z-10" >Annuler</button>
           </div>
         </div>
       </div>
