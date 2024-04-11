@@ -1,6 +1,5 @@
 <script setup>
 import Alert from '@/components/alerts/Alert.vue';
-import {newAlert, ALERTS} from '@/js/alerts.js';
 
 </script>
 
