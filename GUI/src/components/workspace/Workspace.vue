@@ -9,6 +9,7 @@ const searchTerms = ref([]);
 const showModal = ref(false);
 const refreshKey = ref(0);
 const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
+const strictSearch = ref(false);  // boolean to search only the images with all the tags
 
 
 // base images lists from props
@@ -33,12 +34,18 @@ function filterImages(imagesList) {
   }
 
   return imagesList.value.filter(image => {
-    const tagMatched = image.tags.some(imageTag => {
-      return searchTerms.value.some(searchTag => {
-        return imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase())
-      });
-    });
-    
+    const tagMatched = strictSearch ? 
+      searchTerms.value.every(searchTerm => 
+        image.tags.some(imageTag => 
+          imageTag.tagname.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      ) : 
+      image.tags.some(imageTag => 
+        searchTerms.value.some(searchTag => 
+          imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase())
+        )
+      );
+
     // if invert search, invert tag matched
     return !invertShearch.value ? tagMatched : !tagMatched;
   });
@@ -47,6 +54,7 @@ function filterImages(imagesList) {
 function handleSearch(terms) {
   invertShearch.value = terms[1];
   searchTerms.value = terms[0];
+  strictSearch.value = terms[2];
   refreshKey.value++;
 }
 
@@ -142,7 +150,7 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
 <template>
   <div class="flex-1 flex flex-col w-full">
     <!-- navbar -->
-    <WorkspaceNavbar @toggleSortModal="toggleModal" />
+    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertShearch" :strictSearch="strictSearch" @toggleSortModal="toggleModal" />
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
