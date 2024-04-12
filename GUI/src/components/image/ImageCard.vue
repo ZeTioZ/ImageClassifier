@@ -13,13 +13,19 @@ function toggleModalImage() {
 }
 
 function handleAdd(term) {
-  props.tags.push(term)
+  props.image.tags.push(term)
 }
 
 function handleDel(term) {
-  for (let tag in props.tags) {
-    if (tag === term) {
-      props.tags.splice(tag.indexOf(term));
+  for (let tag in props.image.tags) {
+    if (props.image.tags[tag] === term) {
+      props.image.tags.splice(tag, 1);
+    }
+  }
+
+  for (let tag in props.image.qualityTags) {
+    if (props.image.qualityTags[tag] === term) {
+      props.image.qualityTags.splice(tag, 1);
     }
   }
 }
@@ -59,6 +65,6 @@ function handleDel(term) {
 
   <!-- MODALS -->
   <ModalImage v-if="showModalI"
-    @close="toggleModalImage" @add="handleAdd" @del="handleDel" :image="image" />
+    @close="toggleModalImage" @add="handleAdd" @del="handleDel" :image="image"/>
 </template>
 
