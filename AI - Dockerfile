@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+
+ADD ./WebServer /WebServer
+ADD ./AI /AI
+
+WORKDIR /AI
+
+RUN pip install -r requirements.txt
+RUN pip install -r gpu-enable-requirements.txt
+
+WORKDIR /WebServer
+
+RUN pip install -r requirements.txt
+
+WORKDIR /WebServer/app
+
+EXPOSE 80
+
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
