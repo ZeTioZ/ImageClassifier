@@ -2,7 +2,7 @@
 import Tag from '@/components/image/Tag.vue';
 import Add from '@/components/icons/Add.vue';
 import XMark from '@/components/icons/XMark.vue';
-import {ref} from "vue";
+import { ref } from "vue";
 
 const props = defineProps(['parent', 'image']);
 const emit = defineEmits(['close', 'add', 'del']);
@@ -78,7 +78,7 @@ getImageURL();
               {{ image.readableSize }}
             </p>
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 mb-[1px]">
-              1000{{ image.width }} x 1000{{ image.height }}
+              {{ image.width }} x {{ image.height }}
             </p>
           </div>
         </div>

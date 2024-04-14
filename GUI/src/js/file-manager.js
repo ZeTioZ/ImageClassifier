@@ -69,10 +69,11 @@ export class FileManager {
     // get image size
     let dim = {};
     let url = URL.createObjectURL(entryData);
-    sizeOf(url, (width, height) => {
+    await sizeOf(url, (width, height) => {
       dim.width = width;
       dim.height = height;
     });
+
     URL.revokeObjectURL(url);
 
     // compress the image if compressed is true
