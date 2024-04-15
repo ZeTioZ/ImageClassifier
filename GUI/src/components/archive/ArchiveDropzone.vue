@@ -16,7 +16,6 @@ function updateFileList(event) {
 onMounted(() => {
   const dropArea = document.getElementById("dropzone");
 
-
   function preventDefaults(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -31,18 +30,14 @@ onMounted(() => {
   }
 
   function handleDrop(e) {
-    var dt = e.dataTransfer
-    var files = dt.files
+    const files = e.dataTransfer.files
 
     handleFiles(files);
   }
 
   function handleFiles(files) {
-    files = [...files];
-
-  emit('filesUpdated', files);
+    emit('filesUpdated', [...files]);
   }
-
 
 
   // Prevent default drag behaviors
