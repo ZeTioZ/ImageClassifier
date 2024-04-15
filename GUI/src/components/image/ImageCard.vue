@@ -3,17 +3,31 @@ import Tag from '@/components/image/Tag.vue'
 import VEllipsis from '@/components/icons/VEllipsis.vue';
 import ModalImage from './ModalImage.vue';
 import { ref } from 'vue';
+import { Tag as TagObject } from '@/js/tag.js';
 
 const props = defineProps(['index', 'selected', 'image']);
+const emits = defineEmits(['canSelectImage']);
 
 const showModalI = ref(false);
 
-function toggleModalImage() {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function toggleModalImage(closing) {
   showModalI.value = !showModalI.value;
+  if (closing) {
+    sleep(1).then(() => {
+      emits('canSelectImage', !showModalI.value);
+    });
+  }
+  else {
+    emits('canSelectImage', !showModalI.value);
+  }
 }
 
 function handleAdd(term) {
-  props.image.tags.push(term)
+  props.image.tags.push(new TagObject(term, term))
 }
 
 function handleDel(term) {
@@ -41,7 +55,7 @@ function handleDel(term) {
       <!-- Image name -->
       <span class="font-semibold inline-block align-middle my-auto text-ls-bleu-fonce truncate">{{ image.filename }}</span>
       <!-- Three dots/menu icon -->
-      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1" @click="toggleModalImage">
+      <a href="#" class="rounded-full hover:bg-gray-300 transition duration-300 text-ls-bleu-fonce p-1" @click="toggleModalImage(false)">
         <VEllipsis class="w-4 h-4"/>
       </a>
     </div>

@@ -2,14 +2,15 @@
 import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { Image } from '@/js/image';
 
 const searchTerms = ref([]);
 const showModal = ref(false);
 const refreshKey = ref(0);
-const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
+const invertSearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 const strictSearch = ref(false);  // boolean to search only the images with all the tags
+const canSelect = ref(true); // boolean to know if the images can be selected
 
 
 // base images lists from props
@@ -47,12 +48,12 @@ function filterImages(imagesList) {
       );
 
     // if invert search, invert tag matched
-    return !invertShearch.value ? tagMatched : !tagMatched;
+    return !invertSearch.value ? tagMatched : !tagMatched;
   });
 }
 
 function handleSearch(terms) {
-  invertShearch.value = terms[1];
+  invertSearch.value = terms[1];
   searchTerms.value = terms[0];
   strictSearch.value = terms[2];
   refreshKey.value++;
@@ -61,16 +62,22 @@ function handleSearch(terms) {
 // Référence réactive pour les images sélectionnées
 const selectedImages = ref([]);
 
+function canSelectImage(value) {
+  canSelect.value = value;
+}
+
 // Fonction pour basculer la sélection d'une image
 function toggleImageSelection(imageIndex, workspace) {
   const imageID = {index: imageIndex, workspace: workspace};
   const selectedIndex = selectedImages.value.findIndex(
     (image) => image.index === imageIndex && image.workspace === workspace
   );
-  if (selectedIndex >= 0) {
-    selectedImages.value.splice(selectedIndex, 1); // Désélectionner
-  } else {
-    selectedImages.value.push(imageID); // Sélectionner
+  if (canSelect.value) {
+    if (selectedIndex >= 0) {
+      selectedImages.value.splice(selectedIndex, 1); // Désélectionner
+    } else {
+      selectedImages.value.push(imageID); // Sélectionner
+    }
   }
 }
 
@@ -150,21 +157,21 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
 <template>
   <div class="flex-1 flex flex-col w-full">
     <!-- navbar -->
-    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertShearch" :strictSearch="strictSearch" @toggleSortModal="toggleModal" />
+    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertSearch" :strictSearch="strictSearch" @toggleSortModal="toggleModal" />
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
-      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" 
+      <WorkspaceTable ref="workspaceTable"  class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer"
         :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"
-        :selectedImages="selectedImages"/>
+        :selectedImages="selectedImages" @canSelectImage="canSelectImage"/>
 
-      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" 
+      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées"
         :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"
-        :selectedImages="selectedImages"/>
+        :selectedImages="selectedImages" @canSelectImage="canSelectImage"/>
     </div>
   </div>
 
