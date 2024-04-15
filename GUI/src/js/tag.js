@@ -41,7 +41,7 @@ export class Tag {
       this._cssColorClass = "bg-black";
     } else {
       this._cssColorClass = Tag._CSS_COLOR_CLASSES[Tag._colorIndex];
-      Tag._colorIndex++;
+      Tag._colorIndex = (Tag._colorIndex + 1) % Tag._CSS_COLOR_CLASSES.length;
     }
   }
 

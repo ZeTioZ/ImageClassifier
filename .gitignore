@@ -162,4 +162,7 @@ cython_debug/
 AI/extracted/
 AI/test/
 WebServer/uploads/
-AI/models/scout-model-v4.pt
+AI/models/
+*.iml
+GUI/.vite
+GUI/.vscode
