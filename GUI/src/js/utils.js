@@ -76,9 +76,15 @@ export async function handleApiResponseForArchiveUploads(response, archiveList) 
 * @param {string} url - the url of the image.
 * @param {Function} callback - the callback function that manages the width and the height.
 */
-export function sizeOf(url, callback) {
+export async function sizeOf(url, callback) {
   const img = new Image();
   img.src = url;
-  img.onload = () => { callback(img.width, img.height); }
+
+  // use img.decode (returning a Promise) instead of img.onload because all browsers
+  // don't fire the loaded event at the same time, causing an error if 
+  // the image is unloaded anywhere else (unloding a blob for instance).
+  await img.decode().then(() => {
+    callback(img.width, img.height);
+  });
 }
 
