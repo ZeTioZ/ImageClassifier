@@ -11,7 +11,7 @@ const add = ref(false);
 const imageURL = ref('');
 
 function closeModal() {
-  emit('close', true);
+  emit('close');
 }
 
 function tagToAdd(event) {

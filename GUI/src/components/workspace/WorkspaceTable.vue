@@ -14,18 +14,12 @@ const props = defineProps({
   selectedImages: Object,
 });
 
-const emit = defineEmits(['canSelectImage']);
-
 // Référence réactive pour les images 
 const draggableImages = ref([]);
 
 watchEffect(() => {
   draggableImages.value = props.images.value;
 });
-
-function canSelectImage(value) {
-  emit('canSelectImage', value);
-}
 
 // Fonction appelée lorsque le déplacement des images est terminé
 function onEnd(event) {
@@ -69,7 +63,7 @@ function onEnd(event) {
       <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center" @click="toggleImageSelection(index, props.workspaceName)">
-            <ImageCard :image="element" :index="index" :selected="isImageSelected(index, props.workspaceName)" @canSelectImage="canSelectImage"/>
+            <ImageCard :image="element" :index="index" :selected="isImageSelected(index, props.workspaceName)"/>
           </div>
         </template>
       </draggable>

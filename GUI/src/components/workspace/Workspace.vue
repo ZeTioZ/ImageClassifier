@@ -10,7 +10,6 @@ const showModal = ref(false);
 const refreshKey = ref(0);
 const invertSearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 const strictSearch = ref(false);  // boolean to search only the images with all the tags
-const canSelect = ref(true); // boolean to know if the images can be selected
 
 
 // base images lists from props
@@ -62,22 +61,16 @@ function handleSearch(terms) {
 // Référence réactive pour les images sélectionnées
 const selectedImages = ref([]);
 
-function canSelectImage(value) {
-  canSelect.value = value;
-}
-
 // Fonction pour basculer la sélection d'une image
 function toggleImageSelection(imageIndex, workspace) {
   const imageID = {index: imageIndex, workspace: workspace};
   const selectedIndex = selectedImages.value.findIndex(
     (image) => image.index === imageIndex && image.workspace === workspace
   );
-  if (canSelect.value) {
-    if (selectedIndex >= 0) {
-      selectedImages.value.splice(selectedIndex, 1); // Désélectionner
-    } else {
-      selectedImages.value.push(imageID); // Sélectionner
-    }
+  if (selectedIndex >= 0) {
+    selectedImages.value.splice(selectedIndex, 1); // Désélectionner
+  } else {
+    selectedImages.value.push(imageID); // Sélectionner
   }
 }
 
@@ -161,17 +154,17 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
-      <WorkspaceTable ref="workspaceTable"  class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer"
+      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer"
         :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"
-        :selectedImages="selectedImages" @canSelectImage="canSelectImage"/>
+        :selectedImages="selectedImages"/>
 
       <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées"
         :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"
-        :selectedImages="selectedImages" @canSelectImage="canSelectImage"/>
+        :selectedImages="selectedImages"/>
     </div>
   </div>
 
