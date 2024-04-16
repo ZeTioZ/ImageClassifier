@@ -35,7 +35,28 @@ export class Tag {
 
   constructor(tagname, displayName, qualityTag = false) {
     this._tagname = tagname;
-    this._displayName = displayName;
+    switch (displayName) {
+      case "food":
+        this._displayName = "nourriture";
+        break;
+      case "activity":
+        this._displayName = "activité";
+        break;
+      case "equipment":
+        this._displayName = "équipement";
+        break;
+      case "music-instrument":
+        this._displayName = "musique-instrument";
+        break;
+      case "nasty":
+        this._displayName = "nuisible";
+        break;
+      case "person":
+        this._displayName = "personne";
+        break;
+      default:
+        this._displayName = displayName;
+    }
 
     if (qualityTag) {
       this._cssColorClass = "bg-black";
