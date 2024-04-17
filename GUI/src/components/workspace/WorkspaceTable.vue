@@ -44,8 +44,9 @@ function onEnd(event) {
   <div class="flex flex-col text-center h-full">
     <!-- Title -->
     <div class="flex justify-between p-2">
-      <div>
-        <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
+      <div class="flex">
+        <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }} </h2>
+        <p class="text-sm text-gray-500"> ({{ draggableImages.length }} image{{ draggableImages.length > 1 ? "s":""}})</p>
       </div>
       <div>
         <!--si aucune image n'est séléctioné alors gris claire sans over et si une ou plusieurs image séléctionée gris foncé avec over-->
