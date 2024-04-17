@@ -54,6 +54,18 @@ export class Tag {
       case "person":
         this._displayName = "personne";
         break;
+      case "blurry":
+        this._displayName = "flou";
+        break;
+      case "not_bright":
+        this._displayName = "luminosité";
+        break;
+      case "min_width":
+        this._displayName = "largeur minimale";
+        break;
+      case "min_height":
+        this._displayName = "hauteur minimale";
+        break;
       default:
         this._displayName = displayName;
     }
