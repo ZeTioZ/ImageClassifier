@@ -11,6 +11,13 @@ const refreshKey = ref(0);
 const invertSearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 const strictSearch = ref(false);  // boolean to search only the images with all the tags
 
+const resetSearch = () => {
+  searchTerms.value = [];
+  invertSearch.value = false;
+  strictSearch.value = false;
+  refreshKey.value++;
+};
+
 
 // base images lists from props
 const goodImages = computed(() => Image.IMAGES.filter(img => !img.toBeDeleted));
@@ -150,7 +157,7 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
 <template>
   <div class="flex-1 flex flex-col w-full">
     <!-- navbar -->
-    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertSearch" :strictSearch="strictSearch" @toggleSortModal="toggleModal" />
+    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertSearch" :strictSearch="strictSearch" @toggleSortModal="toggleModal" @resetSearch="resetSearch" />
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
