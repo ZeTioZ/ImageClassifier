@@ -45,6 +45,13 @@ async function addArchives(archives) {
 
     // update file buffer
     fileBuffer.items.add(archiveFile);
+    
+    // push notif 
+    notify({
+      type: "info",
+      title: "Archive chargée",
+      text: `Le fichier '${newArchive.filename}' a été chargé.`
+    });
   }
 }
  
@@ -72,7 +79,13 @@ function removeArchive(index) {
     } else {
       // unload archive to free resources used for blob URLs
       archive.unload();
-      console.log(`archive '${archive.filename}' unloaded`);
+
+      // push notif 
+      notify({
+        type: "info",
+        title: "Archive déchargée",
+        text: `Le fichier '${archive.filename}' a été déchargé.`
+      });
     }
   }
   
@@ -86,12 +99,6 @@ function removeArchive(index) {
  * Submit archive(s), tags and batch name and call endpoint
  */
 async function submit(newTags, newName) {
-  notify({
-    type: "info",
-    title: "Important message",
-    text: "Hello user! text test te ste stete te te te r."
-  });
-
   const files = archiveList.value.map(archive => archive.file);
 
   try {
@@ -106,10 +113,23 @@ async function submit(newTags, newName) {
 
     // update image list
     Image.IMAGES = images;
+
+    // archives uploaded success message
+    notify({
+      type: "success",
+      title: "Classification terminée",
+      text: "Les images ont été triées et classiffiées par l'IA."
+    });
   }
 
   catch (err) {
-    // TODO: display the error visualy
+    // display error 
+    notify({
+      type: "error",
+      title: "Erreur",
+      text: `Une erreur est survenue lors du traitement des images: ${err.code || 'UNK_ERR'}`
+    });
+
     throw err;
 
   } finally {
