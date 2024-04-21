@@ -2,6 +2,7 @@
 import {onMounted, ref } from "vue";
 import { API } from '@/api/';
 import XMark from '@/components/icons/XMark.vue';
+import { notify } from '@kyvg/vue3-notification';
 
 const netteté = ref(0);
 const length = ref(0);
@@ -25,8 +26,13 @@ onMounted(async () => {
       BlacklistedTags.value = [...data.banned_tags];
     }
   } catch (error) {
-    console.error("Erreur lors de la récupération de la configuration:", error);
-    // Gérer l'erreur comme il convient
+    notify({
+      type: "error",
+      title: "Erreur",
+      text: `Quelque chose s'est mal passé lors de la récupération de la configuration: ${error.code || 'UNK_ERR'}.`
+    });
+
+    throw error;
   }
 });
 
@@ -35,11 +41,22 @@ async function updateAIConfig(updatedConfig) {
   try {
     // Envoie les données mises à jour au serveur
     await API.configs.post(updatedConfig);
-    console.log('Configuration mise à jour avec succès');
+
+    notify({
+      type: "success",
+      title: "Paramètres mis à jour",
+      text: "Les paramètres ont été mis à jours avec succès."
+    });
+
     closeModal(); // Ferme le modal après la mise à jour réussie
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la configuration :", error);
-    // Gérer l'erreur comme il convient
+    notify({
+      type: "error",
+      title: "Erreur",
+      text: `Quelque chose s'est mal passé lors de la mise à jour des paramètres: ${error.code}`
+    });
+
+    throw error;
   }
 }
 
@@ -49,6 +66,12 @@ function rebotConfig() {
   hight.value = 400;
   brigthness.value = 51;
   BlacklistedTags.value = ["nasty"];
+
+  notify({
+    type: "info",
+    title: "Paramètres réinitialisés",
+    text: "Les paramètres de l'IA ont été réinitialisés."
+  });
 }
 
 function validateConfig() {
