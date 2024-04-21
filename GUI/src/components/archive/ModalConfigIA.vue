@@ -29,7 +29,7 @@ onMounted(async () => {
     notify({
       type: "error",
       title: "Erreur",
-      text: `Quelque chose s'est mal passé lors de la récupération de la configuration: ${error.code || 'UNK_ERR'}.`
+      text: `Quelque chose s'est mal passé lors de la récupération de la configuration: ${error.code || 'UNK_ERR'}`
     });
 
     throw error;
@@ -53,7 +53,7 @@ async function updateAIConfig(updatedConfig) {
     notify({
       type: "error",
       title: "Erreur",
-      text: `Quelque chose s'est mal passé lors de la mise à jour des paramètres: ${error.code}`
+      text: `Quelque chose s'est mal passé lors de la mise à jour des paramètres: ${error.code || 'UNK_ERR'}`
     });
 
     throw error;
