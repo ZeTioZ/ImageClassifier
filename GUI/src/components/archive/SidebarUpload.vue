@@ -11,6 +11,7 @@ import { Tag } from '@/js/tag';
 import { Image } from '@/js/image';
 import { handleApiResponseForArchiveUploads } from '@/js/utils';
 import { API } from '@/api/';
+import { notify } from "@kyvg/vue3-notification";
 
 
 const emits = defineEmits(['onNewImages']);
@@ -85,6 +86,12 @@ function removeArchive(index) {
  * Submit archive(s), tags and batch name and call endpoint
  */
 async function submit(newTags, newName) {
+  notify({
+    type: "info",
+    title: "Important message",
+    text: "Hello user! text test te ste stete te te te r."
+  });
+
   const files = archiveList.value.map(archive => archive.file);
 
   try {
