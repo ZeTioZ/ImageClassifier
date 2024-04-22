@@ -91,7 +91,7 @@ function closeModal() {
             <h3 class="text-xl text-center font-semibold text-gray-900 lg:text-2xl">
               Configuration de l'IA
             </h3>
-            <h4 class="text-sm text-gray-500"> Modifiez les paramètres de l'IA pour le tri des images.</h4>
+            <h4 class="text-sm text-gray-500"> Modifiez les paramètres de l'IA pour le tri automatisé des images.</h4>
           </div>
 
           <!-- Modal body -->
@@ -99,25 +99,25 @@ function closeModal() {
             <!--netteté-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Netteté :</span>
-              <input v-model="netteté" type="number" min="0" max="3000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
+              <input v-model="netteté" type="number" min="0" max="3000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
             <input v-model="netteté" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ">
             <!--length-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
-              <span>Largeur minimale : </span> 
-              <input v-model="length" type="number" min="0" max="5000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/> 
+              <span>Largeur minimale :</span> 
+              <input v-model="length" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/> 
             </div>
             <input v-model="length" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--heigth-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Hauteur minimale :</span>
-              <input v-model="hight" type="number" min="0" max="5000" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
+              <input v-model="hight" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
             <input v-model="hight" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!--brigtness-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Luminosité :</span>
-              <input v-model="brigthness" type="number" min="0" max="100" class="w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
+              <input v-model="brigthness" type="number" min="0" max="100" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
             <input v-model="brigthness" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             <!---->
@@ -130,7 +130,7 @@ function closeModal() {
                 </button>             
               </span>
               <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
-              autocomplete="off" class="bg-gray-50 text-gray-900 text-xs rounded block p-1 w-full" />
+              autocomplete="off" class="bg-gray-50 text-gray-900 text-xs rounded block p-1 w-full border" />
             </p>
           </div>
 
