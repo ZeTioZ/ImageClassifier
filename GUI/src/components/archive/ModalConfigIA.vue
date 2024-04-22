@@ -2,6 +2,8 @@
 import {onMounted, ref } from "vue";
 import { API } from '@/api/';
 import XMark from '@/components/icons/XMark.vue';
+import Check from '@/components/icons/Check.vue';
+import Reset from '@/components/icons/Reset.vue';
 
 const netteté = ref(0);
 const length = ref(0);
@@ -121,31 +123,32 @@ function closeModal() {
             </div>
             <input v-model="brigthness" type="range" min="0" max="100" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
             <!---->
-            <p class="text-base leading-relaxed text-gray-500">
-              Mot-clé à blacklister : 
-              <span v-for="(tag, index) in BlacklistedTags" :key="index">
-                {{ tag }}
-                <button @click="remove(index)" class="bg-blue-700 text-white rounded">
-                  <XMark class="w-3 h-3" />
-                </button>             
-              </span>
-              <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
-              autocomplete="off" class="bg-gray-50 text-gray-900 text-xs rounded block p-1 w-full border" />
-            </p>
+            <div>
+            <p class="text-base leading-relaxed">Mots-clés à blacklister :</p>
+            <div class="p-0 text-gray-500 flex justify-center items-center" v-for="(tag, index) in BlacklistedTags" :key="index">
+              <button @click="remove(index)" class="bg-ls-rouge text-white rounded border">
+                <XMark class="w-3 h-3" />
+              </button>             
+              <p class="ms-1">{{ tag }}</p>
+            </div>
+            <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
+              autocomplete="off" class="bg-gray-50 text-gray-900 text-xs rounded block p-1 mt-3 w-full border" />
+            </div>
           </div>
 
           <!-- Modal footer -->
           <div class="flex justify-evenly items-center p-6 space-x-2">
-            <button type="button" @click="validateConfig" class="text-white bg-ls-vert-base font-medium rounded-full text-sm px-5 py-2.5 text-center w-5/12">Valider</button>
-            <button type="button" @click="rebotConfig" class="text-white bg-ls-rouge font-medium rounded-full text-sm px-5 py-2.5 text-center w-5/12">Réinitialiser</button>
-
-            <!-- <button type="button" @click="closeModal" class="text-white bg-gray-400 rounded-full text-sm font-medium px-5 py-2.5">Annuler</button> -->
+            <button type="button" @click="validateConfig" class="text-white bg-ls-vert-base font-medium rounded-full text-sm px-5 py-2.5 text-center w-1/2 flex flex-row items-center justify-center">
+              <Check/>
+              <span class="ms-1">Appliquer</span>
+            </button>
+            <button type="button" @click="rebotConfig" class="text-white bg-ls-rouge font-medium rounded-full text-sm px-5 py-2.5 text-center w-1/2 flex flex-row items-center justify-center">
+              <Reset/>
+              <span class="ms-1">Réinitialiser</span>
+            </button>
           </div>
         </div>
 
-        <button class="fixed top-0 right-0" @click="closeModal">
-          <XMark class="w-5 h-5" />
-        </button>
       </div>
     </div>
   </div>
