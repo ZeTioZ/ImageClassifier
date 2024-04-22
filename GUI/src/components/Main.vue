@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import Navbar from '@/components/navbar/Navbar.vue';
 import Workspace from '@/components/workspace/Workspace.vue';
 import SidebarUpload from '@/components/archive/SidebarUpload.vue';
-import AlertsPlaceholder from '@/components/alerts/AlertsPlaceholder.vue';
+import Notification from '@/components/notifications/Notification.vue';
 </script>
 
 <template>
@@ -17,7 +17,7 @@ import AlertsPlaceholder from '@/components/alerts/AlertsPlaceholder.vue';
       <Workspace />
     </div>
 
-    <!-- <AlertsPlaceholder /> -->
+    <Notification />
   </main>
 </template>
 
