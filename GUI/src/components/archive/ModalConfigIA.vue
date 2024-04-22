@@ -1,7 +1,8 @@
 <script setup>
 import {onMounted, ref } from "vue";
-import AI_config from "@/api/AI-config.js";
+import { API } from '@/api/';
 import XMark from '@/components/icons/XMark.vue';
+import { notify } from '@kyvg/vue3-notification';
 
 const netteté = ref(0);
 const length = ref(0);
@@ -15,7 +16,7 @@ const emit = defineEmits(['close']);
 // Charger les configurations après que le composant soit monté
 onMounted(async () => {
   try {
-    const { data } = await AI_config.getConfigs(); // Assurez-vous que cette méthode correspond à celle définie dans AI-config pour récupérer la configuration
+    const { data } = await API.configs.get(); // Assurez-vous que cette méthode correspond à celle définie dans AI-config pour récupérer la configuration
     // Supposons que la réponse inclue des champs correspondants à vos paramètres
     netteté.value = data.blur_precision || 0;
     length.value = data.image_min_width || 0;
@@ -25,8 +26,13 @@ onMounted(async () => {
       BlacklistedTags.value = [...data.banned_tags];
     }
   } catch (error) {
-    console.error("Erreur lors de la récupération de la configuration:", error);
-    // Gérer l'erreur comme il convient
+    notify({
+      type: "error",
+      title: "Erreur",
+      text: `Quelque chose s'est mal passé lors de la récupération de la configuration: ${error.code || 'UNK_ERR'}`
+    });
+
+    throw error;
   }
 });
 
@@ -34,12 +40,23 @@ onMounted(async () => {
 async function updateAIConfig(updatedConfig) {
   try {
     // Envoie les données mises à jour au serveur
-    await AI_config.updateConfigs(updatedConfig);
-    console.log('Configuration mise à jour avec succès');
+    await API.configs.post(updatedConfig);
+
+    notify({
+      type: "success",
+      title: "Paramètres mis à jour",
+      text: "Les paramètres ont été mis à jours avec succès."
+    });
+
     closeModal(); // Ferme le modal après la mise à jour réussie
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la configuration :", error);
-    // Gérer l'erreur comme il convient
+    notify({
+      type: "error",
+      title: "Erreur",
+      text: `Quelque chose s'est mal passé lors de la mise à jour des paramètres: ${error.code || 'UNK_ERR'}`
+    });
+
+    throw error;
   }
 }
 
@@ -49,6 +66,12 @@ function rebotConfig() {
   hight.value = 400;
   brigthness.value = 51;
   BlacklistedTags.value = ["nasty"];
+
+  notify({
+    type: "info",
+    title: "Paramètres réinitialisés",
+    text: "Les paramètres de l'IA ont été réinitialisés."
+  });
 }
 
 function validateConfig() {

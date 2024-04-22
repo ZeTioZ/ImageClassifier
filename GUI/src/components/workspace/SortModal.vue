@@ -62,7 +62,7 @@ function searchTags() {
               </div>
               <!-- Label -->
               <span @mouseenter="showTooltip = true" @mouseleave="showTooltip = false" class="ml-3 text-gray-700 font-medium">
-                Recherche inversée
+                Recherche excluante
               </span>
               <div v-if="showTooltip" class="absolute left-32 ml-3 w-64 bg-black text-white p-2 rounded-md shadow-lg text-xs">
                 Exclut les éléments contenant les mots-clés spécifiés.

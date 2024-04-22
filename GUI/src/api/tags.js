@@ -10,7 +10,7 @@ export class Tags {
     return axios.get(ROUTE);
   }
 
-  static async post() {
-    return null;
+  static async post(json) {
+    return axios.post(ROUTE, json);
   }
 }

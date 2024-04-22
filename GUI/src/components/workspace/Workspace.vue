@@ -2,14 +2,21 @@
 import WorkspaceNavbar from '@/components/workspace/WorkspaceNavbar.vue';
 import WorkspaceTable from '@/components/workspace/WorkspaceTable.vue';
 import SortModal from '@/components/workspace/SortModal.vue';
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { Image } from '@/js/image';
 
 const searchTerms = ref([]);
 const showModal = ref(false);
 const refreshKey = ref(0);
-const invertShearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
+const invertSearch = ref(false);  // boolean to invert the search(ie: search without specific tags)
 const strictSearch = ref(false);  // boolean to search only the images with all the tags
+
+const resetSearch = () => {
+  searchTerms.value = [];
+  invertSearch.value = false;
+  strictSearch.value = false;
+  refreshKey.value++;
+};
 
 
 // base images lists from props
@@ -36,22 +43,22 @@ function filterImages(imagesList) {
     const tagMatched = strictSearch.value ? 
       searchTerms.value.every(searchTerm => 
         image.tags.some(imageTag => 
-          imageTag.tagname.toLowerCase().includes(searchTerm.toLowerCase())
+          imageTag.displayName.toLowerCase().includes(searchTerm.toLowerCase())
         )
       ) : 
       image.tags.some(imageTag => 
         searchTerms.value.some(searchTag => 
-          imageTag.tagname.toLowerCase().includes(searchTag.toLowerCase())
+          imageTag.displayName.toLowerCase().includes(searchTag.toLowerCase())
         )
       );
 
     // if invert search, invert tag matched
-    return !invertShearch.value ? tagMatched : !tagMatched;
+    return !invertSearch.value ? tagMatched : !tagMatched;
   });
 }
 
 function handleSearch(terms) {
-  invertShearch.value = terms[1];
+  invertSearch.value = terms[1];
   searchTerms.value = terms[0];
   strictSearch.value = terms[2];
   refreshKey.value++;
@@ -149,17 +156,17 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
 <template>
   <div class="flex-1 flex flex-col w-full">
     <!-- navbar -->
-    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertShearch" :strictSearch="strictSearch" @toggleSortModal="toggleModal" />
+    <WorkspaceNavbar :searchTerms="searchTerms" :invertShearch="invertSearch" :strictSearch="strictSearch" @toggleSortModal="toggleModal" @resetSearch="resetSearch" />
 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
-      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer" 
+      <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer"
         :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"
         :selectedImages="selectedImages"/>
 
-      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées" 
+      <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées"
         :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"

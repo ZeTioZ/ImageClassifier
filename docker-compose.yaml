@@ -1,0 +1,16 @@
+services:
+  gui-webserver:
+    container_name: gui-webserver
+    build:
+      dockerfile: './GUI - Dockerfile'
+    image: gui-webserver
+    ports:
+      - "8000:80"
+
+  ai-webserver:
+    container_name: ai-webserver
+    build:
+      dockerfile: './AI - Dockerfile'
+    image: ai-webserver
+    ports:
+      - "8001:80"

@@ -21,7 +21,6 @@ watchEffect(() => {
   draggableImages.value = props.images.value;
 });
 
-
 // Fonction appelée lorsque le déplacement des images est terminé
 function onEnd(event) {
   var newlist = false;
@@ -45,8 +44,9 @@ function onEnd(event) {
   <div class="flex flex-col text-center h-full">
     <!-- Title -->
     <div class="flex justify-between p-2">
-      <div>
-        <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }}</h2>
+      <div class="flex">
+        <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }} </h2>
+        <p class="text-sm text-gray-500"> ({{ draggableImages.length }} image{{ draggableImages.length > 1 ? "s":""}})</p>
       </div>
       <div>
         <!--si aucune image n'est séléctioné alors gris claire sans over et si une ou plusieurs image séléctionée gris foncé avec over-->
@@ -64,7 +64,7 @@ function onEnd(event) {
       <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center" @click="toggleImageSelection(index, props.workspaceName)">
-            <ImageCard :image="element" :index="index" :selected="isImageSelected(index, props.workspaceName)" />
+            <ImageCard :image="element" :index="index" :selected="isImageSelected(index, props.workspaceName)"/>
           </div>
         </template>
       </draggable>

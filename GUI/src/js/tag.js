@@ -33,11 +33,49 @@ export class Tag {
     // an unexpected error will occur.
   ];
 
-  constructor(tagname, displayName) {
+  constructor(tagname, displayName, qualityTag = false) {
     this._tagname = tagname;
-    this._displayName = displayName;
-    this._cssColorClass = Tag._CSS_COLOR_CLASSES[Tag._colorIndex];
-    Tag._colorIndex++;
+    switch (displayName) {
+      case "food":
+        this._displayName = "nourriture";
+        break;
+      case "activity":
+        this._displayName = "activité";
+        break;
+      case "equipment":
+        this._displayName = "équipement";
+        break;
+      case "music-instrument":
+        this._displayName = "musique-instrument";
+        break;
+      case "nasty":
+        this._displayName = "nuisible";
+        break;
+      case "person":
+        this._displayName = "personne";
+        break;
+      case "blurry":
+        this._displayName = "flou";
+        break;
+      case "not_bright":
+        this._displayName = "luminosité";
+        break;
+      case "min_width":
+        this._displayName = "largeur minimale";
+        break;
+      case "min_height":
+        this._displayName = "hauteur minimale";
+        break;
+      default:
+        this._displayName = displayName;
+    }
+
+    if (qualityTag) {
+      this._cssColorClass = "bg-black";
+    } else {
+      this._cssColorClass = Tag._CSS_COLOR_CLASSES[Tag._colorIndex];
+      Tag._colorIndex = (Tag._colorIndex + 1) % Tag._CSS_COLOR_CLASSES.length;
+    }
   }
 
   /**
