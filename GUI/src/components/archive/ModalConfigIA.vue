@@ -87,11 +87,11 @@ function closeModal() {
         <div class="relative bg-white rounded-lg">
 
           <!-- Modal header -->
-          <div class="items-start justify-between p-5 rounded-t">
+          <div class="items-start justify-between p-5">
             <h3 class="text-xl text-center font-semibold text-gray-900 lg:text-2xl">
               Configuration de l'IA
             </h3>
-            <h4 class="text-sm text-gray-500"> Modifiez les paramètres de l'IA pour le tri automatisé des images.</h4>
+            <h4 class="text-sm text-gray-500">Modifiez les paramètres de l'IA pour le tri automatisé des images.</h4>
           </div>
 
           <!-- Modal body -->
@@ -135,12 +135,17 @@ function closeModal() {
           </div>
 
           <!-- Modal footer -->
-          <div class="flex justify-evenly items-center p-6 space-x-2 rounded-b">
-            <button type="button" @click="validateConfig" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Valider</button>
-            <button type="button" @click="rebotConfig" class="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Réinitialiser</button>
-            <button type="button" @click="closeModal" class="text-white bg-gray-400 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg text-sm font-medium px-5 py-2.5 focus:z-10" >Annuler</button>
+          <div class="flex justify-evenly items-center p-6 space-x-2">
+            <button type="button" @click="validateConfig" class="text-white bg-ls-vert-base font-medium rounded-full text-sm px-5 py-2.5 text-center w-5/12">Valider</button>
+            <button type="button" @click="rebotConfig" class="text-white bg-ls-rouge font-medium rounded-full text-sm px-5 py-2.5 text-center w-5/12">Réinitialiser</button>
+
+            <!-- <button type="button" @click="closeModal" class="text-white bg-gray-400 rounded-full text-sm font-medium px-5 py-2.5">Annuler</button> -->
           </div>
         </div>
+
+        <button class="fixed top-0 right-0" @click="closeModal">
+          <XMark class="w-5 h-5" />
+        </button>
       </div>
     </div>
   </div>
