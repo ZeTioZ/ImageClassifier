@@ -101,25 +101,25 @@ function closeModal() {
               <span>Netteté :</span>
               <input v-model="netteté" type="number" min="0" max="3000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
-            <input v-model="netteté" type="range" min="0" max="3000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ">
+            <input v-model="netteté" type="range" min="0" max="3000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
             <!--length-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Largeur minimale :</span> 
               <input v-model="length" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/> 
             </div>
-            <input v-model="length" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="length" type="range" min="0" max="5000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
             <!--heigth-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Hauteur minimale :</span>
               <input v-model="hight" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
-            <input v-model="hight" type="range" min="0" max="5000" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="hight" type="range" min="0" max="5000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
             <!--brigtness-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Luminosité :</span>
               <input v-model="brigthness" type="number" min="0" max="100" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
-            <input v-model="brigthness" type="range" min="0" max="100" value="0" step="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input v-model="brigthness" type="range" min="0" max="100" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
             <!---->
             <p class="text-base leading-relaxed text-gray-500">
               Mot-clé à blacklister : 
@@ -151,3 +151,25 @@ function closeModal() {
   </div>
 </template>
 
+<style scoped>
+.slider {
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--ls-bleu-fonce);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  background-color: var(--ls-bleu-fonce);
+  cursor: pointer;
+}
+</style>
