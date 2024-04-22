@@ -3,6 +3,7 @@ import Download from '@/components/icons/Download.vue';
 import { Tag } from '@/js/tag.js';
 import { Image } from '@/js/image.js';
 import { API } from '@/api'; 
+import { notify } from '@kyvg/vue3-notification';
 
 async function save() {
   const JSON = {genereted_tags: {}};
@@ -13,7 +14,23 @@ async function save() {
     .filter(image => !image.toBeDeleted)
     .forEach(image => JSON.genereted_tags[image.hash] = image.toJSON());
 
-  await API.tags.post(JSON);
+  try {
+    await API.tags.post(JSON);
+
+    notify({
+      type: "success",
+      title: "Classification sauvegardée",
+      text: "La classification des images a été sauvegardée."
+    });
+  } catch (err) {
+    notify({
+      type: "error",
+      title: "Erreur",
+      text: `Quelque chose s'est mal passé lors de la sauvegarde de la classification des images: ${err.code || 'UNK_ERR'}`
+    });
+
+    throw err;
+  }
 }
 </script>
 

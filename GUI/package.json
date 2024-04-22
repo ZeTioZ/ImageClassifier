@@ -9,6 +9,7 @@
     "preview": "vite build && vite preview"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^3.2.1",
     "@zip.js/zip.js": "^2.7.40",
     "axios": "^1.6.7",
     "browser-image-compression": "^2.0.2",
