@@ -34,7 +34,7 @@ function handleDel(term) {
 
 <template>
   <!-- Image Container -->
-  <div class="relative rounded overflow-hidden w-full p-1"
+  <div class="relative rounded overflow-hidden w-full h-full p-1"
     :class="[props.selected ? 'bg-blue-200' : 'bg-gray-200']">
 
     <!-- Image header -->
