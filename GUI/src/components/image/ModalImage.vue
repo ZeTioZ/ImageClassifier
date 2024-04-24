@@ -39,18 +39,22 @@ getImageURL();
 
     <!-- Modal content -->
     <div class="fixed bg-white rounded-xl shadow inset-16">
+
+      <!-- Modal navbar -->
       <nav class="bg-ls-vert-base relative rounded-t-xl">
         <h2 class="text-xl font-bold py-2 truncate px-16">{{ image.filename }}</h2>
         <button @click="closeModal" class="absolute inset-y-2 right-2 text-gray-500 hover:text-gray-700">
           <XMark class="w-6 h-6"/>
         </button>
       </nav>
+
       <!-- Modal body -->
-      <div class="flex">
-        <div class="flex w-2/3 border-e-2 border-gray-500 min-h-[206px]">
-          <img :src="imageURL" alt="full" class="h-[calc(100vh-12.77rem)] w-full object-cover p-2 rounded-lg min-h-[206px]">
+      <div class="flex h-fit">
+        <div class="w-2/3 grid place-content-center">
+          <img :src="imageURL" alt="full" class="p-2 rounded-lg object-contain max-h-fit" />
         </div>
-        <div class="w-1/3 min-h-[206px]">
+
+        <div class="w-1/3 bg-gray-200 rounded-br-xl">
           <p class="text-base leading-relaxed text-gray-500 pb-[1px]">
             <b>Mots-clés :</b>
           </p>
@@ -82,6 +86,7 @@ getImageURL();
           </p>
         </div>
       </div>
+
     </div>
 
   </div>
