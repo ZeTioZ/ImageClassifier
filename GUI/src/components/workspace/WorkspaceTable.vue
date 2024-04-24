@@ -61,7 +61,7 @@ function onEnd(event) {
     </div>
     <!-- Workspace where images are managed -->
     <div class="flex-1 p-2 pt-0 pb-12 overflow-y-auto scrollbar-hide">
-      <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
+      <draggable class="min-h-full grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
           <div class="flex flex-col items-center h-full" @click="toggleImageSelection(index, props.workspaceName)">
             <ImageCard :image="element" :index="index" :selected="isImageSelected(index, props.workspaceName)"/>
