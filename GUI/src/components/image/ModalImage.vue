@@ -38,8 +38,8 @@ getImageURL();
   <div id="extralarge-modal" tabindex="-1" data-draggable="false" class="fixed z-10 bg-gray-600 bg-opacity-50 inset-0" @click.self="closeModal">
 
     <!-- Modal content -->
-    <div class="fixed bg-white rounded-full shadow inset-16">
-      <nav class="bg-ls-vert-base relative">
+    <div class="fixed bg-white rounded-xl shadow inset-16">
+      <nav class="bg-ls-vert-base relative rounded-t-xl">
         <h2 class="text-xl font-bold py-2 truncate px-16">{{ image.filename }}</h2>
         <button @click="closeModal" class="absolute inset-y-2 right-2 text-gray-500 hover:text-gray-700">
           <XMark class="w-6 h-6"/>
