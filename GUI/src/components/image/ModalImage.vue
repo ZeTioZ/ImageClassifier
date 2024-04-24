@@ -61,26 +61,28 @@ getImageURL();
         </div>
 
         <div class="w-1/3 bg-gray-200 rounded-br-xl">
-          <p class="text-base leading-relaxed text-gray-500 pb-[1px]">
+          <p class="text-base leading-relaxed text-gray-500 pt-5">
             <b>Mots-clés :</b>
           </p>
           <p class="flex text-base leading-relaxed text-gray-500 pb-[10px] justify-center items-center">
-          <div class="mt-0.5 overflow-y-auto scrollbar-hide">
-            <div class="flex m-3">
-              <button @click="addTag" class="text-ls-bleu-fonce hover:bg-ls-bleu-fonce hover:text-white rounded text-sm p-1 transition duration-300">
-                <Add class="w-6 h-6" />
-              </button>
-              <Tag v-for="tag in image.tags" @delete="tagToDel(tag)" :key="tag.tagname" :tagName="tag.tagname" :class="tag.cssColorClass" :inModal="'pomelo'"/>
+            <div class="mt-0.5 overflow-y-auto scrollbar-hide">
+              <div class="flex m-3">
+                <button @click="addTag" class="text-ls-bleu-fonce hover:bg-ls-bleu-fonce hover:text-white rounded text-sm p-1 transition duration-300 mb-1 me-1">
+                  <Add class="w-6 h-6" />
+                </button>
+                <Tag v-for="tag in image.tags" @delete="tagToDel(tag)" :key="tag.tagname" :tagName="tag.tagname" :class="tag.cssColorClass" :inModal="'pomelo'"/>
+              </div>
+              <input v-if="add" id="tag" placeholder="Mot-clé à rajouter" @keyup.enter="tagToAdd" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-md block p-2 mx-2" />
             </div>
-            <input v-if="add" id="tag" placeholder="Mot-clé à rajouter" @keyup.enter="tagToAdd" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-l-md block p-2 mx-2" />
-          </div>
           </p>
+
           <p v-if="image.qualityTags.length > 0" class="text-base leading-relaxed text-gray-500 mb-[10px]">
-            <b>Raisons de suppression:</b>
+            <b>Raisons de suppression :</b>
           </p>
           <div v-if="image.qualityTags.length > 0" class="flex m-3 text-base leading-relaxed text-gray-500 justify-center mb-[10px]">
             <Tag v-for="tag in image.qualityTags" @delete="tagToDel(tag)" :key="tag.tagname" :tagName="tag.tagname" :class="tag.cssColorClass" :inModal="'pomelo'"/>
           </div>
+
           <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 mb-[1px]">
             <b>Détails :</b>
           </p>
