@@ -2,7 +2,7 @@
 import ImageCard from '@/components/image/ImageCard.vue';
 import draggable from 'vuedraggable';
 import { ref, watchEffect } from 'vue';
-import arow from '@/components/icons/Arow.vue';
+import arrows from '@/components/icons/Arrows.vue';
 
 const props = defineProps({
   workspaceName: String,
@@ -51,19 +51,19 @@ function onEnd(event) {
       <div>
         <!--si aucune image n'est séléctioné alors gris claire sans over et si une ou plusieurs image séléctionée gris foncé avec over-->
         <button v-if="props.selectedImages.length === 0" class=" px-1 py-1 bg-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">
-          <arow class="w-6 h-6" />
+          <arrows class="w-6 h-6" />
         </button>
         <button v-else @click="moveImages(props.workspaceName)" class=" px-1 py-1 bg-gray-700 hover:bg-gray-800 focus:outline-none
           focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">
-          <arow class="w-6 h-6" />
+          <arrows class="w-6 h-6" />
         </button>
       </div>
     </div>
     <!-- Workspace where images are managed -->
     <div class="flex-1 p-2 pt-0 pb-12 overflow-y-auto scrollbar-hide">
-      <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
+      <draggable class="min-h-full grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
-          <div class="flex flex-col items-center" @click="toggleImageSelection(index, props.workspaceName)">
+          <div class="flex flex-col items-center h-full" @click="toggleImageSelection(index, props.workspaceName)">
             <ImageCard :image="element" :index="index" :selected="isImageSelected(index, props.workspaceName)"/>
           </div>
         </template>

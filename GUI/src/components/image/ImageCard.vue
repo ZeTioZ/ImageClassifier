@@ -34,7 +34,7 @@ function handleDel(term) {
 
 <template>
   <!-- Image Container -->
-  <div class="relative rounded  overflow-hidden w-full p-1"
+  <div class="relative rounded overflow-hidden w-full p-1"
     :class="[props.selected ? 'bg-blue-200' : 'bg-gray-200']">
 
     <!-- Image header -->
@@ -53,10 +53,10 @@ function handleDel(term) {
     </div>
 
     <!-- Tags -->
-    <div class="w-full flex flex-col p-1">
+    <div class="w-full p-1">
       <!-- Container pour les tags avec défilement horizontal -->
       <div class="mt-0.5 overflow-y-auto scrollbar-hide">
-        <div class="flex">
+        <div class="flex flex-wrap">
           <Tag v-for="tag in image.tags" :key="tag.tagname" :tagName="tag.displayName" :class="tag.cssColorClass" />
           <Tag v-for="tag in image.qualityTags" :key="tag.tagname" :tagName="tag.displayName" :class="tag.cssColorClass" />
         </div>
