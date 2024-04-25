@@ -1,5 +1,5 @@
 {
-    "blur_precision": 151.0,
+    "blur_precision": 120.0,
     "image_min_width": 400,
     "image_min_height": 400,
     "image_min_brightness": 0.0,

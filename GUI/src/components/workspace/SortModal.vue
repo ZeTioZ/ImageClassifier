@@ -93,7 +93,7 @@ function searchTags() {
         <div class="items-center px-4 py-3">
           <button id="ok-btn" @click="searchTags" 
             class="px-4 py-2 bg-gray-700 hover:bg-gray-800 focus:outline-none
-            focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-md w-full shadow-sm ">
+            focus:ring-4 focus:ring-gray-300 text-white text-base font-medium rounded-full w-full shadow-sm ">
             Chercher
           </button>
         </div>

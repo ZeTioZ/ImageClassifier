@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.19
+FROM node:lts-alpine3.19 as dev-stage
 
 ADD ./GUI /GUI
 
@@ -7,6 +7,12 @@ WORKDIR /GUI
 RUN npm install
 RUN npm audit fix
 
+FROM dev-stage as build-stage
+RUN npm run build
+
+FROM nginx:alpine as prod-stag
+COPY --from=build-stage /GUI/dist /usr/share/nginx/html
+
 EXPOSE 80
 
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "80"]
+CMD ["nginx", "-g", "daemon off;"]
