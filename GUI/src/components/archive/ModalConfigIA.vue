@@ -18,7 +18,7 @@ const emit = defineEmits(['close']);
 // Charger les configurations après que le composant soit monté
 onMounted(async () => {
   try {
-    const data = await API.configs.get();
+    const {data} = await API.configs.get();
 
     blurPrecision.value = data.blur_precision || 0;
     width.value = data.image_min_width || 0;
