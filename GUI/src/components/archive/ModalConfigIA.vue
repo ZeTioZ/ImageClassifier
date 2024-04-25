@@ -6,26 +6,27 @@ import Check from '@/components/icons/Check.vue';
 import Reset from '@/components/icons/Reset.vue';
 import { notify } from '@kyvg/vue3-notification';
 
-const netteté = ref(0);
-const length = ref(0);
-const hight = ref(0);
-const brigthness = ref(0);
+const blurPrecision = ref(0);
+const width = ref(0);
+const height = ref(0);
+const brightness = ref(0);
 const Tag = ref('');
-const BlacklistedTags = ref([]);
+const blacklistedTags = ref([]);
 
 const emit = defineEmits(['close']);
 
 // Charger les configurations après que le composant soit monté
 onMounted(async () => {
   try {
-    const { data } = await API.configs.get(); // Assurez-vous que cette méthode correspond à celle définie dans AI-config pour récupérer la configuration
-    // Supposons que la réponse inclue des champs correspondants à vos paramètres
-    netteté.value = data.blur_precision || 0;
-    length.value = data.image_min_width || 0;
-    hight.value = data.image_min_height || 0;
-    brigthness.value = data.image_min_brightness || 0;
+    const data = await API.configs.get();
+
+    blurPrecision.value = data.blur_precision || 0;
+    width.value = data.image_min_width || 0;
+    height.value = data.image_min_height || 0;
+    brightness.value = data.image_min_brightness || 0;
+
     if (data.banned_tags) {
-      BlacklistedTags.value = [...data.banned_tags];
+      blacklistedTags.value = [...data.banned_tags];
     }
   } catch (error) {
     notify({
@@ -63,11 +64,11 @@ async function updateAIConfig(updatedConfig) {
 }
 
 function rebotConfig() {
-  netteté.value = 151;
-  length.value = 400;
-  hight.value = 400;
-  brigthness.value = 51;
-  BlacklistedTags.value = ["nasty"];
+  blurPrecision.value = 151;
+  width.value = 400;
+  height.value = 400;
+  brightness.value = 51;
+  blacklistedTags.value = ["nasty"];
 
   notify({
     type: "info",
@@ -78,25 +79,26 @@ function rebotConfig() {
 
 function validateConfig() {
   const updatedConfig = {
-    blur_precision: netteté.value,
-    image_min_width: length.value,
-    image_min_height: hight.value,
-    image_min_brightness: brigthness.value,
-    banned_tags: BlacklistedTags.value
+    blur_precision: blurPrecision.value,
+    image_min_width: width.value,
+    image_min_height: height.value,
+    image_min_brightness: brightness.value,
+    banned_tags: blacklistedTags.value
   };
+
   updateAIConfig(updatedConfig);
   closeModal();
 }
 
 function BlacklistTags() {
   if (Tag.value) {
-    BlacklistedTags.value.push(Tag.value);
+    blacklistedTags.value.push(Tag.value);
     Tag.value = '';
   }
 }
 
 function remove(index){
-  BlacklistedTags.value.splice(index, 1);
+  blacklistedTags.value.splice(index, 1);
 }
 
 function closeModal() {
@@ -121,40 +123,40 @@ function closeModal() {
 
           <!-- Modal body -->
           <div class="p-6 space-y-6">
-            <!--netteté-->
+            <!--blur precision-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Netteté :</span>
-              <input v-model="netteté" type="number" min="0" max="3000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
+              <input v-model="blurPrecision" type="number" min="0" max="3000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
-            <input v-model="netteté" type="range" min="0" max="3000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
-            <!--length-->
+            <input v-model="blurPrecision" type="range" min="0" max="3000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
+            <!--width-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Largeur minimale :</span> 
-              <input v-model="length" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/> 
+              <input v-model="width" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/> 
             </div>
-            <input v-model="length" type="range" min="0" max="5000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
+            <input v-model="width" type="range" min="0" max="5000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
             <!--heigth-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Hauteur minimale :</span>
-              <input v-model="hight" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
+              <input v-model="height" type="number" min="0" max="5000" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
-            <input v-model="hight" type="range" min="0" max="5000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
-            <!--brigtness-->
+            <input v-model="height" type="range" min="0" max="5000" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
+            <!--brightness-->
             <div class="flex justify-center items-center text-base leading-relaxed text-gray-500">
               <span>Luminosité :</span>
-              <input v-model="brigthness" type="number" min="0" max="100" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
+              <input v-model="brightness" type="number" min="0" max="100" class="ms-1 w-1/4 h-8 bg-gray-50 text-gray-900 text-s rounded-md p-1 shadow-none"/>
             </div>
-            <input v-model="brigthness" type="range" min="0" max="100" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
+            <input v-model="brightness" type="range" min="0" max="100" value="0" step="10" class="w-full h-1 bg-gray-200 slider rounded-lg">
             <!---->
             <div>
             <p class="text-base leading-relaxed">Mots-clés à blacklister :</p>
-            <div class="p-0 text-gray-500 flex justify-center items-center" v-for="(tag, index) in BlacklistedTags" :key="index">
+            <div class="p-0 text-gray-500 flex justify-center items-center" v-for="(tag, index) in blacklistedTags" :key="index">
               <button @click="remove(index)" class="bg-ls-rouge text-white rounded border">
                 <XMark class="w-3 h-3" />
               </button>             
               <p class="ms-1">{{ tag }}</p>
             </div>
-            <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="BlacklistTags"
+            <input v-model="Tag" id="tag" placeholder="Ex.: voiture, piscine, etc." @keyup.enter="blacklistTags"
               autocomplete="off" class="bg-gray-50 text-gray-900 text-xs rounded block p-1 mt-3 w-full border" />
             </div>
           </div>
