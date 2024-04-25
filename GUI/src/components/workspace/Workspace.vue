@@ -141,7 +141,7 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
 
     // Extraire l'image déplacée
     const [imageToReorder] = imagesList.splice(oldIndex, 1);
-
+    
     // Réinsérer l'image à sa nouvelle position
     imagesList.splice(newIndex, 0, imageToReorder);
   }
@@ -161,13 +161,15 @@ function updateImagesIndices(oldIndex, newIndex, movedToNewList, fromWorkspace) 
     <!-- table (ie: columns) -->
     <div class="flex flex-row h-full">
       <WorkspaceTable class="w-1/2 border-e-2 border-gray-500" :key="refreshKey" workspaceName="À supprimer"
-        :images="filteredBadImages" :toggleImageSelection="toggleImageSelection" 
+        :images="filteredBadImages" :allImages="badImages"
+        :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"
         :selectedImages="selectedImages"/>
 
       <WorkspaceTable class="w-1/2" :key="refreshKey" workspaceName="Triées"
-        :images="filteredGoodImages" :toggleImageSelection="toggleImageSelection" 
+        :images="filteredGoodImages" :allImages="goodImages" 
+        :toggleImageSelection="toggleImageSelection" 
         :moveImages="moveImages"  :isImageSelected="isImageSelected" 
         :updateImagesIndices="updateImagesIndices"
         :selectedImages="selectedImages"/>

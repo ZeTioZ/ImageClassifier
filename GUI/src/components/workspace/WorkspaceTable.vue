@@ -7,6 +7,7 @@ import arow from '@/components/icons/Arow.vue';
 const props = defineProps({
   workspaceName: String,
   images: Object,
+  allImages: Object,
   toggleImageSelection: Function,
   moveImages: Function,
   isImageSelected: Function,
@@ -18,8 +19,14 @@ const props = defineProps({
 const draggableImages = ref([]);
 
 watchEffect(() => {
-  draggableImages.value = props.images.value;
+  draggableImages.value = props.allImages;
 });
+
+// Fonction qui determine si une image doit etre afichée ou non (en fonction de la recherche)
+// si elle est présente dans images alors elle doit etre affichée sinon non
+function isImageVisible(image) {
+  return props.images.value.includes(image);
+}
 
 // Fonction appelée lorsque le déplacement des images est terminé
 function onEnd(event) {
@@ -46,7 +53,7 @@ function onEnd(event) {
     <div class="flex justify-between p-2">
       <div class="flex">
         <h2 class="text-xl font-bold text-ls-bleu-fonce underline decoration-ls-vert-base decoration-2">{{ props.workspaceName }} </h2>
-        <p class="text-sm text-gray-500"> ({{ draggableImages.length }} image{{ draggableImages.length > 1 ? "s":""}})</p>
+        <p class="text-sm text-gray-500"> ({{ images.value.length }} image{{ images.value.length > 1 ? "s":""}})</p>
       </div>
       <div>
         <!--si aucune image n'est séléctioné alors gris claire sans over et si une ou plusieurs image séléctionée gris foncé avec over-->
@@ -61,9 +68,9 @@ function onEnd(event) {
     </div>
     <!-- Workspace where images are managed -->
     <div class="flex-1 p-2 pt-0 pb-12 overflow-y-auto scrollbar-hide">
-      <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="images" v-model="draggableImages" item-key="index" @end="onEnd">
+      <draggable class="min-h-[400px] grid grid-cols-3 gap-4" group="allImages" v-model="draggableImages" item-key="index" @end="onEnd">
         <template #item="{ element, index }">
-          <div class="flex flex-col items-center" @click="toggleImageSelection(index, props.workspaceName)">
+          <div v-if="isImageVisible(element)" class="flex flex-col items-center" @click="toggleImageSelection(index, props.workspaceName)">
             <ImageCard :image="element" :index="index" :selected="isImageSelected(index, props.workspaceName)"/>
           </div>
         </template>
