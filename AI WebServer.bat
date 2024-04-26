@@ -1,4 +1,4 @@
 @echo off
 chcp 65001
 echo Vérification de l'environnement virtuel...
-python -m pip install --upgrade pip -q & python -m venv .\venv\ & .\venv\Scripts\activate & pip install -r .\AI\requirements.txt -q & pip install -r .\AI\gpu-enable-requirements.txt -q & pip install -r .\WebServer\requirements.txt -q & echo Environnement prêt, allumage des services... & cd .\WebServer\app & python -m uvicorn main:app --port 80 --reload & cd ..\.. & .\venv\Scripts\deactivate.bat & pause
+python -m pip install --upgrade pip -q & python -m venv .\venv\ & .\venv\Scripts\activate & pip install -r .\AI\requirements.txt -q & pip install -r .\AI\gpu-enable-requirements.txt -q & pip install -r .\WebServer\requirements.txt -q & echo Environnement prêt, allumage des services... & cd .\WebServer\app & python -m uvicorn main:app --workers 4 & cd ..\.. & .\venv\Scripts\deactivate.bat & pause

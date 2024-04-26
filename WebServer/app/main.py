@@ -31,6 +31,11 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+async def root():
+	return "Welcome to the AI Web Server!"
+
+
 @app.post("/tags")
 async def update_tags(tags: dict):
 	if not os.path.exists(extracted_path):

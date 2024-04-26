@@ -4,7 +4,10 @@ services:
     build:
       dockerfile: './GUI - Dockerfile'
     image: gui-webserver
+    environment:
+      - WEB_PORT=80
     ports:
+      # Use the same port as WEB_PORT as the internal container port (right number)
       - "8000:80"
 
   ai-webserver:
@@ -12,5 +15,8 @@ services:
     build:
       dockerfile: './AI - Dockerfile'
     image: ai-webserver
+    environment:
+      - AI_PORT=80
     ports:
+      # Use the same port as AI_PORT as the internal container port (right number)
       - "8001:80"
