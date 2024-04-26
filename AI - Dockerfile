@@ -14,6 +14,6 @@ RUN pip install -r requirements.txt
 
 WORKDIR /WebServer/app
 
-EXPOSE 80
+EXPOSE $AI_PORT
 
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--workers", "4"]
+CMD uvicorn main:app --host 0.0.0.0 --port $AI_PORT --workers 4

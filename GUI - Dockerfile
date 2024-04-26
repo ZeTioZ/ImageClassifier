@@ -13,6 +13,6 @@ RUN npm run build
 FROM nginx:alpine as prod-stag
 COPY --from=build-stage /GUI/dist /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE $WEB_PORT
 
 CMD ["nginx", "-g", "daemon off;"]
