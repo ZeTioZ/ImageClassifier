@@ -145,6 +145,6 @@ This project is an image classification and management tool designed to help use
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
 
 ## License
-This project is open-source and available under the MIT License.
+This project is open-source and available under the GNU General Public License.
 
 For more detailed documentation, please refer to the [project report](https://github.com/ZeTioZ/ImageClassifier/blob/master/docs/Backlog_%26_documentation_G%C3%A9nie_Logiciel.pdf).
