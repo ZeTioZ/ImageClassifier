@@ -59,8 +59,8 @@ This project is an image classification and management tool designed to help use
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-repo/image-classifier-tool.git
-   cd image-classifier-tool
+   git clone https://github.com/zetioz/ImageClassifier.git
+   cd ./ImageClassifier/
    ```
 
 2. **Install Dependencies**:
@@ -72,7 +72,7 @@ This project is an image classification and management tool designed to help use
      ```
    - For the GUI:
      ```bash
-     cd gui
+     cd ./GUI/
      npm install
      ```
 
@@ -89,7 +89,8 @@ This project is an image classification and management tool designed to help use
 4. **Run the GUI**:
    ```bash
    cd gui
-   npm run serve
+   npm audit fix
+   npm run dev --host
    ```
 
 5. **Docker Setup (Optional)**:
@@ -107,12 +108,12 @@ This project is an image classification and management tool designed to help use
 4. **Automatic Sorting and Tagging**: Let the AI sort and tag the images.
 5. **Manual Adjustments**: Use drag-and-drop to move images between categories, and add/remove tags as needed.
 6. **Filtering**: Filter images by keywords to quickly find specific categories.
-7. **Save**: Save the results, and optionally export to Keepeek.
+7. **Save**: Save the results.
 
 ### CLI
 - **Basic Usage**:
   ```bash
-  imageclassifier -n "Photos camp" -z zip1 -z zip2 -z zip3 -t tag1 -t tag2
+  python ./AI/src/main.py -n "Photos camp" -z zip1 -z zip2 -z zip3 -t tag1 -t tag2
   ```
 - **Flags**:
   - `-n`: Batch name for images.
@@ -128,14 +129,12 @@ This project is an image classification and management tool designed to help use
   - Improve drag-and-drop functionality after filtering.
 - **Enhancements**:
   - Improve the UX for manual keyword addition.
-  - Add more AI models for different types of image classification.
-  - Integrate with more external image libraries like Keepeek.
+  - Integrate with external image libraries like Keepeek.
 
 ## Performance
 - **Minimum Requirements**:
   - CPU: Dual Core x86
   - HDD: 15 GB
-  - Software: Python, Node.js
 - **Recommended Requirements**:
   - CPU: 8 Core x86
   - GPU: RTX 2060 or higher
